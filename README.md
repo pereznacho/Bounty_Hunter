@@ -35,7 +35,7 @@ Antes de usar la herramienta, asegurate de tener instaladas las siguientes depen
 
 ```bash
 git clone https://github.com/pereznacho/Bounty_Hunter.git
-cd bounty-hunter
+cd Bounty_Hunter
 chmod +x bounty_hunter.sh
 ```
 
