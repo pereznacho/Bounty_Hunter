@@ -25,22 +25,27 @@ def ensure_xsstrike_installed():
         print(f"{RED}[✘] Error al clonar XSStrike con permisos de administrador.{RESET}")
         return None
 
+def is_api_or_static(url):
+    """Evita endpoints que probablemente no funcionen con XSStrike"""
+    return any(p in url.lower() for p in ["/api/", "/auth/", "/images/", ".png", ".jpg", ".jpeg", ".gif", ".svg"])
+
 def run_xss_scan(param_urls_file, result_dir, log_file):
     xsstrike_dir = ensure_xsstrike_installed()
     xss_file = os.path.join(result_dir, "xss_vulnerables.txt")
 
-    # Asegurar que exista aunque esté vacío
-    with open(xss_file, "w") as _:
-        pass
+    with open(xss_file, "w") as _: pass  # crea o limpia archivo
 
     if not xsstrike_dir:
         return xss_file
 
-    with open(param_urls_file, "r") as urls, open(xss_file, "w") as vuln_out, open(log_file, "a") as log_out:
+    with open(param_urls_file, "r") as urls, open(xss_file, "a") as vuln_out, open(log_file, "a") as log_out:
         urls_list = [u.strip() for u in urls if u.strip()]
         total = len(urls_list)
 
         for idx, full_url in enumerate(urls_list, start=1):
+            if is_api_or_static(full_url):
+                continue
+
             parsed = urlparse(full_url)
             qs = parse_qs(parsed.query)
 
@@ -53,16 +58,24 @@ def run_xss_scan(param_urls_file, result_dir, log_file):
                 modified_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
 
                 print(f"{BLUE}[XSStrike {idx}] Probando parámetro '{param}': {modified_url}{RESET}")
+
                 try:
-                    output = subprocess.check_output(
-                        ["python3", os.path.join(xsstrike_dir, "xsstrike.py"), "-u", modified_url, "--fuzzer", "--skip-dom"],
-                        stderr=subprocess.STDOUT,
+                    result = subprocess.run(
+                        ["python3", os.path.join(xsstrike_dir, "xsstrike.py"), "-u", modified_url,
+                         "--fuzzer", "--skip-dom", "--timeout", "15"],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True,
                         timeout=60
-                    ).decode()
+                    )
 
-                    log_out.write(f"\n[PARAM: {param}] {modified_url}\n{output}\n")
+                    stdout = result.stdout.strip()
+                    stderr = result.stderr.strip()
 
-                    if "Vulnerable webpage:" in output:
+                    log_out.write(f"\n[PARAM: {param}] {modified_url}\n{stdout}\n{stderr}\n")
+
+                    if "Vulnerable webpage:" in stdout:
+                        print(f"{GREEN}[✓] Vulnerabilidad detectada: {modified_url}{RESET}")
                         vuln_out.write(modified_url + "\n")
 
                 except subprocess.TimeoutExpired:
