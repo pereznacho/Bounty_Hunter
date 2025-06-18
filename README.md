@@ -56,7 +56,7 @@ This mode will enumerate subdomains, verify which ones are live, gather URLs, pa
 ### URL Mode:
 
 ```bash
-./bounty_hunter.py -u https://target.com/page.php?id=FUZZ
+./bounty_hunter.py -u https://target.com/page.php
 ```
 
 This mode skips subdomain discovery and focuses on the provided target URL for parameter fuzzing and vulnerability analysis.
