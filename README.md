@@ -16,7 +16,7 @@ It integrates multiple tools to streamline domain recon, parameter fuzzing, and 
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/yourusername/Bounty_Hunter.git
+git clone https://github.com/pereznacho/Bounty_Hunter.git
 cd Bounty_Hunter
 chmod +x bounty_hunter.py
 ```
