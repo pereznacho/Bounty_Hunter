@@ -131,7 +131,7 @@ This tool is intended **only for authorized testing** and educational purposes.
 ## 👨‍💼 Author
 
 **Ignacio Pérez** – [LinkedIn](https://www.linkedin.com/in/ignacio-perez)
-Community: [ThreatX Security](https://threatx.ar) 🇦🇷
+Community: [ThreatX Security](https://www.threatxsecurity.com) 🇦🇷
 
 ---
 
