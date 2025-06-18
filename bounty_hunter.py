@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 import subprocess
+from termcolor import cprint
 from datetime import datetime
 from utils import install, reporter
 from modules import xss, sqli
@@ -61,7 +62,6 @@ def etapa_waf(live_file, result_dir, log_file, mode, domain):
         run_waf_detection(live_file, result_dir, log_file)
 
 def etapa_nuclei(domain, result_dir):
-    from termcolor import cprint
     cprint("[*] Ejecutando Nuclei sobre HTTP y HTTPS...", "blue")
     output_file = os.path.join(result_dir, "nuclei_results.txt")
 
@@ -70,18 +70,32 @@ def etapa_nuclei(domain, result_dir):
     with open(output_file, "w") as out:
         for url in targets:
             cprint(f"[-] Analizando: {url}", "yellow")
-            result = subprocess.run(
-                ["nuclei", "-u", url, "-silent"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
-            )
-            if result.stdout.strip():
+            try:
+                process = subprocess.Popen(
+                    ["nuclei", "-u", url, "-silent"],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True
+                )
+
+                has_output = False
                 out.write(f"# Resultados para {url}:\n")
-                out.write(result.stdout + "\n")
-                cprint(f"[✔] Vulnerabilidades encontradas en {url}", "red")
-            else:
-                cprint(f"[✓] Sin hallazgos para {url}", "green")
+
+                for line in process.stdout:
+                    print(line, end="")  # Mostrar en pantalla
+                    out.write(line)      # Guardar en archivo
+                    has_output = True
+
+                process.wait()
+
+                if has_output:
+                    cprint(f"[✔] Vulnerabilidades encontradas en {url}", "red")
+                    out.write("\n")
+                else:
+                    cprint(f"[✓] Sin hallazgos para {url}", "green")
+
+            except Exception as e:
+                cprint(f"[✘] Error al ejecutar Nuclei en {url}: {e}", "red")
 
     if os.path.getsize(output_file) == 0:
         os.remove(output_file)
