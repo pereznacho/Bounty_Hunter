@@ -24,26 +24,40 @@ go_bin = os.path.expanduser("~/go/bin")
 if go_bin not in os.environ["PATH"]:
     os.environ["PATH"] = f"{go_bin}:{os.environ['PATH']}"
 
-# ─── Ctrl+C ────────────────────────────────────────────
+# ─── Ctrl+C controlado ─────────────────────────────────
 skip_to_next = False
+repeat_stage = False
 
 def handle_stage(stage_func, name):
-    global skip_to_next
+    global skip_to_next, repeat_stage
     print(f"{BLUE}[*] Ejecutando etapa: {name}{NC}")
-    try:
-        stage_func()
-    except KeyboardInterrupt:
-        print(f"\n{RED}[✘] Proceso interrumpido. ¿Qué deseas hacer?{NC}")
-        print("1) Continuar con la siguiente etapa")
-        print("2) Finalizar y guardar resultados")
-        opcion = input("> Selección: ").strip()
-        if opcion == "2":
-            print(f"{RED}[✘] Tarea finalizada por el usuario. Resultados hasta el momento están guardados.{NC}")
-            sys.exit(0)
-        else:
-            print(f"{YELLOW}[!] Continuando con la siguiente etapa...{NC}")
-            skip_to_next = True
+    while True:
+        try:
+            stage_func()
+            break  # etapa finalizada correctamente, salimos del bucle
+        except KeyboardInterrupt:
+            print(f"\n{RED}[✘] Proceso interrumpido. ¿Qué deseas hacer?{NC}")
+            print("1) Continuar con la siguiente etapa")
+            print("2) Repetir esta etapa")
+            print("3) Finalizar y guardar resultados")
 
+            opcion = input("> Selección: ").strip()
+
+            if opcion == "1":
+                print(f"{YELLOW}[!] Continuando con la siguiente etapa...{NC}")
+                skip_to_next = True
+                break
+            elif opcion == "3":
+                print(f"{RED}[✘] Tarea finalizada por el usuario. Resultados hasta el momento están guardados.{NC}")
+                sys.exit(0)
+            elif opcion == "2":
+                print(f"{BLUE}[*] Repitiendo la etapa actual...{NC}")
+                continue  # se vuelve a ejecutar la misma etapa
+            else:
+                print(f"{RED}[!] Opción inválida. Intenta nuevamente.{NC}")
+                
+                
+                
 # ─── Etapas ────────────────────────────────────────────
 def etapa_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file):
     from modules.recon import run_recon
