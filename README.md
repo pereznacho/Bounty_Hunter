@@ -89,7 +89,7 @@ utils/                     # Utilidades compartidas
 ## 🚀 Instalación y Puesta en Marcha
 
 ```bash
-<<<<<<< HEAD
+
 # Clonar el repositorio
 git clone https://github.com/pereznacho/Bounty_Hunter2.git
 cd Bounty_Hunter2
@@ -98,7 +98,7 @@ git clone https://github.com/pereznacho/Bounty_Hunter.git
 cd Bounty_Hunter
 chmod +x bounty_hunter.py
 ```
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
+
 
 # Crear entorno virtual
 python3 -m venv env
@@ -197,14 +197,14 @@ This mode skips subdomain discovery and focuses on the provided target URL for p
 
 ## 🧑‍💻 Autor
 
-<<<<<<< HEAD
+
 Desarrollado por **Ignacio Pérez** ([@iperez](https://github.com/pereznacho))
 
 > "Automatizá tu recon. Repetí tus escaneos. Dominá tu proceso."
 =======
 **Ignacio Pérez** – [LinkedIn](https://www.linkedin.com/in/ignacio-perez)
 Community: [ThreatX Security](https://www.threatxsecurity.com) 🇦🇷
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
+
 
 ---
 
