@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: #0d0d0d;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,255,255,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #ffa500;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #ccc;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 14px;
+        }
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .register-link a {
+            color: #ffa500;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="post" action="/login">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required>
+
+            <button class="btn" type="submit">Iniciar sesión</button>
+        </form>
+
+        <div class="register-link">
+            <p>¿No tienes cuenta? <a href="/register">Crear una</a></p>
+        </div>
+    </div>
+</body>
+</html>

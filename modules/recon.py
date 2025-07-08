@@ -1,9 +1,37 @@
 import os
+from urllib.parse import urlparse, parse_qs
 from termcolor import cprint
 from utils.helpers import run_command, get_httpx_binary
 
+def get_unique_param_urls(input_file, output_file):
+    seen_params = set()
+    unique_lines = []
+
+    with open(input_file, "r", encoding="utf-8", errors="ignore") as infile:
+        for line in infile:
+            url = line.strip()
+            if not url or "?" not in url:
+                continue
+
+            try:
+                parsed = urlparse(url)
+                qs = parse_qs(parsed.query)
+                for param in qs:
+                    key = param.lower()
+                    if key not in seen_params:
+                        seen_params.add(key)
+                        unique_lines.append(url)
+                        break
+            except Exception:
+                continue
+
+    with open(output_file, "w") as out:
+        out.write("\n".join(unique_lines) + "\n")
+
+
 def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file):
     httpx_bin = get_httpx_binary()
+    raw_urls_file = os.path.join(result_dir, "raw_urls.txt")
 
     if mode == "domain":
         cprint("[*] Subdomain enum con subfinder + assetfinder...", "blue")
@@ -32,25 +60,58 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
                 cprint("[✘] httpx no devolvió subdominios vivos.", "red")
         os.remove(subs_httpx)
 
-    cprint("[*] Recolectando URLs con gau + waybackurls...", "blue")
-    run_command(f"gau {domain} >> {urls_file}", silent=True)
-    run_command(f"waybackurls {domain} >> {urls_file}", silent=True)
+        # Ahora recon de URLs sobre cada subdominio vivo
+        cprint("[*] Ejecutando recon de URLs sobre dominios vivos...", "blue")
+        if os.path.exists(live_file):
+            with open(live_file) as f:
+                for url in f:
+                    url = url.strip()
+                    run_command(f"katana -u {url} -silent >> {raw_urls_file}", silent=True)
+                    run_command(f"gau {url} >> {raw_urls_file}", silent=True)
+                    run_command(f"waybackurls {url} >> {raw_urls_file}", silent=True)
+        else:
+            cprint("[!] live_file vacío. No hay URLs para recon.", "yellow")
 
-    cprint("[*] Ejecutando Katana...", "blue")
-    katana_input = live_file if mode == "domain" else target_url
-    if mode == "domain" and os.path.exists(live_file):
-        with open(live_file) as f:
-            for url in f:
-                run_command(f"katana -u {url.strip()} -silent >> {urls_file}", silent=True)
     else:
-        run_command(f"katana -u {katana_input} -silent >> {urls_file}", silent=True)
+        # MODO URL → simular live_file con la URL
+        cprint("[*] Preparando live_file para URL...", "blue")
+        with open(live_file, "w") as lf:
+            lf.write(target_url + "\n")
 
-    run_command(f"sort -u {urls_file} -o {urls_file}")
-    run_command(f"grep '=' {urls_file} > {param_urls_file}")
+        cprint("[*] Ejecutando Katana sobre la URL...", "blue")
+        run_command(f"katana -u {target_url} -silent >> {raw_urls_file}", silent=True)
+
+        cprint("[*] Ejecutando gau sobre la URL...", "blue")
+        run_command(f"gau {target_url} >> {raw_urls_file}", silent=True)
+
+        cprint("[*] Ejecutando waybackurls sobre la URL...", "blue")
+        run_command(f"waybackurls {target_url} >> {raw_urls_file}", silent=True)
+
+    # Filtrar duplicados
+    run_command(f"sort -u {raw_urls_file} -o {raw_urls_file}")
+
+    cprint("[*] Filtrando URLs únicas por nombre de parámetro...", "blue")
+    get_unique_param_urls(raw_urls_file, urls_file)
+
+    # Copiar también para param_urls_file
+    run_command(f"cp {urls_file} {param_urls_file}")
 
     if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
-        cprint("[✘] No se encontraron URLs con parámetros. Finalizando.", "red")
-        exit(1)
+        cprint("[✘] No se encontraron URLs con parámetros.", "red")
+    else:
+        url_count = sum(1 for _ in open(param_urls_file))
+        cprint(f"[✔] URLs con parámetros encontradas: {url_count}", "green")
 
-    url_count = sum(1 for _ in open(param_urls_file))
-    cprint(f"[✔] URLs con parámetros encontradas: {url_count}", "green")
+
+if __name__ == "__main__":
+    import sys
+    mode = sys.argv[1]
+    domain = sys.argv[2]
+    target_url = sys.argv[3]
+    result_dir = sys.argv[4]
+    subs_file = sys.argv[5]
+    live_file = sys.argv[6]
+    urls_file = sys.argv[7]
+    param_urls_file = sys.argv[8]
+
+    run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file)

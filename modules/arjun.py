@@ -1,18 +1,64 @@
 # modules/arjun.py
 
+import os
 import subprocess
+from termcolor import cprint
 
-def run_arjun():
-    target_file = "urls.txt"
-    if not os.path.exists(target_file):
-        print("[!] urls.txt no encontrado.")
+GREEN = "\033[32m"
+RED = "\033[31m"
+BLUE = "\033[34m"
+RESET = "\033[0m"
+
+def run_arjun(param_urls_file, result_dir, log_file):
+    arjun_file = os.path.join(result_dir, "arjun_results.txt")
+    temp_output = os.path.join(result_dir, "arjun_tmp.txt")
+
+    if not os.path.exists(param_urls_file):
+        cprint(f"[✘] Archivo no encontrado: {param_urls_file}", "red")
         return
-    with open(target_file) as f:
-        for url in f:
-            url = url.strip()
-            if url:
-                subprocess.call(f"arjun -u {url} -oT arjun_output.txt", shell=True)
+
+    urls = [u.strip() for u in open(param_urls_file) if u.strip()]
+    if not urls:
+        cprint("[!] Lista de URLs vacía.", "yellow")
+        return
+
+    with open(arjun_file, "w") as out, open(log_file, "a") as log:
+        for idx, url in enumerate(urls, start=1):
+            print(f"{BLUE}[Arjun {idx}/{len(urls)}] Analizando: {url}{RESET}")
+            try:
+                subprocess.run(
+                    ["arjun", "-u", url, "-oT", temp_output, "--include", "GET"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    timeout=60
+                )
+
+                if os.path.exists(temp_output) and os.path.getsize(temp_output) > 0:
+                    with open(temp_output, "r") as f:
+                        lines = f.read().strip().splitlines()
+
+                    if lines:
+                        out.write("🔗 URL: " + url + "\n")
+                        for line in lines:
+                            out.write("🧩 Parámetro encontrado: " + line + "\n")
+                        out.write("--------------------------------------------------\n")
+
+                        log.write(f"[ARJUN] {url}\n")
+                        log.write("\n".join(lines) + "\n\n")
+                    os.remove(temp_output)
+
+            except subprocess.TimeoutExpired:
+                print(f"{RED}[!] Timeout de Arjun para: {url}{RESET}")
+            except Exception as e:
+                print(f"{RED}[✘] Error al ejecutar Arjun para {url}: {e}{RESET}")
+    
+    print(f"{GREEN}[✔] Escaneo Arjun completado. Resultados en {arjun_file}{RESET}")
+    return arjun_file
+
 
 if __name__ == "__main__":
-    import os
-    run_arjun()
+    import sys
+    param_urls_file = sys.argv[1]
+    result_dir = sys.argv[2]
+    log_file = sys.argv[3]
+    run_arjun(param_urls_file, result_dir, log_file)

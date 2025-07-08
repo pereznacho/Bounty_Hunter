@@ -1,4 +1,4 @@
-# modules/ffuf_fuzz.py
+# modules/lfi.py
 
 import os
 import subprocess
@@ -19,15 +19,15 @@ FUZZ_CATEGORIES = {
 
 def validate_files():
     if not os.path.exists(PARAM_FILE):
-        cprint(f"[!] Archivo requerido no encontrado: {PARAM_FILE}", "red")
+        cprint(f"[✘] Archivo requerido no encontrado: {PARAM_FILE}", "red")
         return False
     missing = [k for k, v in FUZZ_CATEGORIES.items() if not os.path.isfile(v)]
     if missing:
-        cprint("[!] Faltan wordlists para: " + ", ".join(missing), "red")
+        cprint("[✘] Faltan wordlists para: " + ", ".join(missing), "red")
         return False
     return True
 
-def run_ffuf_fuzz():
+def run_lfi(result_dir, log_file):
     if not validate_files():
         return
 
@@ -39,16 +39,34 @@ def run_ffuf_fuzz():
         return
 
     for category, wordlist in FUZZ_CATEGORIES.items():
-        cprint(f"\n[+] Step: Fuzzing {category}", "blue", attrs=["bold", "underline"])
-        for url in urls:
-            cprint(f"  -> URL: {url}", "cyan")
-            cmd = f"ffuf -u \"{url}FUZZ\" -w \"{wordlist}\" -mc 200,500 -t 50"
-            try:
-                subprocess.call(cmd, shell=True)
-            except KeyboardInterrupt:
-                cprint("\n[!] Interrumpido por el usuario. ¿Continuar con el siguiente payload? (y/n): ", "yellow", end="")
-                if input().strip().lower() != "y":
+        result_file = os.path.join(result_dir, f"{category.lower().replace(' ', '_')}_results.txt")
+
+        cprint(f"\n🚀 Fuzzing: {category}", "blue", attrs=["bold", "underline"])
+        with open(result_file, "w") as rf, open(log_file, "a") as log:
+            for i, url in enumerate(urls, start=1):
+                cprint(f"[{category} {i}] 🔗 {url}", "cyan")
+                cmd = f'ffuf -u "{url}FUZZ" -w "{wordlist}" -mc 200,500 -t 25 -s'
+                try:
+                    result = subprocess.check_output(cmd, shell=True, text=True)
+                    if result.strip():
+                        rf.write(f"🔗 URL: {url}\n")
+                        rf.write(f"🧩 Payloads desde: {wordlist}\n")
+                        rf.write("📄 Evidencia:\n")
+                        rf.write(result + "\n")
+                        rf.write("--------------------------------------------------\n")
+                        log.write(f"[FFUF][{category}] {url}\n{result}\n\n")
+                        cprint("[✓] Resultados encontrados.", "green")
+                    else:
+                        cprint("[-] Sin hallazgos.", "yellow")
+                except KeyboardInterrupt:
+                    cprint("\n[!] Interrumpido por el usuario.", "yellow")
                     return
+                except subprocess.CalledProcessError:
+                    continue
+
 
 if __name__ == "__main__":
-    run_ffuf_fuzz()
+    import sys
+    result_dir = sys.argv[1]
+    log_file = sys.argv[2]
+    run_lfi(result_dir, log_file)

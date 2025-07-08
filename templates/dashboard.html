@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bounty_Hunter - Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="banner">
+<pre>
+██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+</pre>
+            <p class="subtitle">BugBounty Automation Tool - by Ignacio Pérez</p>
+
+            <div class="topbar">
+                {% if request.session.user_id %}
+                    <span>👤 {{ request.session.username }}</span>
+                    <a href="/logout">Cerrar sesión</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                    <a href="/register">Registro</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <h2>Bienvenido, {{ request.session.username }}</h2>
+        <a href="javascript:void(0)" onclick="abrirModal()" class="create-link">+ Nuevo Proyecto</a>
+        <h3>Tus proyectos:</h3>
+
+        {% for p in projects %}
+        <div class="card" onclick="location.href='/project/{{ p.id }}'">
+            <h4>📁 {{ p.name }}</h4>
+            <p><strong>Tipo:</strong> {{ p.mode }}</p>
+            <p><strong>Target:</strong> {{ p.target }}</p>
+            <p><strong>Fecha:</strong> {{ p.created_at.strftime('%Y-%m-%d') }}</p>
+            <p><strong>Estado:</strong> {{ p.status }}</p>
+            <p><strong>Progreso:</strong> {{ p.progress }}%</p>
+            <progress value="{{ p.progress }}" max="100" style="width: 100%; height: 15px;"></progress>
+
+            <div class="project-buttons">
+                <form method="post" action="/project/{{ p.id }}/delete">
+                    <button type="submit" class="delete-btn">🗑 Eliminar</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Modal para nuevo proyecto -->
+    <div id="modalNuevoProyecto" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2>Nuevo Proyecto</h2>
+            <form action="/projects" method="post">
+                <label for="name">Nombre del Proyecto:</label>
+                <input type="text" name="name" required>
+
+                <label for="mode">Modo:</label>
+                <select name="mode">
+                    <option value="domain">Domain</option>
+                    <option value="url">URL</option>
+                </select>
+
+                <label for="target">Target:</label>
+                <input type="text" name="target" required>
+
+                <label for="start_now">¿Iniciar ahora?:</label>
+                <select name="start_now">
+                    <option value="yes">Sí, iniciar ahora</option>
+                    <option value="no">No, más tarde</option>
+                </select>
+
+                <input type="hidden" name="username" value="{{ request.session.username }}">
+                <button type="submit">Crear Proyecto</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal() {
+            const modal = document.getElementById("modalNuevoProyecto");
+            modal.style.display = "flex";
+            modal.classList.add("show");
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById("modalNuevoProyecto");
+            modal.classList.remove("show");
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modalNuevoProyecto");
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
+    </script>
+</body>
+</html>

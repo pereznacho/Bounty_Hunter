@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Proyecto</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .modal-backdrop {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-box {
+            background-color: #131b2e;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
+            color: #fff;
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            color: #ff9800;
+            text-align: center;
+        }
+
+        .modal-box label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #ffa726;
+            font-weight: bold;
+        }
+
+        .modal-box input,
+        .modal-box select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #0e1624;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .modal-box button {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .modal-box a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-backdrop">
+        <div class="modal-box">
+            <h2>Nuevo Proyecto</h2>
+            <form method="POST" action="/project/new">
+                <label for="name">Nombre del Proyecto:</label>
+                <input type="text" name="name" id="name" required>
+
+                <label for="mode">Modo:</label>
+                <select name="mode" id="mode">
+                    <option value="domain">Domain</option>
+                    <option value="url">URL</option>
+                </select>
+
+                <label for="target">Target:</label>
+                <input type="text" name="target" id="target" required>
+
+                <label for="start_now">¿Iniciar ahora?</label>
+                <select name="start_now" id="start_now">
+                    <option value="yes">Sí, iniciar ahora</option>
+                    <option value="no">No, iniciar después</option>
+                </select>
+
+                <button type="submit">Crear Proyecto</button>
+            </form>
+            <a href="/dashboard">← Volver al Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

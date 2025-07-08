@@ -1,73 +1,73 @@
 import os
 import subprocess
-from urllib.parse import urlparse, parse_qs, urlencode
+import json
+from termcolor import cprint
+from urllib.parse import urlparse, parse_qs
 
 RED = "\033[31m"
 GREEN = "\033[32m"
 BLUE = "\033[34m"
+YELLOW = "\033[33m"
 RESET = "\033[0m"
 
-def ensure_xsstrike_installed():
-    xs_path = "/usr/share/XSStrike"
-    if os.path.isdir(xs_path):
-        print(f"{GREEN}[✔] XSStrike ya está instalado.{RESET}")
-        return xs_path
-
-    print(f"{BLUE}[+] Clonando XSStrike en /usr/share (requiere permisos root)...{RESET}")
+def extract_param_name(url):
     try:
-        subprocess.run(
-            ["sudo", "git", "clone", "https://github.com/s0md3v/XSStrike.git", xs_path],
-            check=True
-        )
-        print(f"{GREEN}[✓] XSStrike instalado correctamente.{RESET}")
-        return xs_path
-    except subprocess.CalledProcessError:
-        print(f"{RED}[✘] Error al clonar XSStrike con permisos de administrador.{RESET}")
-        return None
+        parsed_url = urlparse(url)
+        qs = parse_qs(parsed_url.query)
+        if qs:
+            return list(qs.keys())[0]
+    except:
+        pass
+    return "desconocido"
 
 def run_xss_scan(param_urls_file, result_dir, log_file):
-    xsstrike_dir = ensure_xsstrike_installed()
-    xss_file = os.path.join(result_dir, "xss_vulnerables.txt")
+    xsstrike_dir = "/usr/share/XSStrike"
+    if not os.path.isdir(xsstrike_dir):
+        print(f"{YELLOW}[!] XSStrike no está instalado en /usr/share/XSStrike{RESET}")
+        return
 
-    # Asegurar que exista aunque esté vacío
-    with open(xss_file, "w") as _:
-        pass
+    xss_output = os.path.join(result_dir, "xss_vulnerables.txt")
 
-    if not xsstrike_dir:
-        return xss_file
-
-    with open(param_urls_file, "r") as urls, open(xss_file, "w") as vuln_out, open(log_file, "a") as log_out:
+    with open(param_urls_file, "r") as urls, open(xss_output, "w") as xss_out, open(log_file, "a") as log_out:
         urls_list = [u.strip() for u in urls if u.strip()]
         total = len(urls_list)
 
-        for idx, full_url in enumerate(urls_list, start=1):
-            parsed = urlparse(full_url)
-            qs = parse_qs(parsed.query)
+        for idx, url in enumerate(urls_list, start=1):
+            print(f"{BLUE}[XSStrike {idx}/{total}] Analizando: {url}{RESET}")
+            try:
+                result = subprocess.check_output(
+                    ["python3", "xsstrike.py", "--crawl", "--blind", "--skip", "--url", url],
+                    cwd=xsstrike_dir,
+                    stderr=subprocess.STDOUT,
+                    timeout=90
+                ).decode(errors="ignore")
 
-            if not qs:
-                continue
+                log_out.write(f"\n[XSS] {url}\n{result}\n")
 
-            for param in qs:
-                single_param = {param: "test"}
-                new_query = urlencode(single_param)
-                modified_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
+                if "Vulnerable" in result or "XSS found" in result:
+                    param = extract_param_name(url)
+                    lines = result.strip().splitlines()
+                    payloads = [line for line in lines if "<script>" in line or "alert(" in line or "payload:" in line]
 
-                print(f"{BLUE}[XSStrike {idx}] Probando parámetro '{param}': {modified_url}{RESET}")
-                try:
-                    output = subprocess.check_output(
-                        ["python3", os.path.join(xsstrike_dir, "xsstrike.py"), "-u", modified_url, "--fuzzer", "--skip-dom"],
-                        stderr=subprocess.STDOUT,
-                        timeout=60
-                    ).decode()
+                    xss_out.write(f"🔗 URL: {url}\n")
+                    xss_out.write(f"🧩 Parámetro afectado: {param}\n")
+                    if payloads:
+                        xss_out.write(f"🎯 Payload: {payloads[0].strip()}\n")
+                    else:
+                        xss_out.write("🎯 Payload: No identificado explícitamente\n")
 
-                    log_out.write(f"\n[PARAM: {param}] {modified_url}\n{output}\n")
+                    xss_out.write(f"🧾 Evidencia:\n{result.strip()}\n")
+                    xss_out.write("-" * 50 + "\n\n")
 
-                    if "Vulnerable webpage:" in output:
-                        vuln_out.write(modified_url + "\n")
+            except subprocess.TimeoutExpired:
+                print(f"{YELLOW}[!] Timeout XSStrike para: {url}{RESET}")
+            except Exception as e:
+                print(f"{RED}[✘] Error en XSStrike para: {url}: {e}{RESET}")
 
-                except subprocess.TimeoutExpired:
-                    print(f"{RED}[!] Timeout XSStrike para: {modified_url}{RESET}")
-                except Exception as e:
-                    print(f"{RED}[✘] Error XSStrike para: {modified_url}: {e}{RESET}")
 
-    return xss_file
+if __name__ == "__main__":
+    import sys
+    param_urls_file = sys.argv[1]
+    result_dir = sys.argv[2]
+    log_file = sys.argv[3]
+    run_xss_scan(param_urls_file, result_dir, log_file)

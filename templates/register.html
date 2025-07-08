@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: #0d0d0d;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,255,255,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            color: #ffa500;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #ccc;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 14px;
+        }
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .login-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .login-link a {
+            color: #ffa500;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registro de Usuario</h2>
+        <form method="post" action="/register">
+            <label for="first_name">Nombre</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Apellido</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="username">Usuario</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirmar Contraseña</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <button class="btn" type="submit">Registrar</button>
+        </form>
+
+        <div class="login-link">
+            <p>¿Ya tienes cuenta? <a href="/login">Iniciar sesión</a></p>
+        </div>
+    </div>
+</body>
+</html>

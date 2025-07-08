@@ -2,7 +2,7 @@ import os
 from termcolor import cprint
 from utils.helpers import run_command
 
-def run_waf_detection(live_file, result_dir, log_file):
+def run_waf(live_file, result_dir, log_file):
     cprint("[*] Detectando WAFs en subdominios activos...", "blue")
     waf_file = os.path.join(result_dir, "waf_detected.txt")
     detected = 0
@@ -35,3 +35,11 @@ def run_waf_detection(live_file, result_dir, log_file):
         cprint("[✓] No se detectaron WAFs en los subdominios analizados.", "green")
     else:
         cprint(f"[✓] WAFs detectados en {detected} subdominios.", "red")
+
+
+if __name__ == "__main__":
+    import sys
+    live_file = sys.argv[1]
+    result_dir = sys.argv[2]
+    log_file = sys.argv[3]
+    run_waf(live_file, result_dir, log_file)

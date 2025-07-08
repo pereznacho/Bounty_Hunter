@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte - {{ project.name }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm 10mm 8mm 10mm;
+            background: #0B132B;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9pt;
+            background: #0B132B;
+            color: #FFFFFF;
+        }
+
+        h1, h2, h3 {
+            color: #FCA311;
+            border-bottom: 1px solid #FCA311;
+            padding-bottom: 4px;
+            margin-top: 5px;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .metadata p {
+            margin: 2px 0;
+            word-break: break-all;
+        }
+
+        .file-block {
+            margin-top: 8px;
+            padding: 8px;
+            background-color: #1C2541;
+            border: 1px solid #3A506B;
+            border-radius: 3px;
+            word-break: break-all;
+            page-break-inside: avoid;
+        }
+
+        .file-block h3 {
+            margin-top: 0;
+            color: #6FFFE9;
+        }
+
+        pre, code {
+            background-color: #1C2541;
+            color: #FFFFFF;
+            padding: 8px;
+            border-radius: 3px;
+            font-size: 8pt;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-wrap: break-word;
+            margin: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8pt;
+            color: #AAAAAA;
+        }
+
+        .highlight {
+            color: #FCA311;
+            font-weight: bold;
+        }
+
+        a {
+            color: #6FFFE9;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1C2541;
+            color: #FFFFFF;
+            margin-top: 10px;
+            table-layout: fixed;
+            word-break: break-word;
+        }
+
+        th, td {
+            border: 1px solid #3A506B;
+            padding: 4px;
+            font-size: 8pt;
+            word-break: break-all;
+        }
+
+        .avoid-break {
+            page-break-before: avoid;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+        }
+
+        .section {
+            page-break-inside: avoid;
+            margin-bottom: 8px;
+        }
+
+        ul.index {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.index li {
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>📄 Reporte de Proyecto</h1>
+
+    <div class="metadata avoid-break">
+        <p><span class="highlight">Nombre:</span> {{ project.name }}</p>
+        <p><span class="highlight">Target:</span> {{ project.target }}</p>
+        <p><span class="highlight">Modo:</span> {{ project.mode }}</p>
+        <p><span class="highlight">Fecha de creación:</span> {{ project.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p><span class="highlight">Estado actual:</span> {{ scan.status }}</p>
+        <p><span class="highlight">Etapa actual:</span> {{ scan.current_step }}</p>
+        <p><span class="highlight">Progreso:</span> {{ scan.progress }}%</p>
+    </div>
+
+    <h2 class="avoid-break">📚 Índice de Archivos</h2>
+
+    {% if files %}
+        <ul class="index">
+            {% for fname, content in files.items() %}
+                <li><a href="#file-{{ loop.index }}">{{ fname }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron archivos generados.</p>
+    {% endif %}
+
+    <h2 class="avoid-break">📁 Archivos Generados</h2>
+
+    {% if files %}
+        {% for fname, content in files.items() %}
+            <div class="file-block avoid-break" id="file-{{ loop.index }}">
+                <h3>📄 {{ fname }}</h3>
+                <pre>{{ content }}</pre>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No se encontraron archivos generados.</p>
+    {% endif %}
+
+    <div class="footer avoid-break">
+        Reporte generado automáticamente por Bounty_Hunter - {{ datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S') }}
+    </div>
+
+</body>
+</html>

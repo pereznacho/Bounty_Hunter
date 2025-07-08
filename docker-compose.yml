@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: bounty_hunter_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
