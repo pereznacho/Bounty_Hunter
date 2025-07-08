@@ -89,9 +89,16 @@ utils/                     # Utilidades compartidas
 ## 🚀 Instalación y Puesta en Marcha
 
 ```bash
+<<<<<<< HEAD
 # Clonar el repositorio
 git clone https://github.com/pereznacho/Bounty_Hunter2.git
 cd Bounty_Hunter2
+=======
+git clone https://github.com/pereznacho/Bounty_Hunter.git
+cd Bounty_Hunter
+chmod +x bounty_hunter.py
+```
+>>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 
 # Crear entorno virtual
 python3 -m venv env
@@ -116,12 +123,32 @@ docker run -p 8000:8000 bounty_hunter
 
 ## 🖥️ Uso y Flujo de Trabajo
 
+<<<<<<< HEAD
 1. **Crear proyecto**: Desde la interfaz web, define el nombre y tipo (dominio/URL).
 2. **Orquestar etapas**: Controla cada etapa (subdominios, hosts, URLs, vulnerabilidades) desde el dashboard.
 3. **Visualizar resultados**: Accede a los archivos generados en tiempo real, con colores y conteo automático.
 4. **Exportar reporte**: Descarga el informe PDF final desde la web.
 5. **Personalizar módulos**: Agrega scripts en [`modules/`](modules/) y regístralos en [`backend/modules_list.py`](backend/modules_list.py).
 6. **Configurar herramientas**: Edita [`config/tools.json`](config/tools.json) para rutas y parámetros.
+=======
+You can run the tool in two modes:
+
+### Domain Mode:
+
+```bash
+./bounty_hunter.py -d example.com
+```
+
+This mode will enumerate subdomains, verify which ones are live, gather URLs, parameters, and perform fuzzing and vulnerability scans.
+
+### URL Mode:
+
+```bash
+./bounty_hunter.py -u https://target.com/page.php
+```
+
+This mode skips subdomain discovery and focuses on the provided target URL for parameter fuzzing and vulnerability analysis.
+>>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 
 ---
 
@@ -170,9 +197,14 @@ docker run -p 8000:8000 bounty_hunter
 
 ## 🧑‍💻 Autor
 
+<<<<<<< HEAD
 Desarrollado por **Ignacio Pérez** ([@iperez](https://github.com/pereznacho))
 
 > "Automatizá tu recon. Repetí tus escaneos. Dominá tu proceso."
+=======
+**Ignacio Pérez** – [LinkedIn](https://www.linkedin.com/in/ignacio-perez)
+Community: [ThreatX Security](https://www.threatxsecurity.com) 🇦🇷
+>>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 
 ---
 
