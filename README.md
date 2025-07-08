@@ -148,7 +148,7 @@ This mode will enumerate subdomains, verify which ones are live, gather URLs, pa
 ```
 
 This mode skips subdomain discovery and focuses on the provided target URL for parameter fuzzing and vulnerability analysis.
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
+
 
 ---
 
