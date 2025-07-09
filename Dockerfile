@@ -1,5 +1,5 @@
 # Forzar build en AMD64 si corres en M1/M2
-FROM --platform=linux/amd64 python:3.11-slim
+FROM python:3.11-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CGO_ENABLED=1
@@ -33,6 +33,9 @@ RUN apt-get update && \
         zlib1g-dev \
         shared-mime-info \
         unzip \
+    && apt-get dist-upgrade -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar Go 1.24.2
