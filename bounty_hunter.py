@@ -26,12 +26,7 @@ go_bin = os.path.expanduser("~/go/bin")
 if go_bin not in os.environ["PATH"]:
     os.environ["PATH"] = f"{go_bin}:{os.environ['PATH']}"
 
-<<<<<<< HEAD
-=======
-# ─── Ctrl+C controlado ─────────────────────────────────
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 skip_to_next = False
-repeat_stage = False
 
 from urllib.parse import urlparse
 
@@ -43,27 +38,18 @@ def get_safe_name_from_target(target):
     return hostname.replace(":", "_").replace("/", "_")
 
 def handle_stage(stage_func, name):
-<<<<<<< HEAD
     global skip_to_next
     print(f"==> START: {name}", flush=True)
-=======
-    global skip_to_next, repeat_stage
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
     print(f"{BLUE}[*] Ejecutando etapa: {name}{NC}")
     while True:
         try:
             stage_func()
-<<<<<<< HEAD
             break
-=======
-            break  # etapa finalizada correctamente, salimos del bucle
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
         except KeyboardInterrupt:
             print(f"\n{RED}[✘] Proceso interrumpido. ¿Qué deseas hacer?{NC}")
             print("1) Continuar con la siguiente etapa")
             print("2) Repetir esta etapa")
             print("3) Finalizar y guardar resultados")
-<<<<<<< HEAD
 
             opcion = input("> Selección: ").strip()
 
@@ -81,27 +67,6 @@ def handle_stage(stage_func, name):
                 print(f"{RED}[!] Opción inválida. Intenta nuevamente.{NC}")
     print(f"==> END: {name}", flush=True)
 
-=======
-
-            opcion = input("> Selección: ").strip()
-
-            if opcion == "1":
-                print(f"{YELLOW}[!] Continuando con la siguiente etapa...{NC}")
-                skip_to_next = True
-                break
-            elif opcion == "3":
-                print(f"{RED}[✘] Tarea finalizada por el usuario. Resultados hasta el momento están guardados.{NC}")
-                sys.exit(0)
-            elif opcion == "2":
-                print(f"{BLUE}[*] Repitiendo la etapa actual...{NC}")
-                continue  # se vuelve a ejecutar la misma etapa
-            else:
-                print(f"{RED}[!] Opción inválida. Intenta nuevamente.{NC}")
-                
-                
-                
-# ─── Etapas ────────────────────────────────────────────
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 def etapa_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file):
     from modules.recon import run_recon
     run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file)
@@ -118,50 +83,6 @@ def etapa_waf(live_file, result_dir, log_file, mode, domain):
     else:
         run_waf_detection(live_file, result_dir, log_file)
 
-<<<<<<< HEAD
-=======
-def etapa_nuclei(domain, result_dir):
-    cprint("[*] Ejecutando Nuclei sobre HTTP y HTTPS...", "blue")
-    output_file = os.path.join(result_dir, "nuclei_results.txt")
-
-    targets = [f"http://{domain}", f"https://{domain}"]
-
-    with open(output_file, "w") as out:
-        for url in targets:
-            cprint(f"[-] Analizando: {url}", "yellow")
-            try:
-                process = subprocess.Popen(
-                    ["nuclei", "-u", url, "-silent"],
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                    text=True
-                )
-
-                has_output = False
-                out.write(f"# Resultados para {url}:\n")
-
-                for line in process.stdout:
-                    print(line, end="")  # Mostrar en pantalla
-                    out.write(line)      # Guardar en archivo
-                    has_output = True
-
-                process.wait()
-
-                if has_output:
-                    cprint(f"[✔] Vulnerabilidades encontradas en {url}", "red")
-                    out.write("\n")
-                else:
-                    cprint(f"[✓] Sin hallazgos para {url}", "green")
-
-            except Exception as e:
-                cprint(f"[✘] Error al ejecutar Nuclei en {url}: {e}", "red")
-
-    if os.path.getsize(output_file) == 0:
-        os.remove(output_file)
-        cprint("[✓] Nuclei no encontró vulnerabilidades.", "green")
-    else:
-        cprint(f"[✔] Resultados guardados en {output_file}", "green")
->>>>>>> 50c7cc1bcc9ba4da24f895d378c44f54e887fc1c
 
 def etapa_xss(param_urls_file, result_dir, log_file):
     print(f"{BLUE}[*] Fuzzeando con XSStrike...{NC}")

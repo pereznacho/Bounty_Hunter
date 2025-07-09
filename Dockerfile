@@ -118,6 +118,7 @@ RUN nuclei -update
 RUN nuclei
 
 
+
 # Copiar requirements.txt primero
 COPY requirements.txt /tmp/
 
@@ -128,6 +129,8 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 # Copiar app
 WORKDIR /app
 COPY . /app
+
+RUN python3 backend/init_db.py
 
 EXPOSE 8000
 
