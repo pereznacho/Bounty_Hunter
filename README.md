@@ -123,7 +123,7 @@ docker run -p 8000:8000 bounty_hunter
 
 ## 🖥️ Uso y Flujo de Trabajo
 
-<<<<<<< HEAD
+
 1. **Crear proyecto**: Desde la interfaz web, define el nombre y tipo (dominio/URL).
 2. **Orquestar etapas**: Controla cada etapa (subdominios, hosts, URLs, vulnerabilidades) desde el dashboard.
 3. **Visualizar resultados**: Accede a los archivos generados en tiempo real, con colores y conteo automático.
