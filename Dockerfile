@@ -1,5 +1,5 @@
 # Forzar build en AMD64 si corres en M1/M2
-FROM python:3.11-slim-bookworm
+FROM --platform=linux/amd64 python:3.11-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CGO_ENABLED=1
@@ -33,9 +33,6 @@ RUN apt-get update && \
         zlib1g-dev \
         shared-mime-info \
         unzip \
-    && apt-get dist-upgrade -y \
-    && apt-get autoremove -y \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar Go 1.24.2
@@ -138,8 +135,3 @@ RUN python3 backend/init_db.py
 EXPOSE 8000
 
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--reload"]
-
-
-
-
-
