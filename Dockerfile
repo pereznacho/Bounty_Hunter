@@ -129,6 +129,9 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 WORKDIR /app
 COPY . /app
 
+RUN python3 backend/init_db.py
+
+
 EXPOSE 8000
 
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--reload"]
