@@ -107,7 +107,10 @@ chmod +x setup_tools.sh
 # Iniciar servidor local
 uvicorn backend.main:app --reload
 
-# O usando Docker
+# Desde su imagen oficial en Docker
+docker pull nachin519/bounty_hunter_web
+
+# O usando Docker local
 docker build -t bounty_hunter .
 docker run -p 8000:8000 bounty_hunter
 ```
