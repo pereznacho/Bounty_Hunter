@@ -100,9 +100,8 @@ source env/bin/activate
 # Instalar dependencias Python
 pip install -r requirements.txt
 
-# Instalar herramientas externas necesarias
-chmod +x setup_tools.sh
-./setup_tools.sh
+# Configurar la DB
+python3 backend/init_db.py
 
 # Iniciar servidor local
 uvicorn backend.main:app --reload
