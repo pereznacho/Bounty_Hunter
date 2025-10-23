@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎯 Bounty_Hunter2
 
 **Advanced Bug Bounty Automation Tool** - Complete bug bounty automation platform with multi-platform integration, real-time vulnerability detection and auto-expanded mode.
