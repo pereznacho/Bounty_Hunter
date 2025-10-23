@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Target Detail - Bounty Hunter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #c9d1d9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(14, 165, 164, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 184, 107, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            color: #0d1117;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.2);
+            border: 1px solid rgba(14, 165, 164, 0.3);
+            min-height: 44px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 164, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn-outline {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 164, 0.3);
+            color: #0ea5a4;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            justify-content: center;
+        }
+
+        .btn-outline:hover {
+            background: rgba(14, 165, 164, 0.1);
+            border-color: #0ea5a4;
+            transform: translateY(-1px);
+            color: #9fd8d6;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+            color: white !important;
+            border: 1px solid #dc2626 !important;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #b91c1c, #dc2626) !important;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3) !important;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #047857, #059669) !important;
+            color: white !important;
+            border: 1px solid #047857 !important;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #065f46, #047857) !important;
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.3) !important;
+        }
+
+        .card {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.05) inset;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                0 1px 0 rgba(255, 255, 255, 0.05) inset;
+            border-color: rgba(14, 165, 164, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(14, 165, 164, 0.5) 50%, 
+                transparent
+            );
+        }
+
+        .file-block {
+            background: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(33, 38, 45, 0.8);
+            border-radius: 12px;
+            margin: 16px 0;
+            padding: 16px;
+            border-left: 4px solid #0ea5a4;
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                0 1px 0 rgba(255, 255, 255, 0.03) inset;
+            transition: all 0.3s ease;
+        }
+
+        .file-block:hover {
+            border-left-color: #9fd8d6;
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.05) inset;
+        }
+
+        .file-block summary {
+            cursor: pointer;
+            color: #ffb86b;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: color 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .file-block summary:hover {
+            color: #ffc470;
+        }
+
+        .file-content {
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid rgba(33, 38, 45, 0.6);
+            padding: 16px;
+            color: #c9d1d9;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(14, 165, 164, 0.2), rgba(159, 216, 214, 0.2));
+            color: #9fd8d6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            margin-left: 8px;
+            border: 1px solid rgba(14, 165, 164, 0.3);
+        }
+
+        .muted {
+            color: #8b949e;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .export-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* Severity colors with modern styling */
+        .critical { 
+            color: #ff6b6b; 
+            font-weight: 600; 
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
+        }
+        .high { 
+            color: #ffa726; 
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(255, 167, 38, 0.3);
+        }
+        .medium { 
+            color: #ffb86b; 
+            font-weight: 500;
+            text-shadow: 0 0 6px rgba(255, 184, 107, 0.3);
+        }
+        .low { 
+            color: #9fd8d6; 
+            font-weight: 500;
+        }
+        .info { 
+            color: #74c0fc; 
+            font-weight: 500;
+        }
+
+        progress {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        progress::-webkit-progress-value {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+        
+        progress::-moz-progress-bar {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+
+        /* Header styling */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ascii-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: #0ea5a4;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(14, 165, 164, 0.3);
+            white-space: pre;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 50%, #ffb86b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #8b949e;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        /* Typography improvements */
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c9d1d9;
+            margin-bottom: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0ea5a4;
+            margin-bottom: 20px;
+            margin-top: 32px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #9fd8d6;
+            margin-bottom: 16px;
+            margin-top: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #c9d1d9;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(14, 165, 164, 0.3) 50%, 
+                transparent
+            );
+            margin: 24px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% set state = state or {} %}
+    <!-- Banner -->
+    <div class="page-header">
+        <pre class="ascii-logo">██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+by Ignacio Pérez</pre>
+        <h1 class="page-title">Target Analysis Dashboard</h1>
+        <p class="page-subtitle">Advanced Security Research Platform - Target Deep Dive</p>
+    </div>
+    {% if target %}
+      <script>document.title = "Target: {{ target.target }}";</script>
+    {% endif %}
+
+    <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <a href="/dashboard" class="btn-outline">← Back to Dashboard</a>
+        <a href="/project/{{ project.id }}/targets" class="btn-outline">← Back to Targets</a>
+    </div>
+
+    <h1>📁 Bounty Program: {{ project.name }}</h1>
+    {% if target %}
+      <h2>🎯 Target: {{ target.target }}</h2>
+      <p class="muted">🧭 Scope Type: {{ target.scope_type }}</p>
+      <p class="muted">📌 URL/Domain: {{ target.url }}</p>
+      <hr style="margin: 16px 0; border-color: #264653;">
+    {% endif %}
+    <p class="muted">🌐 Platform: {{ project.platform }}</p>
+    <p class="muted">🏷 Program Handle: {{ project.program_handle }}</p>
+    <p class="muted">🧭 <strong>Created:</strong> {{ project.created_at.strftime('%Y-%m-%d') }}</p>
+
+    <hr style="margin: 16px 0; border-color: #264653;">
+    <h2>🎯 Selected Targets</h2>
+    {% if project.domains %}
+        <h3>🌍 Domains</h3>
+        <ul>
+        {% for domain in project.domains %}
+            <li>{{ domain }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if project.urls %}
+        <h3>🔗 URLs</h3>
+        <ul>
+        {% for url in project.urls %}
+            <li>{{ url }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>📊 Active Scans</h2>
+    {% if scans %}
+        {% for scan in scans %}
+            <div class="card" style="margin-bottom: 20px;">
+                <p><strong>🔍 Target:</strong> {{ scan.target }}</p>
+                <p><strong>Mode:</strong> {{ scan.mode }}</p>
+                <p><strong>Status:</strong> {{ scan.status }}</p>
+                <p><strong>Step:</strong> {{ scan.current_step }}</p>
+                <p><strong>Progress:</strong> {{ scan.progress }}%</p>
+                <progress max="100" value="{{ scan.progress }}"></progress>
+
+                <div class="export-btns" style="margin-top: 10px;">
+                    {% if target %}
+                      <a href="/project/{{ project.id }}/target/{{ target.id }}" class="btn-outline">🔎 View Target</a>
+                    {% else %}
+                      <a href="/project/{{ scan.id }}/detail" class="btn-outline">🔎 View Details</a>
+                    {% endif %}
+                    {% if scan.status == 'completed' %}
+                        <a href="/project/{{ scan.id }}/export" class="btn">📄 Export PDF</a>
+                        <a href="/results/{{ scan.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+                        <a href="/project/{{ scan.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Controles -->
+    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+        {% if state and state.status == "running" %}
+            <form action="/project/{{ project.id }}/stop" method="post">
+                <button type="submit" class="btn btn-danger">⛔ Stop</button>
+            </form>
+            <form action="/project/{{ project.id }}/skip" method="post">
+                <button type="submit" class="btn btn-success">⏭ Skip Step</button>
+            </form>
+            <form action="/project/{{ project.id }}/repeat" method="post">
+                <button type="submit" class="btn">🔁 Repeat Step</button>
+            </form>
+        {% else %}
+            <form action="/project/{{ project.id }}/start" method="post">
+                <button type="submit" class="btn">▶ Start</button>
+            </form>
+        {% endif %}
+        <form action="/project/{{ project.id }}/target/{{ target.id }}/delete" method="post" 
+              onsubmit="return confirm('Are you sure you want to delete this target? This will stop any running scan for this target and remove all its results.')">
+            <button type="submit" class="btn btn-danger">🗑 Delete Target</button>
+        </form>
+    </div>
+
+    {% if state and state.status == "completed" %}
+    <div class="export-btns">
+        <a href="/project/{{ project.id }}/export" class="btn">📄 Export PDF Report</a>
+        <a href="/results/{{ project.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+        <a href="/project/{{ project.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
+    </div>
+    {% endif %}
+
+    <hr style="margin: 24px 0; border-color: #264653;">
+
+    <!-- BLOQUE DE ARCHIVOS (actualizado para evitar errores) -->
+    <h2>📂 Generated Files</h2>
+    <div id="files-output">
+        {% if files is defined and files %}
+            {% for fname, content in files.items() %}
+                {% set line_count = content.splitlines() | length %}
+                <details class="file-block">
+                    <summary class="file-header">
+                        <strong>📄 {{ fname }}</strong>
+                        <span class="muted">({{ line_count }} lines)</span>
+                    </summary>
+                    <div class="file-content">
+                        {% if 'nuclei' in fname %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_nuclei }}</pre>
+                        {% elif 'xss' in fname or 'XSS' in fname or fname == 'xss_vulnerables.txt' %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_xss }}</pre>
+                        {% else %}
+                            {{ content
+                                | e
+                                | replace('\x1b[1;91m', '<span class="critical">')
+                                | replace('\x1b[91m', '<span class="critical">')
+                                | replace('\x1b[1;93m', '<span class="medium">')
+                                | replace('\x1b[93m', '<span class="medium">')
+                                | replace('\x1b[1;92m', '<span class="low">')
+                                | replace('\x1b[92m', '<span class="low">')
+                                | replace('\x1b[1;94m', '<span class="info">')
+                                | replace('\x1b[94m', '<span class="info">')
+                                | replace('\x1b[1;96m', '<span class="info">')
+                                | replace('\x1b[96m', '<span class="info">')
+                                | replace('\x1b[34m', '<span class="info">')
+                                | replace('\x1b[0m', '</span>')
+                                | replace('\x1b[97m[~]', '🔸')
+                                | replace('[~]', '🔸')
+                                | replace('\x1b[97m', '')
+                                | replace('\x1b[91m', '')
+                                | replace('\x1b[92m', '')
+                                | replace('\x1b[93m', '')
+                                | replace('\x1b[94m', '')
+                                | replace('\x1b[96m', '')
+                                | safe
+                            }}
+                        {% endif %}
+                    </div>
+                </details>
+            {% endfor %}
+        {% else %}
+            <p class="muted">⚠️ No files have been generated yet for this project.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function updateStatus() {
+    fetch("/api/project/{{ project.id }}/status")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("progress").value = data.progress;
+            document.getElementById("progress_text").innerText = data.progress + "%";
+            document.getElementById("status_text").innerText = data.status;
+            document.getElementById("stage_text").innerText = data.current_step;
+            if (data.progress < 100 && data.status !== "cancelled") {
+                setTimeout(updateStatus, 3000);
+            }
+        });
+}
+updateStatus();
+</script>
+</body>
+</html>

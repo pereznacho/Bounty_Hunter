@@ -1,167 +1,463 @@
-<!-- project_detail.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle del Proyecto</title>
+    <title>Project Details</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background-color: #0b1120;
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #c9d1d9;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 40px 20px;
+            color: #c9d1d9;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 100%);
+            color: #0d1117;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #21262d;
+            color: #9fd8d6;
+            padding: 11px 19px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline:hover {
+            border-color: #0ea5a4;
+            background: rgba(14, 165, 164, 0.1);
+        }
+
+        .card {
+            background: #0f1720;
+            border: 1px solid #21262d;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5a4, transparent);
         }
 
         .file-block {
-            background-color: #1e1e2f;
-            border-radius: 8px;
-            margin: 10px 0;
-            padding: 10px;
-            border-left: 5px solid #3e8ed0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: #0f1720;
+            border: 1px solid #21262d;
+            border-radius: 12px;
+            margin: 16px 0;
+            padding: 20px;
+            border-left: 3px solid #0ea5a4;
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
         }
+
         .file-block summary {
             cursor: pointer;
-            color: #ffd700;
+            color: #ffb86b;
             font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+            background: linear-gradient(135deg, #ffb86b 0%, #ff9d3d 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         .file-block summary:hover {
-            color: #fff176;
+            color: #0ea5a4;
+            -webkit-text-fill-color: #0ea5a4;
         }
-        .file-icon {
-            margin-right: 8px;
-        }
+
         .file-content {
-            background-color: #0d1117;
-            padding: 10px;
-            color: #e0e0e0;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-family: "Courier New", monospace;
+            background: #161b22;
+            border: 1px solid #21262d;
+            padding: 16px;
+            color: #c9d1d9;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
             white-space: pre-wrap;
             overflow-x: auto;
+            line-height: 1.5;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-        .critical { color: #ff1744; font-weight: bold; }
-        .high { color: #ff6f00; }
-        .medium { color: #ffca28; }
-        .low { color: #66bb6a; }
-        .info { color: #29b6f6; }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            color: #0d1117;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .muted {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
 
         .export-btns {
-            margin-top: 15px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
-        .export-btns a {
-            display: inline-block;
-            background-color: #2a3b4c;
-            color: white;
-            padding: 8px 15px;
-            margin-right: 10px;
-            text-decoration: none;
-            border-radius: 5px;
+        .critical { 
+            color: #ff4c9b; 
+            font-weight: bold; 
+            background: #3b002b; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .high { 
+            color: #ff5b5b; 
+            background: #3b1b1b; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .medium { 
+            color: #facc15; 
+            background: #3a2f00; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .low { 
+            color: #4ade80; 
+            background: #0f2d1c; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .info { 
+            color: #60a5fa; 
+            background: #1e3a8a; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
         }
 
-        .export-btns a:hover {
-            background-color: #3c546e;
+        /* NUEVOS COLORES PARA PROJECT DETAIL SEGÚN ESTÁNDARES DE CIBERSEGURIDAD */
+        .vulnerability-badge.critical {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;  /* Púrpura */
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3) !important;
+        }
+        
+        .vulnerability-badge.high {
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;  /* Rojo */
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3) !important;
+        }
+        
+        .vulnerability-badge.medium {
+            background: linear-gradient(135deg, #f97316, #ea580c) !important;  /* Anaranjado */
+            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3) !important;
+        }
+        
+        .vulnerability-badge.low {
+            background: linear-gradient(135deg, #059669, #047857) !important;  /* Verde oscuro */
+            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3) !important;
+        }
+        
+        /* Actualizar texto de badges según nivel */
+        .vulnerability-badge.critical::before { content: "🟣 CRITICAL"; }
+        .vulnerability-badge.high::before { content: "🔴 HIGH"; }
+        .vulnerability-badge.medium::before { content: "🟠 MEDIUM"; }
+        .vulnerability-badge.low::before { content: "🟢 LOW"; }
+
+        progress {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        progress::-webkit-progress-value {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+        
+        progress::-moz-progress-bar {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+
+        /* Header styling */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ascii-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: #0ea5a4;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(14, 165, 164, 0.3);
+            white-space: pre;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 50%, #ffb86b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #8b949e;
+            font-size: 1rem;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <div id="banner">
-<pre>
-██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
-██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
-██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
-██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
-██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
-╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-</pre>
-        <p class="subtitle">BugBounty Automation Tool - by Ignacio Pérez</p>
+    {% set state = state or {} %}
+    <!-- Banner -->
+    <div class="page-header">
+        <pre class="ascii-logo">██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝</pre>
+        <h1 class="page-title">Scan Results Detail</h1>
+        <p class="page-subtitle">Advanced Security Research Platform - Project Analysis</p>
     </div>
+    {% if target %}
+      <script>document.title = "Target: {{ target.target }}";</script>
+    {% endif %}
 
-    <h1>Proyecto: {{ project.name }}</h1>
-    <p><strong>Tipo:</strong> {{ project.mode }}</p>
-    <p><strong>Target:</strong> {{ project.target }}</p>
-    <p><strong>Fecha de creación:</strong> {{ project.created_at.strftime('%Y-%m-%d') }}</p>
-    <hr>
+    <a href="/dashboard" class="btn-outline" style="margin-bottom: 20px;">← Back to Dashboard</a>
 
-    <h2>Estado Actual</h2>
-    <p><strong>Etapa:</strong> <span id="stage_text">{{ state.current_step }}</span></p>
-    <p><strong>Estado:</strong> <span id="status_text">{{ state.status }}</span></p>
-    <p><strong>Progreso:</strong> <span id="progress_text">{{ state.progress }}%</span></p>
-    <progress id="progress" max="100" value="{{ state.progress }}"></progress>
+    <h1>📁 Bounty Program: {{ project.name }}</h1>
+    {% if target %}
+      <h2>🎯 Target: {{ target.target }}</h2>
+      <p class="muted">🧭 Scope Type: {{ target.scope_type }}</p>
+      <p class="muted">📌 URL/Domain: {{ target.url }}</p>
+      <hr style="margin: 16px 0; border-color: #264653;">
+    {% endif %}
+    <p class="muted">🌐 Platform: {{ project.platform }}</p>
+    <p class="muted">🏷 Program Handle: {{ project.program_handle }}</p>
+    <p class="muted">🧭 <strong>Created:</strong> {{ project.created_at.strftime('%Y-%m-%d') }}</p>
 
-    <div style="margin-top: 20px;">
-        {% if state.status == "running" %}
-        <form action="/project/{{ project.id }}/stop" method="post" style="display: inline;">
-            <button type="submit" class="stop-btn">⛔ Detener</button>
-        </form>
-        <form action="/project/{{ project.id }}/skip" method="post" style="display: inline;">
-            <button type="submit" class="skip-btn">⏭ Saltar Etapa</button>
-        </form>
-        <form action="/project/{{ project.id }}/repeat" method="post" style="display: inline;">
-            <button type="submit" class="repeat-btn">🔁 Repetir Etapa</button>
-        </form>
+    <hr style="margin: 16px 0; border-color: #264653;">
+    <h2>🎯 Selected Targets</h2>
+    {% if project.domains %}
+        <h3>🌍 Domains</h3>
+        <ul>
+        {% for domain in project.domains %}
+            <li>{{ domain }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if project.urls %}
+        <h3>🔗 URLs</h3>
+        <ul>
+        {% for url in project.urls %}
+            <li>{{ url }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>📊 Active Scans</h2>
+    {% if scans %}
+        {% for scan in scans %}
+            <div class="card" style="margin-bottom: 20px;">
+                <p><strong>🔍 Target:</strong> {{ scan.target }}</p>
+                <p><strong>Mode:</strong> {{ scan.mode }}</p>
+                <p><strong>Status:</strong> {{ scan.status }}</p>
+                <p><strong>Step:</strong> {{ scan.current_step }}</p>
+                <p><strong>Progress:</strong> {{ scan.progress }}%</p>
+                <progress max="100" value="{{ scan.progress }}"></progress>
+
+                <div class="export-btns" style="margin-top: 10px;">
+                    {% if target %}
+                      <a href="/project/{{ project.id }}/target/{{ target.id }}" class="btn-outline">🔎 View Target</a>
+                    {% else %}
+                      <a href="/project/{{ scan.id }}/detail" class="btn-outline">🔎 View Details</a>
+                    {% endif %}
+                    {% if scan.status == 'completed' %}
+                        <a href="/project/{{ scan.id }}/export" class="btn">📄 Export PDF</a>
+                        <a href="/results/{{ scan.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+                        <a href="/project/{{ scan.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Controles -->
+    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+        {% if state and state.status == "running" %}
+            <form action="/project/{{ project.id }}/stop" method="post">
+                <button type="submit" class="btn" style="background:#dc2626; color:white;">⛔ Stop</button>
+            </form>
+            <form action="/project/{{ project.id }}/skip" method="post">
+                <button type="submit" class="btn" style="background:#047857;">⏭ Skip Step</button>
+            </form>
+            <form action="/project/{{ project.id }}/repeat" method="post">
+                <button type="submit" class="btn">🔁 Repeat Step</button>
+            </form>
         {% else %}
-        <form action="/project/{{ project.id }}/start" method="post" style="display: inline;">
-            <button type="submit" class="start-btn">▶ Iniciar</button>
-        </form>
+            <form action="/project/{{ project.id }}/start" method="post">
+                <button type="submit" class="btn">▶ Start</button>
+            </form>
         {% endif %}
-        <form action="/project/{{ project.id }}/delete" method="post" style="display: inline;">
-            <button type="submit" class="delete-btn">🗑 Eliminar</button>
+        <form action="/project/{{ project.id }}/delete" method="post">
+            <button type="submit" class="btn" style="background:#dc2626; color:white;">🗑 Delete</button>
         </form>
     </div>
 
-    {% if state.status == "completed" %}
+    {% if state and state.status == "completed" %}
     <div class="export-btns">
-        <a href="/project/{{ project.id }}/export" target="_blank">📄 Exportar Reporte PDF</a>
-        <a href="/results/{{ project.results_dir }}/reporte.md" download>📘 Descargar Markdown</a>
-        <a href="/project/{{ project.id }}/export/burp" target="_blank">🧩 Exportar BurpSuite</a>
+        <a href="/project/{{ project.id }}/export" class="btn">📄 Export PDF Report</a>
+        <a href="/results/{{ project.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+        <a href="/project/{{ project.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
     </div>
     {% endif %}
 
-    <div style="margin-top: 30px;">
-        <a href="/dashboard">← Volver al Dashboard</a>
-    </div>
+    <hr style="margin: 24px 0; border-color: #264653;">
 
-    <hr>
-    <h2>📂 Archivos generados</h2>
+    <!-- BLOQUE DE ARCHIVOS (actualizado para evitar errores) -->
+    <h2>📂 Generated Files</h2>
     <div id="files-output">
-        {% for fname, content in files.items() %}
-        {% set line_count = content.splitlines() | length %}
-        <details class="file-block">
-            <summary class="file-header">
-                <span class="file-icon">📄</span>
-                <strong>{{ fname }}</strong>
-                <span style="color: #aaa;">({{ line_count }} resultados)</span>
-            </summary>
-            <div class="file-content">
-                {{ content
-                    | replace('\x1b[1;91m', '<span class="critical">')
-                    | replace('\x1b[91m', '<span class="critical">')
-                    | replace('\x1b[1;93m', '<span class="medium">')
-                    | replace('\x1b[93m', '<span class="medium">')
-                    | replace('\x1b[1;92m', '<span class="low">')
-                    | replace('\x1b[92m', '<span class="low">')
-                    | replace('\x1b[1;94m', '<span class="info">')
-                    | replace('\x1b[94m', '<span class="info">')
-                    | replace('\x1b[1;96m', '<span class="info">')
-                    | replace('\x1b[96m', '<span class="info">')
-                    | replace('\x1b[34m', '<span class="info">')
-                    | replace('\x1b[0m', '</span>')
-                    | replace('\x1b[97m[~]', '🔸')
-                    | replace('[~]', '🔸')
-                    | replace('\x1b[97m', '')
-                    | replace('\x1b[91m', '')
-                    | replace('\x1b[92m', '')
-                    | replace('\x1b[93m', '')
-                    | replace('\x1b[94m', '')
-                    | replace('\x1b[96m', '')
-                    | safe
-                }}
-            </div>
-        </details>
-        {% endfor %}
+        {% if files is defined and files %}
+            {% for fname, content in files.items() %}
+                {% set line_count = content.splitlines() | length %}
+                <details class="file-block">
+                    <summary class="file-header">
+                        <strong>📄 {{ fname }}</strong>
+                        <span class="muted">({{ line_count }} lines)</span>
+                    </summary>
+                    <div class="file-content">
+                        {% if 'nuclei' in fname %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_nuclei }}</pre>
+                        {% elif 'xss' in fname or 'XSS' in fname or fname == 'xss_vulnerables.txt' %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_xss }}</pre>
+                        {% else %}
+                            {{ content
+                                | e
+                                | replace('\x1b[1;91m', '<span class="critical">')
+                                | replace('\x1b[91m', '<span class="critical">')
+                                | replace('\x1b[1;93m', '<span class="medium">')
+                                | replace('\x1b[93m', '<span class="medium">')
+                                | replace('\x1b[1;92m', '<span class="low">')
+                                | replace('\x1b[92m', '<span class="low">')
+                                | replace('\x1b[1;94m', '<span class="info">')
+                                | replace('\x1b[94m', '<span class="info">')
+                                | replace('\x1b[1;96m', '<span class="info">')
+                                | replace('\x1b[96m', '<span class="info">')
+                                | replace('\x1b[34m', '<span class="info">')
+                                | replace('\x1b[0m', '</span>')
+                                | replace('\x1b[97m[~]', '🔸')
+                                | replace('[~]', '🔸')
+                                | replace('\x1b[97m', '')
+                                | replace('\x1b[91m', '')
+                                | replace('\x1b[92m', '')
+                                | replace('\x1b[93m', '')
+                                | replace('\x1b[94m', '')
+                                | replace('\x1b[96m', '')
+                                | safe
+                            }}
+                        {% endif %}
+                    </div>
+                </details>
+            {% endfor %}
+        {% else %}
+            <p class="muted">⚠️ No files have been generated yet for this project.</p>
+        {% endif %}
     </div>
 </div>
 
@@ -180,6 +476,59 @@ function updateStatus() {
         });
 }
 updateStatus();
+
+// JavaScript para aplicar colores correctos en project detail
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('[🎨] Applying new color scheme to project detail...');
+    
+    // Función para determinar el nivel de vulnerabilidad y aplicar colores
+    function updateProjectColors() {
+        // Buscar badge de vulnerabilidad en el proyecto
+        const vulnBadge = document.querySelector('.vulnerability-badge');
+        if (vulnBadge) {
+            const text = vulnBadge.textContent.toLowerCase();
+            
+            // Limpiar contenido actual y clases
+            vulnBadge.innerHTML = '';
+            vulnBadge.className = 'vulnerability-badge';
+            
+            // Aplicar clase y contenido según nivel detectado
+            if (text.includes('critical') || text.includes('sql') || text.includes('lfi')) {
+                vulnBadge.classList.add('critical');
+                vulnBadge.textContent = '🟣 CRITICAL';
+            } else if (text.includes('high') || text.includes('xss') || text.includes('dalfox') || text.includes('ffuf')) {
+                vulnBadge.classList.add('high');
+                vulnBadge.textContent = '🔴 HIGH';
+            } else if (text.includes('medium') || text.includes('template') || text.includes('tplmap')) {
+                vulnBadge.classList.add('medium');
+                vulnBadge.textContent = '🟠 MEDIUM';
+            } else if (text.includes('low') || text.includes('wfuzz')) {
+                vulnBadge.classList.add('low');
+                vulnBadge.textContent = '🟢 LOW';
+            } else if (text.includes('vulnerabilit')) {
+                // Caso genérico - aplicar high por defecto
+                vulnBadge.classList.add('high');
+                vulnBadge.textContent = '🔴 HIGH';
+            }
+            
+            console.log('[✅] Project vulnerability badge updated with new colors');
+        }
+        
+        // Buscar otras referencias de vulnerabilidades en la página
+        document.querySelectorAll('.stats-item, .project-stat').forEach(item => {
+            if (item.textContent.toLowerCase().includes('vulnerabilit')) {
+                item.style.color = '#ef4444';
+                item.style.fontWeight = 'bold';
+            }
+        });
+    }
+    
+    // Ejecutar actualización
+    updateProjectColors();
+    
+    // Re-ejecutar cada 5 segundos por si hay cambios dinámicos
+    setInterval(updateProjectColors, 5000);
+});
 </script>
 </body>
 </html>

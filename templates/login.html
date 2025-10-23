@@ -1,90 +1,482 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>Bounty_Hunter - Access Terminal</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background-color: #0d0d0d;
-            font-family: 'Segoe UI', sans-serif;
-            color: #fff;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #c9d1d9;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        .form-container {
-            background: #1a1a1a;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,255,255,0.1);
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 400px;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
         }
-        h2 {
-            color: #ffa500;
-            text-align: center;
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: center;
+            padding: 0 40px;
+        }
+        
+        /* Left side - Branding */
+        .brand-section {
+            text-align: left;
+        }
+        
+        .ascii-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: #0ea5a4;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(14, 165, 164, 0.3);
+            white-space: pre;
         }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            color: #ccc;
+        
+        .brand-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 50%, #ffb86b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.025em;
         }
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            background-color: #2a2a2a;
-            color: #fff;
-            font-size: 14px;
+        
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #8b949e;
+            margin-bottom: 30px;
+            font-weight: 400;
         }
-        .btn {
-            margin-top: 20px;
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
+        
+        .feature-list {
+            list-style: none;
         }
-        .btn:hover {
-            background-color: #0056b3;
+        
+        .feature-list li + li {
+            margin-top: 8px;
         }
-        .register-link {
-            margin-top: 15px;
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: #9fd8d6;
+            font-size: 0.9rem;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #0d1117;
+            font-weight: 600;
+        }
+        
+        /* Right side - Login form */
+        .form-container {
+            background: #0f1720;
+            border: 1px solid #21262d;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5a4, transparent);
+        }
+        
+        .form-header {
             text-align: center;
+            margin-bottom: 32px;
         }
-        .register-link a {
-            color: #ffa500;
+        
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        
+        .form-subtitle {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            border-radius: 8px;
+            color: #f0f6fc;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #0ea5a4;
+            box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+            background-color: #0d1117;
+        }
+        
+        .input-field::placeholder {
+            color: #6e7681;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 100%);
+            color: #0d1117;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .register-section {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #21262d;
+        }
+        
+        .register-text {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+        
+        .register-link {
+            color: #9fd8d6;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
-        .register-link a:hover {
+        
+        .register-link:hover {
+            color: #0ea5a4;
             text-decoration: underline;
+        }
+        
+        /* Security indicators */
+        .security-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(14, 165, 164, 0.1);
+            border: 1px solid rgba(14, 165, 164, 0.2);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            color: #9fd8d6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 20px;
+                text-align: center;
+            }
+            
+            .brand-section {
+                text-align: center;
+            }
+            
+            .ascii-logo {
+                font-size: 8px;
+            }
+            
+            .brand-title {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 32px 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ascii-logo {
+                font-size: 6px;
+            }
+            
+            .brand-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-container {
+                padding: 24px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Iniciar Sesión</h2>
-        <form method="post" action="/login">
-            <label for="username">Usuario</label>
-            <input type="text" id="username" name="username" required>
+    <div class="login-container">
+        <!-- Left Side - Branding -->
+        <div class="brand-section">
+            <div class="ascii-logo">
+██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗
+██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝
+██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝ 
+██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝  
+██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║   
+╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝   
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required>
+██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗ 
+██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 
-            <button class="btn" type="submit">Iniciar sesión</button>
-        </form>
+               by Ignacio Perez
+            </div>
+            
+            <h1 class="brand-title">Bounty Hunter</h1>
+            <p class="brand-subtitle">Advanced Bug Bounty Automation Platform</p>
+            
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    Multi-Platform Bug Bounty Integration
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">🔍</div>
+                    Automated Vulnerability Scanning
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    Real-time Threat Assessment
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    Comprehensive Reporting Suite
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    Enterprise Security Standards
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Right Side - Login Form -->
+        <div class="form-container">
 
-        <div class="register-link">
-            <p>¿No tienes cuenta? <a href="/register">Crear una</a></p>
+            
+            <div class="form-header">
+                <h2 class="form-title">Access Terminal</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+            </div>
+            
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="input-field"
+                        placeholder="Enter your username"
+                        required 
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="input-field"
+                        placeholder="Enter your password"
+                        required 
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Initialize Session
+                </button>
+            </form>
+
+            <div class="register-section">
+                <p class="register-text">
+                    Need access credentials? 
+                    <a href="/register" class="register-link">Request Account</a>
+                </p>
+            </div>
         </div>
     </div>
+    
+    <script>
+        // Add subtle animations and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus animation for input fields
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Button click effect
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+    
+    <style>
+        .input-group {
+            transition: transform 0.2s ease;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Additional security styling */
+        .security-badge::before {
+            content: '🔒 ';
+            margin-right: 4px;
+        }
+    </style>
 </body>
 </html>

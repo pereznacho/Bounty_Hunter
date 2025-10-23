@@ -1,0 +1,5 @@
+http://testaspnet.vulnweb.com/Comments.aspx?id=1337
+http://testaspnet.vulnweb.com/test/vuln.cgi?par1=
+http://testaspnet.vulnweb.com/ReadNews.aspx?NewsAd=ads/def.html
+http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2
+http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=

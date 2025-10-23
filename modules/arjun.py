@@ -13,13 +13,20 @@ def run_arjun(param_urls_file, result_dir, log_file):
     arjun_file = os.path.join(result_dir, "arjun_results.txt")
     temp_output = os.path.join(result_dir, "arjun_tmp.txt")
 
-    if not os.path.exists(param_urls_file):
-        cprint(f"[✘] Archivo no encontrado: {param_urls_file}", "red")
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        cprint("[!] No se encontraron URLs con parámetros para analizar con Arjun.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(arjun_file, "w") as out:
+            out.write("")
         return
 
     urls = [u.strip() for u in open(param_urls_file) if u.strip()]
     if not urls:
         cprint("[!] Lista de URLs vacía.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(arjun_file, "w") as out:
+            out.write("")
         return
 
     with open(arjun_file, "w") as out, open(log_file, "a") as log:
@@ -50,9 +57,9 @@ def run_arjun(param_urls_file, result_dir, log_file):
             except subprocess.TimeoutExpired:
                 print(f"{RED}[!] Timeout de Arjun para: {url}{RESET}")
             except Exception as e:
-                print(f"{RED}[✘] Error al ejecutar Arjun para {url}: {e}{RESET}")
+                print(f"{RED}[✘] Error executing Arjun for {url}: {e}{RESET}")
     
-    print(f"{GREEN}[✔] Escaneo Arjun completado. Resultados en {arjun_file}{RESET}")
+    print(f"{GREEN}[✔] Arjun scan completed. Results in {arjun_file}{RESET}")
     return arjun_file
 
 

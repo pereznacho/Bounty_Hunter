@@ -1,103 +1,375 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Bounty_Hunter - Register Account</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background-color: #0d0d0d;
-            font-family: 'Segoe UI', sans-serif;
-            color: #fff;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #c9d1d9;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .register-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            padding: 0 20px;
+        }
+        
         .form-container {
-            background: #1a1a1a;
+            background: #0f1720;
+            border: 1px solid #21262d;
+            border-radius: 16px;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,255,255,0.1);
-            width: 100%;
-            max-width: 450px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
         }
-        h2 {
-            color: #ffa500;
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5a4, transparent);
+        }
+        
+        .form-header {
             text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .form-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        
+        .form-subtitle {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+        
+        .input-group {
             margin-bottom: 20px;
+            transition: transform 0.2s ease;
         }
-        label {
+        
+        .input-label {
             display: block;
-            margin: 15px 0 5px;
-            color: #ccc;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #f0f6fc;
+            margin-bottom: 8px;
         }
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
+        
+        .input-field {
             width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            background-color: #2a2a2a;
-            color: #fff;
+            padding: 12px 16px;
+            background-color: #161b22;
+            border: 1px solid #21262d;
+            border-radius: 8px;
+            color: #f0f6fc;
             font-size: 14px;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
-        .btn {
-            margin-top: 20px;
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #0ea5a4;
+            box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+            background-color: #0d1117;
+        }
+        
+        .input-field::placeholder {
+            color: #6e7681;
+        }
+        
+        .submit-btn {
             width: 100%;
-            background-color: #007bff;
-            color: white;
-            padding: 12px;
+            background: linear-gradient(135deg, #0ea5a4 0%, #ffb86b 100%);
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 8px;
+            padding: 14px 24px;
+            color: #0d1117;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            font-family: inherit;
         }
-        .btn:hover {
-            background-color: #0056b3;
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(14, 165, 164, 0.3);
+            background: linear-gradient(135deg, #0ea5a4 0%, #ff9d3d 100%);
         }
-        .login-link {
-            margin-top: 15px;
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .form-footer {
             text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #21262d;
         }
-        .login-link a {
-            color: #ffa500;
+        
+        .form-link {
+            color: #8b949e;
+            font-size: 0.875rem;
             text-decoration: none;
         }
-        .login-link a:hover {
+        
+        .form-link a {
+            color: #0ea5a4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .form-link a:hover {
+            color: #9fd8d6;
             text-decoration: underline;
+        }
+        
+        .security-badges {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            opacity: 0.7;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+        
+        .security-icon {
+            width: 12px;
+            height: 12px;
+            background: #0ea5a4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+        
+        /* Form validation states */
+        .input-field.error {
+            border-color: #f85149;
+            box-shadow: 0 0 0 3px rgba(248, 81, 73, 0.1);
+        }
+        
+        .input-field.success {
+            border-color: #238636;
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.1);
+        }
+        
+        /* Loading state */
+        .submit-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .submit-btn.loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #0d1117;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 0 16px;
+            }
+            
+            .form-container {
+                padding: 32px 24px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Registro de Usuario</h2>
-        <form method="post" action="/register">
-            <label for="first_name">Nombre</label>
-            <input type="text" id="first_name" name="first_name" required>
+    <div class="register-container">
+        <div class="form-container">
+            <div class="form-header">
+                <h1 class="form-title">Create Your Account</h1>
+                <p class="form-subtitle">Join the elite community of security researchers</p>
+            </div>
+            
+            <form method="post" action="/register" id="registerForm">
+                <div class="input-group">
+                    <label for="first_name" class="input-label">First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="input-field" 
+                           placeholder="Enter your first name" required>
+                </div>
 
-            <label for="last_name">Apellido</label>
-            <input type="text" id="last_name" name="last_name" required>
+                <div class="input-group">
+                    <label for="last_name" class="input-label">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" class="input-field" 
+                           placeholder="Enter your last name" required>
+                </div>
 
-            <label for="username">Usuario</label>
-            <input type="text" id="username" name="username" required>
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" 
+                           placeholder="Choose a unique username" required>
+                </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+                <div class="input-group">
+                    <label for="email" class="input-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="input-field" 
+                           placeholder="your.email@domain.com" required>
+                </div>
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" 
+                           placeholder="Create a strong password" required>
+                </div>
 
-            <label for="confirm_password">Confirmar Contraseña</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+                <div class="input-group">
+                    <label for="confirm_password" class="input-label">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="input-field" 
+                           placeholder="Repeat your password" required>
+                </div>
 
-            <button class="btn" type="submit">Registrar</button>
-        </form>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Create Account
+                </button>
+            </form>
 
-        <div class="login-link">
-            <p>¿Ya tienes cuenta? <a href="/login">Iniciar sesión</a></p>
+            <div class="form-footer">
+                <p class="form-link">
+                    Already have an account? 
+                    <a href="/login">Sign in here</a>
+                </p>
+                
+                <div class="security-badges">
+                    <div class="security-badge">
+                        <div class="security-icon">🔒</div>
+                        <span>Encrypted</span>
+                    </div>
+                    <div class="security-badge">
+                        <div class="security-icon">🛡️</div>
+                        <span>Secure</span>
+                    </div>
+                    <div class="security-badge">
+                        <div class="security-icon">⚡</div>
+                        <span>Fast</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <script>
+        // Form validation and enhancement
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Creating Account';
+        });
+        
+        // Real-time password confirmation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (confirmPassword && password === confirmPassword) {
+                this.classList.add('success');
+                this.classList.remove('error');
+            } else {
+                this.classList.remove('error', 'success');
+            }
+        });
+        
+        // Enhanced input focus effects
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>

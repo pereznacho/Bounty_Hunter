@@ -1,0 +1,2 @@
+Target URL,Place,Parameter,Technique(s),Note(s)
+http://testphp.vulnweb.com/search.php?test=query=,GET,test,BETU,

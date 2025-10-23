@@ -1,0 +1,3 @@
+http://testhtml5.vulnweb.com/comment?id=617c785e96f91add44af3020e2c6064b
+http://testhtml5.vulnweb.com/ajax/popular?offset=10
+http://testhtml5.vulnweb.com:80/static/css/?<my_tag_88fc8f0ec9141866cb14f3125be901b4/>=

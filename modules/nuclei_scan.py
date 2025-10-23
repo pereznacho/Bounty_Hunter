@@ -16,7 +16,9 @@ def run_nuclei_scan(mode, domain, result_dir, log_file):
 
     # Definir correctamente los targets
     if mode == "domain":
-        targets = [f"http://{domain}", f"https://{domain}"]
+        # Si ya tiene protocolo, no agregar más
+        clean_domain = domain.replace("http://", "").replace("https://", "")
+        targets = [f"http://{clean_domain}", f"https://{clean_domain}"]
     else:
         # Modo URL: no tocar el protocolo
         targets = [domain]

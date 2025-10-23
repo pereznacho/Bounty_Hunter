@@ -20,11 +20,16 @@ def extract_param_name(url):
     return "desconocido"
 
 def run_wfuzz_scan(param_urls_file, result_dir, log_file):
-    if not os.path.exists(param_urls_file):
-        print(f"{RED}[✘] Archivo no encontrado: {param_urls_file}{RESET}")
-        return None
-
     wfuzz_out_file = os.path.join(result_dir, "wfuzz_results.txt")
+    
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        print(f"{YELLOW}[!] No se encontraron URLs con parámetros para analizar con Wfuzz.{RESET}")
+        # Crear archivo vacío para mantener consistencia
+        with open(wfuzz_out_file, "w") as wfuzz_out:
+            wfuzz_out.write("")
+        return
+
     wordlist = "/usr/share/wordlists/dirb/common.txt"
 
     with open(param_urls_file, "r") as urls, open(wfuzz_out_file, "w") as wfuzz_out, open(log_file, "a") as log_out:

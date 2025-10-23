@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Integración con Intigriti</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .container { max-width: 1100px; margin: 24px auto; padding: 18px; color: #ddd; }
+        .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        .card { background:#0f1720; border:1px solid #222; padding:16px; border-radius:10px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+        .card h3 { margin:0 0 8px 0; color:#ffb86b; font-size:1.05rem; }
+        .muted { color:#9aa4ad; font-size:0.9rem; }
+        .badge { display:inline-block; background:#123; color:#7ef0c7; padding:4px 8px; border-radius:6px; font-size:0.8rem; margin-left:8px; }
+        .section { margin-top:14px; }
+        .list { max-height:260px; overflow:auto; padding:8px; background:#071018; border-radius:6px; border:1px solid #18222b; }
+        .list label { display:flex; gap:8px; align-items:center; padding:6px 8px; border-bottom:1px dashed rgba(255,255,255,0.03); }
+        .btn { background:#0ea5a4; color:#012; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+        .btn-outline { background:transparent; border:1px solid #264653; color:#9fd8d6; padding:7px 12px; border-radius:8px; cursor:pointer; }
+        .header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+        .back { color:#7ef0c7; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <a class="back" href="/dashboard">⬅️ Back to Dashboard</a>
+                <h1 style="margin:6px 0 0 0; color:#ffd27f;">🔗 Intigriti</h1>
+                <p class="muted">🎯 Programs with Available Scope</p>
+            </div>
+        </div>
+
+        {% if api_error %}
+            <div class="card" style="border-left:4px solid #ff6b6b;">
+                <strong>Error:</strong> {{ api_error }}
+            </div>
+        {% endif %}
+
+        <div class="grid">
+            {% for p in programs %}
+            <div class="card">
+                <h3>📁 {{ p.name }}</h3>
+                <div class="muted">Program ID: {{ p.handle }}</div>
+                <div style="margin-top:10px;">
+                    {% set domains = p.get('domains_count', 0) %}
+                    {% set urls = p.get('urls_count', 0) %}
+                    Targets in Scope: {{ domains + urls }}
+                    <span class="badge">🌐 Dominios: {{ domains }}</span>
+                    <span class="badge">🔗 URLs: {{ urls }}</span>
+                </div>
+                <div class="section">
+                    <form method="get" action="/import/intigriti/program/{{ p.handle }}">
+                        <button type="submit" class="btn-outline">View and select targets</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

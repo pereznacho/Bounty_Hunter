@@ -21,12 +21,23 @@ def extract_param_name(url):
     return "desconocido"
 
 def run_xss_scan(param_urls_file, result_dir, log_file):
+    xss_output = os.path.join(result_dir, "xss_vulnerables.txt")
+    
     xsstrike_dir = "/usr/share/XSStrike"
     if not os.path.isdir(xsstrike_dir):
         print(f"{YELLOW}[!] XSStrike no está instalado en /usr/share/XSStrike{RESET}")
+        # Crear archivo vacío para mantener consistencia
+        with open(xss_output, "w") as xss_out:
+            xss_out.write("")
         return
 
-    xss_output = os.path.join(result_dir, "xss_vulnerables.txt")
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        print(f"{YELLOW}[!] No se encontraron URLs con parámetros para analizar XSS.{RESET}")
+        # Crear archivo vacío para mantener consistencia
+        with open(xss_output, "w") as xss_out:
+            xss_out.write("")
+        return
 
     with open(param_urls_file, "r") as urls, open(xss_output, "w") as xss_out, open(log_file, "a") as log_out:
         urls_list = [u.strip() for u in urls if u.strip()]

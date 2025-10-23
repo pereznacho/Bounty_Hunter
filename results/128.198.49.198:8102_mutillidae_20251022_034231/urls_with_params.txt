@@ -1,0 +1,10 @@
+http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
+https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
+http://128.198.49.198:8102/mutillidae/index.php?popUpNotificationCode=SSLE1
+http://128.198.49.198:8102/mutillidae/hints-page-wrapper.php?level1HintIncludeFile=11
+http://128.198.49.198:8102/mutillidae/webservices/soap/ws-lookup-dns-record.php?wsdl=
+http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
+http://128.198.49.198:8102/mutillidae/index.php?PathToDocument=documentation/how-to-access-Mutillidae-over-Virtual-Box-network.php
+http://128.198.49.198:8102/mutillidae/index.php?iv=6bc24fc1ab650b25b4114e93a98f1eba
+https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
+https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae

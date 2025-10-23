@@ -13,8 +13,12 @@ RESET = "\033[0m"
 def run_gf_qsreplace(param_urls_file, result_dir, log_file):
     output_file = os.path.join(result_dir, "gf_qsreplace_results.txt")
 
-    if not os.path.exists(param_urls_file):
-        cprint(f"[✘] El archivo {param_urls_file} no existe.", "red")
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        cprint("[!] No se encontraron URLs con parámetros para analizar con GF + qsreplace.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
 
     payload = "PAYLOAD"
@@ -25,6 +29,9 @@ def run_gf_qsreplace(param_urls_file, result_dir, log_file):
 
     if not urls:
         cprint("[!] No se encontraron URLs para analizar.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
 
     with open(output_file, "w") as out, open(log_file, "a") as log:
@@ -50,9 +57,9 @@ def run_gf_qsreplace(param_urls_file, result_dir, log_file):
             except subprocess.CalledProcessError:
                 continue
             except Exception as e:
-                cprint(f"[✘] Error en GF para {url}: {e}", "red")
+                cprint(f"[✘] GF error for {url}: {e}", "red")
 
-    cprint(f"{GREEN}[✔] Análisis GF finalizado. Resultados en {output_file}{RESET}")
+    cprint(f"{GREEN}[✔] GF analysis completed. Results in {output_file}{RESET}")
     return output_file
 
 if __name__ == "__main__":

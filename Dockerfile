@@ -4,9 +4,11 @@ FROM --platform=linux/amd64 python:3.11-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CGO_ENABLED=1
 
+RUN apt-get update && apt-get install -y procps
+
 # Instalar dependencias base
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt update && \
+    apt install -y --no-install-recommends \
         build-essential \
         gcc \
         g++ \
@@ -16,13 +18,13 @@ RUN apt-get update && \
         pkg-config \
         libcairo2 \
         libcairo2-dev \
-        libpango1.0-0 \
+        libpango-1.0-0 \
         libpango1.0-dev \
         libpangocairo-1.0-0 \
         libpangoft2-1.0-0 \
         libffi-dev \
-        libgdk-pixbuf2.0-0 \
-        libgdk-pixbuf2.0-dev \
+        libgdk-pixbuf-xlib-2.0-0 \
+        libgdk-pixbuf-xlib-2.0-dev \
         libxml2 \
         libxslt1.1 \
         libglib2.0-0 \
@@ -63,6 +65,9 @@ RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && 
 
 # Move Go binaries to /usr/local/bin
 RUN cp -r /root/go/bin/* /usr/local/bin/
+
+# Instalar arjun (y otras herramientas que necesites)
+RUN pip install arjun
 
 # GF patterns
 RUN git clone https://github.com/1ndianl33t/Gf-Patterns.git /tmp/Gf-Patterns && \
@@ -116,7 +121,7 @@ RUN go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest && \
 ENV NUCLEI_TEMPLATES=/root/nuclei-templates
 RUN nuclei -update
 RUN nuclei
-
+RUN touch ~/.gau.toml
 
 
 # Copiar requirements.txt primero

@@ -1,0 +1,291 @@
+{# templates/intigriti.html #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Integración con intigriti</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        /* Mini estilos locales para que sea consistente con dashboard */
+        .container { max-width: 1100px; margin: 24px auto; padding: 18px; color: #ddd; }
+        .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        .card { background:#0f1720; border:1px solid #222; padding:16px; border-radius:10px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+        .card h3 { margin:0 0 8px 0; color:#ffb86b; font-size:1.05rem; }
+        .muted { color:#9aa4ad; font-size:0.9rem; }
+        .badge { display:inline-block; background:#123; color:#7ef0c7; padding:4px 8px; border-radius:6px; font-size:0.8rem; margin-left:8px; }
+        .section { margin-top:14px; }
+        .list { max-height:260px; overflow:auto; padding:8px; background:#071018; border-radius:6px; border:1px solid #18222b; }
+        .list label { display:flex; gap:8px; align-items:center; padding:6px 8px; border-bottom:1px dashed rgba(255,255,255,0.03); }
+        .btn { background:#0ea5a4; color:#012; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+        .btn-outline { background:transparent; border:1px solid #264653; color:#9fd8d6; padding:7px 12px; border-radius:8px; cursor:pointer; }
+        .header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+        .back { color:#7ef0c7; text-decoration:none; }
+
+        .severity {
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        .Critical { color: #ff4c9b; background:#3b002b; }
+        .High     { color: #ff5b5b; background:#3b1b1b; }
+        .Medium   { color: #facc15; background:#3a2f00; }
+        .Low      { color: #4ade80; background:#0f2d1c; }
+        .None     { color: #94a3b8; background:#1e293b; }
+        
+        .program-type-badge { 
+            font-size:0.7rem; 
+            font-weight:700; 
+            padding:3px 8px; 
+            border-radius:12px; 
+            text-transform:uppercase; 
+            letter-spacing:0.5px;
+        }
+        .program-type-badge.bbp { 
+            background:linear-gradient(135deg, #7ef0c7, #0ea5a4); 
+            color:#012; 
+        }
+        .program-type-badge.vdp { 
+            background:linear-gradient(135deg, #ffb86b, #ff9d3d); 
+            color:#012; 
+        }
+        .program-card.hidden { display: none; }
+        
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 6px 0 0 0;
+        }
+        
+        .platform-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        /* Invert dark logos for better visibility on dark background */
+        .platform-logo[src*="hackerone-logo.svg"],
+        .platform-logo[src*="bugcrowd-logo.png"],
+        .platform-logo[src*="intigriti-logo.png"] {
+            filter: invert(1) brightness(0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <a class="back" href="/dashboard">⬅️ Back to Dashboard</a>
+                <div class="platform-header">
+                    <img src="/static/img/intigriti-logo.png" alt="Intigriti" class="platform-logo">
+                </div>
+                <p class="muted">🎯 Programs with Available Scope</p>
+            </div>
+        </div>
+
+        {% if api_error %}
+            <div class="card" style="border-left:4px solid #ff6b6b;">
+                <strong>Error:</strong> {{ api_error }}
+            </div>
+        {% endif %}
+
+        {% if not selected_program %}
+        <!-- Filter Controls -->
+        <div class="card" style="margin-bottom:16px; border-left:4px solid #ffd27f;">
+            <h3 style="margin-bottom:12px; color:#ffd27f;">🔍 Filters</h3>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Program Type:</label>
+                    <select id="programTypeFilter" style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px;">
+                        <option value="">All Programs</option>
+                        <option value="bbp">BBP (Bug Bounty)</option>
+                        <option value="vdp">VDP (Vulnerability Disclosure)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Min Targets:</label>
+                    <input type="number" id="minTargetsFilter" min="0" placeholder="0" style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px; width:80px;">
+                </div>
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Search:</label>
+                    <input type="text" id="programSearchFilter" placeholder="Program name..." style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px; width:200px;">
+                </div>
+                <button onclick="clearFilters()" style="background:#ff6b86; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.85rem;">Clear Filters</button>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="grid" id="programsGrid">
+            {% if not selected_program %}
+                {% for p in programs %}
+                <div class="card program-card" data-program-type="{{ 'bbp' if p.offers_bounties else 'vdp' }}" data-target-count="{{ p.domains_count + p.urls_count }}" data-program-name="{{ p.name|lower }}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                        <h3 style="margin:0;">📁 {{ p.name }}</h3>
+                        <span class="program-type-badge {{ 'bbp' if p.offers_bounties else 'vdp' }}">
+                            {{ 'BBP' if p.offers_bounties else 'VDP' }}
+                        </span>
+                    </div>
+                    <div class="muted">Program ID: {{ p.handle }}</div>
+                    <div style="margin-top:10px;">
+                        Targets in Scope: {{ p.domains_count + p.urls_count }}
+                        <span class="badge">🌐 Dominios: {{ p.domains_count }}</span>
+                        <span class="badge">🔗 URLs: {{ p.urls_count }}</span>
+                    </div>
+                    <div class="section">
+                        <form method="get" action="/import/intigriti/program/{{ p.handle }}">
+                            <button type="submit" class="btn-outline">View and select targets</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card" style="grid-column: span 1;">
+                    <h3>{{ selected_program.name }}</h3>
+                    <div class="muted">Handle: {{ selected_program.handle }}</div>
+                    {% if selected_program.url %}
+                    <div class="muted"><a href="{{ selected_program.url }}" target="_blank">{{ selected_program.url }}</a></div>
+                    {% endif %}
+                    <div style="margin-top:10px;">
+                        <span class="badge">Domains: {{ selected_program.domains_count }}</span>
+                        <span class="badge">URLs: {{ selected_program.urls_count }}</span>
+                    </div>
+
+                    <div class="section">
+                        <form id="scan-all-form" method="post" action="/import/intigriti/scan">
+                            <input type="hidden" name="handle" value="{{ selected_program.handle }}">
+                            <input type="hidden" name="name" value="{{ selected_program.name }}">
+                            {% for t in selected_program.filtered_targets %}
+                                <input type="hidden" name="targets" value="{{ t.identifier }}">
+                            {% endfor %}
+                            <button type="submit" class="btn" style="width:100%;">🚀 Scan Entire Scope</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card" style="grid-column: span 2;">
+                    <h3 style="color:#b8f3ea;">Select targets to scan</h3>
+                    <p class="muted">Choose individual domains or URLs. Scroll inside the list if long.</p>
+
+                    <form id="selected-scan-form" method="post" action="/import/intigriti/scan">
+                        <input type="hidden" name="handle" value="{{ selected_program.handle }}">
+                        <input type="hidden" name="name" value="{{ selected_program.name }}">
+
+                        <div class="section">
+                            <strong style="color:#ffd27f;">Domains</strong>
+                            <div class="list">
+                                {% for t in selected_program.filtered_targets if t.type == 'domain' %}
+                                    <label>
+                                        <input type="checkbox" name="targets" value="{{ t.identifier }}">
+                                        <span style="flex:1; word-break:break-all;">{{ t.identifier }}</span>
+                                        {% if t.eligibility %}
+                                            <small class="muted">💰 Eligible</small>
+                                        {% endif %}
+                                        {% if t.severity and t.severity != 'none' %}
+                                            <span class="severity {{ t.severity|capitalize }}">{{ t.severity|capitalize }}</span>
+                                        {% endif %}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <strong style="color:#ffd27f;">URLs</strong>
+                            <div class="list">
+                                {% for t in selected_program.filtered_targets if t.type == 'url' %}
+                                    <label>
+                                        <input type="checkbox" name="targets" value="{{ t.identifier }}">
+                                        <span style="flex:1; word-break:break-all;">{{ t.identifier }}</span>
+                                        {% if t.eligibility %}
+                                            <small class="muted">💰 Eligible</small>
+                                        {% endif %}
+                                        {% if t.severity and t.severity != 'none' %}
+                                            <span class="severity {{ t.severity|capitalize }}">{{ t.severity|capitalize }}</span>
+                                        {% endif %}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div style="display:flex; gap:10px; margin-top:14px;">
+                            <button type="submit" class="btn">🚀 Scan Selected</button>
+                            <a class="btn-outline" href="/import/intigriti">← Back to list</a>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        function applyFilters() {
+            const programTypeFilter = document.getElementById('programTypeFilter')?.value || '';
+            const minTargetsFilter = parseInt(document.getElementById('minTargetsFilter')?.value || 0);
+            const searchFilter = document.getElementById('programSearchFilter')?.value.toLowerCase() || '';
+            
+            document.querySelectorAll('.program-card').forEach(card => {
+                const programType = card.dataset.programType;
+                const targetCount = parseInt(card.dataset.targetCount);
+                const programName = card.dataset.programName;
+                
+                let shouldShow = true;
+                
+                // Program type filter
+                if (programTypeFilter && programType !== programTypeFilter) {
+                    shouldShow = false;
+                }
+                
+                // Min targets filter  
+                if (minTargetsFilter > 0 && targetCount < minTargetsFilter) {
+                    shouldShow = false;
+                }
+                
+                // Search filter
+                if (searchFilter && !programName.includes(searchFilter)) {
+                    shouldShow = false;
+                }
+                
+                card.classList.toggle('hidden', !shouldShow);
+            });
+        }
+        
+        function clearFilters() {
+            const programTypeFilter = document.getElementById('programTypeFilter');
+            const minTargetsFilter = document.getElementById('minTargetsFilter');  
+            const searchFilter = document.getElementById('programSearchFilter');
+            
+            if (programTypeFilter) programTypeFilter.value = '';
+            if (minTargetsFilter) minTargetsFilter.value = '';
+            if (searchFilter) searchFilter.value = '';
+            
+            applyFilters();
+        }
+        
+        // small enhancement: if no checkbox selected when clicking scan selected, prevent submit
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add event listeners for filters
+            const programTypeFilter = document.getElementById('programTypeFilter');
+            const minTargetsFilter = document.getElementById('minTargetsFilter');
+            const searchFilter = document.getElementById('programSearchFilter');
+            
+            if (programTypeFilter) programTypeFilter.addEventListener('change', applyFilters);
+            if (minTargetsFilter) minTargetsFilter.addEventListener('input', applyFilters);
+            if (searchFilter) searchFilter.addEventListener('input', applyFilters);
+            
+            const selForm = document.getElementById("selected-scan-form");
+            if (selForm) {
+                selForm.addEventListener("submit", function(e) {
+                    const checked = selForm.querySelectorAll('input[name="targets"]:checked');
+                    if (!checked.length) {
+                        e.preventDefault();
+                        alert("Please select at least one target or use 'Scan Entire Scope'.");
+                        return false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

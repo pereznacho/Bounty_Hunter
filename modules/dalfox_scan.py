@@ -18,11 +18,15 @@ def extract_param(url):
 def run_dalfox(param_urls_file, result_dir, log_file):
     output_file = os.path.join(result_dir, "dalfox_results.txt")
 
-    if not os.path.exists(param_urls_file):
-        cprint(f"[✘] Archivo no encontrado: {param_urls_file}", "red")
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        cprint("[!] No se encontraron URLs con parámetros para analizar con Dalfox.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
 
-    cprint("[*] Ejecutando Dalfox... 🔍", "blue")
+    cprint("[*] Running Dalfox... 🔍", "blue")
 
     with open(param_urls_file) as f, open(output_file, "w") as out, open(log_file, "a") as log:
         urls = [line.strip() for line in f if "=" in line]
@@ -52,7 +56,7 @@ def run_dalfox(param_urls_file, result_dir, log_file):
             else:
                 cprint("[-] No vulnerable.", "yellow")
 
-    cprint(f"{GREEN}[✔] Escaneo Dalfox finalizado. Resultados en {output_file}{RESET}")
+    cprint(f"{GREEN}[✔] Dalfox scan completed. Results in {output_file}{RESET}")
     return output_file
 
 

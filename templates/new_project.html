@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Nuevo Proyecto</title>
+    <title>New Project</title>
     <link rel="stylesheet" href="/static/style.css">
     <style>
         .modal-backdrop {
@@ -67,9 +67,9 @@
 <body>
     <div class="modal-backdrop">
         <div class="modal-box">
-            <h2>Nuevo Proyecto</h2>
+            <h2>New Project</h2>
             <form method="POST" action="/project/new">
-                <label for="name">Nombre del Proyecto:</label>
+                <label for="name">Project Name:</label>
                 <input type="text" name="name" id="name" required>
 
                 <label for="mode">Modo:</label>
@@ -81,15 +81,15 @@
                 <label for="target">Target:</label>
                 <input type="text" name="target" id="target" required>
 
-                <label for="start_now">¿Iniciar ahora?</label>
+                <label for="start_now">Start Now?</label>
                 <select name="start_now" id="start_now">
-                    <option value="yes">Sí, iniciar ahora</option>
-                    <option value="no">No, iniciar después</option>
+                    <option value="yes">Yes, start now</option>
+                    <option value="no">No, start later</option>
                 </select>
 
-                <button type="submit">Crear Proyecto</button>
+                <button type="submit">Create Project</button>
             </form>
-            <a href="/dashboard">← Volver al Dashboard</a>
+            <a href="/dashboard">← Back to Dashboard</a>
         </div>
     </div>
 </body>

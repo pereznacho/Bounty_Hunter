@@ -1,0 +1,1 @@
+http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL= (GET)  # /usr/local/bin/sqlmap -u http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL= --batch --level=3 --risk=2 --random-agent --dbs --current-user --output-dir results/testaspnet.vulnweb.com_20251022_034803/sqlmap

@@ -4,6 +4,11 @@ GREEN = "\033[32m"
 RESET = "\033[0m"
 
 def generate_markdown_report(target, stats, output_dir):
+    # Verificar que el directorio existe antes de generar el reporte
+    if not os.path.exists(output_dir):
+        print(f"[⚠️] Directorio {output_dir} no existe - creándolo")
+        os.makedirs(output_dir, exist_ok=True)
+    
     report_path = os.path.join(output_dir, "reporte.md")
 
     with open(report_path, "w", encoding="utf-8", errors="ignore") as f:

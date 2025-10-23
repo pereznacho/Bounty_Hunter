@@ -9,8 +9,9 @@ from backend.models import User, SessionLocal
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-
-# Dependency para obtener sesión de DB
+# -------------------------------
+# DEPENDENCIA DB
+# -------------------------------
 def get_db():
     db = SessionLocal()
     try:
@@ -18,20 +19,30 @@ def get_db():
     finally:
         db.close()
 
+# -------------------------------
+# FUNCION PARA OBTENER USUARIO LOGUEADO
+# -------------------------------
+def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
+    user_id = request.session.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Usuario no autenticado")
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    return user
 
 # -------------------------------
-# MODELO PARA API JSON
+# MODELO Pydantic PARA API JSON
 # -------------------------------
-
 class UserIn(BaseModel):
     username: str
     password: str
 
-
 # -------------------------------
 # API JSON - REGISTRO
 # -------------------------------
-
 @router.post("/auth/register")
 def register_api(user: UserIn, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == user.username).first()
@@ -46,11 +57,9 @@ def register_api(user: UserIn, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "Usuario registrado"}
 
-
 # -------------------------------
 # API JSON - LOGIN
 # -------------------------------
-
 @router.post("/auth/login")
 def login_api(user: UserIn, db: Session = Depends(get_db)):
     pwd_hash = hashlib.sha256(user.password.encode()).hexdigest()
@@ -63,20 +72,16 @@ def login_api(user: UserIn, db: Session = Depends(get_db)):
 
     return {"token": user.username}
 
-
 # -------------------------------
 # FORMULARIO HTML - REGISTRO (GET)
 # -------------------------------
-
 @router.get("/register", response_class=HTMLResponse)
 def register_form(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
 
-
 # -------------------------------
 # FORMULARIO HTML - REGISTRO (POST)
 # -------------------------------
-
 @router.post("/register")
 def register_post(
     request: Request,
@@ -103,20 +108,16 @@ def register_post(
 
     return RedirectResponse(url="/dashboard", status_code=302)
 
-
 # -------------------------------
 # FORMULARIO HTML - LOGIN (GET)
 # -------------------------------
-
 @router.get("/login", response_class=HTMLResponse)
 def login_form(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-
 # -------------------------------
 # FORMULARIO HTML - LOGIN (POST)
 # -------------------------------
-
 @router.post("/login")
 def login_post(
     request: Request,
@@ -141,11 +142,9 @@ def login_post(
 
     return RedirectResponse(url="/dashboard", status_code=302)
 
-
 # -------------------------------
-# LOGOUT (opcional)
+# LOGOUT
 # -------------------------------
-
 @router.get("/logout")
 def logout(request: Request):
     request.session.clear()

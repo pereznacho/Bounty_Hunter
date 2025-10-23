@@ -1,0 +1,6 @@
+testphp.vulnweb.com
+vulnweb.com
+testasp.vulnweb.com
+www.vulnweb.com
+testaspnet.vulnweb.com
+testhtml5.vulnweb.com

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bounty Hunter Web{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config (opcional) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7ef0c7',
+                        dark: '#1a1c23',
+                        card: '#262931',
+                        accent: '#38bdf8',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos generales -->
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #e5e5e5;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background-color: #7ef0c7;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="min-h-screen px-4 py-6 md:px-12 scrollbar-thin">
+
+    <header class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-semibold text-primary">🔎 Bounty Hunter</h1>
+        <div class="flex gap-4 items-center">
+            <span class="text-sm">Logged in as <strong>{{ user.username if user else 'Guest' }}</strong></span>
+            <a href="/logout" class="text-sm text-red-400 hover:text-red-300">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+www.vulnweb.com
+antivirus1.vulnweb.com
+viruswall.vulnweb.com
+tetphp.vulnweb.com
+www.virus.vulnweb.com
+testhtml5.vulnweb.com
+testphp.vulnweb.com
+testaspnet.vulnweb.com
+estphp.vulnweb.com
+odincovo.vulnweb.com
+www.test.php.vulnweb.com
+virus.vulnweb.com
+rest.vulnweb.com
+testasp.vulnweb.com

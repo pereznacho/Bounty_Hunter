@@ -20,16 +20,23 @@ def extract_param_name(url):
     return "desconocido"
 
 def run_tplmap_scan(param_urls_file, result_dir, log_file):
-    if not os.path.exists(param_urls_file):
-        print(f"{RED}[✘] Archivo no encontrado: {param_urls_file}{RESET}")
-        return None
+    tplmap_results = os.path.join(result_dir, "tplmap_results.txt")
+    
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        print(f"{YELLOW}[!] No se encontraron URLs con parámetros para analizar con Tplmap.{RESET}")
+        # Crear archivo vacío para mantener consistencia
+        with open(tplmap_results, "w") as tpl_out:
+            tpl_out.write("")
+        return
 
     tplmap_dir = "/usr/share/tplmap"
     if not os.path.isdir(tplmap_dir):
         print(f"{YELLOW}[!] Tplmap no está instalado en /usr/share/tplmap{RESET}")
+        # Crear archivo vacío para mantener consistencia
+        with open(tplmap_results, "w") as tpl_out:
+            tpl_out.write("")
         return
-
-    tplmap_results = os.path.join(result_dir, "tplmap_results.txt")
 
     with open(param_urls_file, "r") as urls, open(tplmap_results, "w") as tpl_out, open(log_file, "a") as log_out:
         urls_list = [u.strip() for u in urls if u.strip()]

@@ -1,181 +1,247 @@
-# Bounty_Hunter Web Edition
+# 🎯 Bounty_Hunter2
 
-![banner](https://img.shields.io/badge/Automation-Security-blue)
+**Advanced Bug Bounty Automation Tool** - Complete bug bounty automation platform with multi-platform integration, real-time vulnerability detection and auto-expanded mode.
 
-> Plataforma web avanzada para automatizar el flujo completo de Bug Bounty y pentesting, con control granular, integración de herramientas, y generación de reportes profesionales.
-
-## ✨ Capturas de Pantalla
-
-<p align="center">
-  <img src="img/01.png" alt="Dashboard de proyectos" width="700"/>
-  <br><em>Dashboard de proyectos</em>
-</p>
-
-<p align="center">
-  <img src="img/02.png" alt="Detalle de resultados por etapa" width="700"/>
-  <br><em>Detalle de resultados por etapa</em>
-</p>
-
-<p align="center">
-  <img src="img/03.png" alt="Exportación PDF con colores y conteo" width="700"/>
-  <br><em>Exportación PDF con colores y conteo</em>
-</p>
-
----
-## 🆕 Novedades de la versión actual
-
-- **Arquitectura modular**: Separación clara entre backend, módulos de escaneo, utilidades y controladores.
-- **Sistema de módulos plug-and-play**: Agrega o elimina scripts de escaneo fácilmente en [`modules/`](modules/).
-- **Controladores centralizados**: Lógica desacoplada en [`backend/controllers/`](backend/controllers/).
-- **Gestión de proyectos**: Creación, seguimiento y control de proyectos desde la web.
-- **Ejecución y orquestación de etapas**: Control total sobre cada etapa (iniciar, detener, saltar, repetir).
-- **Integración de herramientas externas**: Subfinder, Assetfinder, httpx, gau, katana, nuclei, dalfox, sqlmap, XSStrike, ffuf, arjun, entre otras.
-- **Persistencia con SQLite**: Base de datos gestionada desde [`backend/init_db.py`](backend/init_db.py) y [`backend/models.py`](backend/models.py).
-- **Exportación avanzada**: Generación de reportes PDF con [`export/burp_export.py`](export/burp_export.py) y soporte visual de colores ANSI.
-- **Configuración flexible**: Archivos JSON para herramientas y módulos en [`config/`](config/).
-- **CLI y automatización**: Scripts CLI en [`cli/`](cli/) y binarios en [`bin/`](bin/).
-- **Soporte Docker**: Despliegue rápido con [`Dockerfile`](Dockerfile) y [`docker-compose.yml`](docker-compose.yml).
-- **Frontend moderno**: Plantillas Jinja2 en [`templates/`](templates/) y recursos estáticos en [`static/`](static/).
-- **Utilidades reutilizables**: Funciones auxiliares en [`backend/utils.py`](backend/utils.py).
-- **Resultados organizados**: Salida de cada etapa en [`results/`](results/), con conteo automático y visualización web.
+> *by Ignacio Pérez*
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🚀 Key Features
 
-```
-bounty_hunter.py           # Script principal/launcher
-db.sqlite3                 # Base de datos SQLite
-Dockerfile                 # Imagen Docker optimizada
-docker-compose.yml         # Orquestación multi-servicio
-requirements.txt           # Dependencias Python
-backend/
-    main.py                # FastAPI app principal
-    auth.py                # Autenticación y seguridad
-    constants.py           # Constantes globales
-    init_db.py             # Inicialización de la base de datos
-    models.py              # Modelos ORM SQLAlchemy
-    modules_list.py        # Registro dinámico de módulos
-    project_routes.py      # Rutas API para proyectos
-    scan_worker.py         # Orquestador de escaneos
-    utils.py               # Utilidades generales
-    controllers/           # Lógica desacoplada por dominio
-bin/
-    tplmap                 # Herramienta auxiliar
-cli/
-    etapas/                # Scripts CLI para etapas
-config/
-    installed.json         # Herramientas instaladas
-    tools.json             # Configuración de herramientas
-export/
-    burp_export.py         # Exportador de resultados a PDF/Burp
-modules/
-    arjun.py               # Módulo Arjun (param discovery)
-    dalfox_scan.py         # Módulo Dalfox (XSS)
-    ffuf.py                # Módulo FFUF (fuzzing)
-    gf_qsreplace.py        # Módulo GF + QSReplace
-    lfi.py                 # Módulo LFI
-    nuclei_scan.py         # Módulo Nuclei
-    ...                    # Otros módulos plug-and-play
-results/                   # Resultados de escaneos
-static/                    # Archivos estáticos frontend
-templates/                 # Plantillas Jinja2
-tools/                     # Herramientas externas
-utils/                     # Utilidades compartidas
-```
+### 🔄 **Auto-Expanded Mode** ⭐ NEW
+- **Automatic domain expansion**: Domains automatically expand to all their active URLs
+- **Uniform behavior**: Bounty programs work exactly like manual form
+- **Smart discovery**: Subfinder + Httpx to find all scannable URLs
+- **Individual targets**: Each discovered URL is scanned as independent web application
+
+### 🌐 **Advanced Multi-platform Integration**
+- **HackerOne**: Automatic program import and complete scope
+- **Intigriti**: Native integration with auto-expanded enabled
+- **YesWeHack**: Full support for European programs
+- **Bugcrowd**: Crowdsourced security platform integration
+
+### 🔍 **Automated Reconnaissance Suite**
+- **Subfinder**: Subdomain discovery with 40+ sources
+- **Assetfinder**: Backup enumeration and asset discovery
+- **Httpx**: Active URL verification with technology detection
+- **GAU**: Historical URL extraction (GetAllUrls)
+- **Waybackurls**: URLs from Wayback Machine
+- **Katana**: Web crawler with JavaScript support
+
+### 🛡️ **Vulnerability Analysis Engine**
+- **Nuclei**: 5000+ updated vulnerability templates
+- **Dalfox**: Specialized XSS scanner with bypass techniques
+- **XSStrike**: XSS vulnerability detection scanner
+- **SQLMap**: Automatic SQL injection detection and exploitation
+
+### 🎨 **Modern Dashboard with Real-time Alerts**
+- **Live updates**: Vulnerability status every 10 seconds
+- **Alert system**: Instant notifications for critical findings
+- **Responsive design**: Optimized for desktop and mobile
 
 ---
 
-## 🚀 Instalación y Puesta en Marcha
+## 📊 Vulnerability Criticality System
+
+### 🔥 **Criticality Levels by Tool**
+
+| Tool | Critical | High | Medium | Low |
+|------------|----------|------|--------|-----|
+| **Nuclei** | RCE, SQLi Auth Bypass | XSS Stored, SSRF | XSS Reflected, Info Disclosure | Fingerprinting, Misconfig |
+| **Dalfox** | Stored XSS | Reflected XSS (High Impact) | Reflected XSS (Medium Impact) | DOM XSS, Low Impact |
+| **SQLMap** | Boolean/Time-based SQLi | Error-based SQLi | Union-based SQLi | Information Schema Access |
+
+### 🎨 **Dashboard Color Coding**
+- 🟣 **CRITICAL**: Purple - Immediate exploitation, full access
+- 🔴 **HIGH**: Red - High impact vulnerabilities
+- 🟠 **MEDIUM**: Orange - Moderate risk, requires combination
+- 🟢 **LOW**: Green - Information, minor configuration
+
+---
+
+## 📦 Installation and Configuration
+
+### 🔧 **Prerequisites**
+- **Docker** 20.10+ and **Docker Compose** v2
+- **Git** for repository cloning
+- **4GB RAM** minimum (8GB recommended)
+- **20GB** free space for results
+
+### ⚡ **Quick Installation**
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/pereznacho/Bounty_Hunter2.git
+# Clone repository
+git clone https://github.com/your-user/Bounty_Hunter2.git
 cd Bounty_Hunter2
 
-# Crear entorno virtual
-python3 -m venv env
-source env/bin/activate
+# Build and run
+docker-compose up --build
 
-# Instalar dependencias Python
-pip install -r requirements.txt
+# Access application
+# http://localhost:8000
+```
 
-# Configurar la DB
-python3 backend/init_db.py
+### 🔐 **Initial Setup**
+1. **Create user**: Register at `/register`
+2. **Login**: Access with credentials
+3. **Create project**: Manual or import from bounty programs
 
-# Iniciar servidor local
-uvicorn backend.main:app --reload
+---
 
-# Desde su imagen oficial en Docker
-docker pull nachin519/bounty_hunter_web
+## 🎯 Workflows
 
-# O usando Docker local
-docker build -t bounty_hunter .
-docker run -p 8000:8000 bounty_hunter
+### 🔄 **Auto-Expanded Workflow** (Recommended)
+
+```mermaid
+graph LR
+    A[Domain] --> B[Subfinder]
+    B --> C[Httpx] 
+    C --> D[Active URLs]
+    D --> E[Individual Targets]
+    E --> F[Scan per URL]
+    F --> G[Vulnerabilities]
+```
+
+1. **Input**: `example.com` from any bounty program
+2. **Subfinder**: Finds `app.example.com`, `api.example.com`, etc.
+3. **Httpx**: Verifies `https://app.example.com`, `https://api.example.com`
+4. **Target Creation**: Each URL as individual target
+5. **Scanning**: Nuclei + Dalfox + SQLMap on each URL
+6. **Results**: Vulnerabilities organized by target
+
+### 📝 **Manual Workflow**
+
+```mermaid
+graph LR
+    A[Manual URL] --> B[Recon Modules]
+    B --> C[Vuln Scan]
+    C --> D[Results]
+```
+
+1. **Create manual project**
+2. **Add specific targets** 
+3. **Run complete scan**
+4. **Review vulnerabilities**
+
+---
+## Workflow and Tools
+1. recon.py — Enumeration and URL/target collection
+    • Tools/techniques: subfinder, assetfinder, httpx (checks alive), katana / waybackurls / gau (historical endpoint collection), pipelines to combine results.
+    • Stage: Recon / asset discovery (domains → URLs).
+2. prepare_url_scan.py — List preparation and sanitization
+    • Tools/techniques: internal scripts to deduplicate, normalize schemes (http/https), filter and generate working lists (urls.txt, etc.).
+    • Stage: Pre-processing before scanning/fuzzing.
+3. arjun.py — Discover hidden parameters
+    • Tools/techniques: Arjun (GET/POST parameter enumeration and endpoints accepting parameters).
+    • Stage: Parameter recon / surface discovery.
+4. gf_qsreplace.py — Pattern filtering + parameter replacement
+    • Tools/techniques: gf (pattern/payload filtering) and qsreplace (substitute parameters with payloads for fuzzing).
+    • Stage: Payload preparation / URL selection for fuzz/XSS/LFI.
+5. ffuf.py — Path and directory fuzzing
+    • Tools/techniques: FFUF (directory/endpoint fuzzing) with wordlists (common.txt, api.txt, etc.).
+    • Stage: Fuzzing / dynamic path enumeration.
+6. dalfox_scan.py — XSS detection and exploitation
+    • Tools/techniques: Dalfox (automated XSS scanning, payloads and reflected/stored testing).
+    • Stage: XSS detection / vector exploitation.
+7. tplmap.py — Template Injection / SSTI
+    • Tools/techniques: tplmap (server-side template injection detection/exploitation in engines like Jinja2, Twig, Mako, etc.).
+    • Stage: SSTI detection/exploitation / template injection.
+8. lfi.py — Local File Inclusion checks
+    • Tools/techniques: payload lists + response checks; custom scripts to detect LFI/path traversal.
+    • Stage: LFI detection / path traversal.
+9. nuclei_scan.py — Template-based scanning (CVE / misconfigs / exposures)
+    • Tools/techniques: Nuclei with YAML templates (misconfigurations, CVEs, takeover, exposures, etc.).
+    • Stage: Massive scanning of known signatures/vulnerabilities.
+10. sqli.py — SQL injection detection
+    • Tools/techniques: sqlmap (automates SQLi tests, DBMS extraction, users, DBs and evidence).
+    • Stage: SQLi detection / exploitation.
+
+## 🌟 New Features Added
+
+### ✨ **Auto-Expanded Mode**
+- **Problem solved**: Bounty programs now create individual URL targets
+- **Uniform behavior**: Manual form = Bounty programs
+- **Implementation**: Interception in `scan_worker.py` with automatic detection
+
+### 🎨 **Enhanced Dashboard**
+- **Unfiltered logos**: HackerOne, Intigriti, YesWeHack, Bugcrowd with original colors
+- **Real-time alerts**: Vulnerability detection every 10 seconds
+- **Push notifications**: Browser alerts for new findings
+
+### 🛠 **Optimized Backend**
+- **Unified routers**: Clean and maintainable code
+- **Error handling**: Robust error and timeout management
+- **Performance**: Parallel scanning and database optimizations
+
+---
+
+## 🔧 Advanced Configuration
+
+### 🎛️ **Environment Variables**
+```bash
+# Database
+DATABASE_URL=sqlite:///./bounty_hunter.db
+
+# Scanning
+MAX_CONCURRENT_SCANS=3
+SCAN_TIMEOUT=3600
+
+# Notifications  
+ENABLE_NOTIFICATIONS=true
+CHECK_INTERVAL=10
+```
+
+### 📁 **Directory Structure**
+```
+Bounty_Hunter2/
+├── backend/           # FastAPI application
+├── templates/         # HTML templates  
+├── static/           # CSS, JS, images
+├── results/          # Scan results
+├── modules/          # Recon modules
+└── docker-compose.yml
 ```
 
 ---
 
-## 🖥️ Uso y Flujo de Trabajo
+## 🤝 Contributing
 
-1. **Crear proyecto**: Desde la interfaz web, define el nombre y tipo (dominio/URL).
-2. **Orquestar etapas**: Controla cada etapa (subdominios, hosts, URLs, vulnerabilidades) desde el dashboard.
-3. **Visualizar resultados**: Accede a los archivos generados en tiempo real, con colores y conteo automático.
-4. **Exportar reporte**: Descarga el informe PDF final desde la web.
-5. **Personalizar módulos**: Agrega scripts en [`modules/`](modules/) y regístralos en [`backend/modules_list.py`](backend/modules_list.py).
-6. **Configurar herramientas**: Edita [`config/tools.json`](config/tools.json) para rutas y parámetros.
+### 🐛 **Report Bugs**
+- Use GitHub Issues with template
+- Include error logs and reproduction steps
 
----
+### 💡 **New Features** 
+- Fork the repository
+- Create branch feature/new-feature
+- Pull request with detailed description
 
-## 🛠️ Módulos y Funcionalidades
-
-- **Enumeración de subdominios**: Subfinder, Assetfinder
-- **Detección de hosts vivos**: httpx
-- **Extracción de URLs**: gau, waybackurls, katana
-- **Descubrimiento de parámetros**: Arjun
-- **Fuzzing y escaneo de vulnerabilidades**: FFUF, Dalfox, Nuclei, XSStrike, sqlmap, LFI, GF+QSReplace
-- **Exportación avanzada**: PDF, Burp Suite, Markdown
-- **Gestión de proyectos**: CRUD, seguimiento, logs, control de etapas
-- **Autenticación**: (en desarrollo, ver roadmap)
-- **Integración CLI**: Scripts y binarios auxiliares
+### 📧 **Contact**
+- **Site**: https://iperez.com.ar
+- **Email**: nacho@iperez.com.ar
+- **Twitter**: @nachoct
+- **LinkedIn**: /in/ignacio-perez
 
 ---
 
-## ⚙️ Configuración
+## 📄 License
 
-- **Herramientas externas**: Configura rutas y parámetros en [`config/tools.json`](config/tools.json).
-- **Módulos**: Agrega nuevos módulos Python en [`modules/`](modules/) y actualiza [`backend/modules_list.py`](backend/modules_list.py).
-- **Base de datos**: SQLite gestionada automáticamente; puedes migrar a otro motor editando [`backend/init_db.py`](backend/init_db.py).
+MIT License - See [LICENSE](LICENSE) for more details.
 
 ---
 
-## 📈 Roadmap
+## ⚡ Recent Changelog
 
-- [x] Arquitectura modular y plug-and-play
-- [x] Exportación PDF avanzada
-- [x] Orquestación granular de etapas
-- [ ] Autenticación y gestión de usuarios ([`backend/auth.py`](backend/auth.py))
-- [ ] WebSocket para actualización en tiempo real
-- [ ] Importación/exportación de proyectos completos
-- [ ] Estadísticas globales y métricas
-- [ ] Integración con Discord/Slack
+### v2.1.0 (Latest)
+- ✅ **Auto-Expanded Mode**: Bounty programs now work like manual
+- ✅ **Enhanced dashboard**: Unfiltered logos, real-time alerts  
+- ✅ **Optimized backend**: Clean routers, better error handling
+- ✅ **Criticality system**: Updated colors according to cybersecurity standards
 
----
-
-## ✨ Capturas de Pantalla
-
-- Dashboard de proyectos
-- Detalle de resultados por etapa
-- Exportación PDF con colores y conteo
+### v2.0.0
+- ✅ **Multi-platform support**: HackerOne, Intigriti, YesWeHack, Bugcrowd
+- ✅ **Real-time monitoring**: Vulnerability detection automation
+- ✅ **Modern UI**: Dark theme, responsive design
 
 ---
 
-## 🧑‍💻 Autor
-
-Desarrollado por **Ignacio Pérez** ([@iperez](https://github.com/pereznacho))
-
-> "Automatizá tu recon. Repetí tus escaneos. Dominá tu proceso."
-
----
-
-⚠ Uso exclusivo con fines educativos y de investigación. No utilizar sin autorización expresa de los propietarios de los
+**🎯 Bounty_Hunter2 - Automating security, one scan at a time.**

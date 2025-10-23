@@ -1,108 +1,1055 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Bounty_Hunter - Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="container">
-        <div id="banner">
-<pre>
-██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
-██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
-██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
-██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
-██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
-╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-</pre>
-            <p class="subtitle">BugBounty Automation Tool - by Ignacio Pérez</p>
-
-            <div class="topbar">
-                {% if request.session.user_id %}
-                    <span>👤 {{ request.session.username }}</span>
-                    <a href="/logout">Cerrar sesión</a>
-                {% else %}
-                    <a href="/login">Login</a>
-                    <a href="/register">Registro</a>
-                {% endif %}
-            </div>
-        </div>
-
-        <h2>Bienvenido, {{ request.session.username }}</h2>
-        <a href="javascript:void(0)" onclick="abrirModal()" class="create-link">+ Nuevo Proyecto</a>
-        <h3>Tus proyectos:</h3>
-
-        {% for p in projects %}
-        <div class="card" onclick="location.href='/project/{{ p.id }}'">
-            <h4>📁 {{ p.name }}</h4>
-            <p><strong>Tipo:</strong> {{ p.mode }}</p>
-            <p><strong>Target:</strong> {{ p.target }}</p>
-            <p><strong>Fecha:</strong> {{ p.created_at.strftime('%Y-%m-%d') }}</p>
-            <p><strong>Estado:</strong> {{ p.status }}</p>
-            <p><strong>Progreso:</strong> {{ p.progress }}%</p>
-            <progress value="{{ p.progress }}" max="100" style="width: 100%; height: 15px;"></progress>
-
-            <div class="project-buttons">
-                <form method="post" action="/project/{{ p.id }}/delete">
-                    <button type="submit" class="delete-btn">🗑 Eliminar</button>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- Modal para nuevo proyecto -->
-    <div id="modalNuevoProyecto" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="cerrarModal()">&times;</span>
-            <h2>Nuevo Proyecto</h2>
-            <form action="/projects" method="post">
-                <label for="name">Nombre del Proyecto:</label>
-                <input type="text" name="name" required>
-
-                <label for="mode">Modo:</label>
-                <select name="mode">
-                    <option value="domain">Domain</option>
-                    <option value="url">URL</option>
-                </select>
-
-                <label for="target">Target:</label>
-                <input type="text" name="target" required>
-
-                <label for="start_now">¿Iniciar ahora?:</label>
-                <select name="start_now">
-                    <option value="yes">Sí, iniciar ahora</option>
-                    <option value="no">No, más tarde</option>
-                </select>
-
-                <input type="hidden" name="username" value="{{ request.session.username }}">
-                <button type="submit">Crear Proyecto</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function abrirModal() {
-            const modal = document.getElementById("modalNuevoProyecto");
-            modal.style.display = "flex";
-            modal.classList.add("show");
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #c9d1d9;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .container { 
+            position: relative;
+            z-index: 10;
+            max-width: 1200px; 
+            margin: 24px auto; 
+            padding: 40px 20px; 
+            color: #c9d1d9; 
+        }
+        
+        .grid { 
+            display: grid; 
+            gap: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+        }
+        
+        .card { 
+            background: #0f1720;
+            border: 1px solid #21262d;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5a4, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #0ea5a4;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(14, 165, 164, 0.2);
+        }
+        
+        .card:hover::before {
+            opacity: 1;
         }
 
-        function cerrarModal() {
-            const modal = document.getElementById("modalNuevoProyecto");
-            modal.classList.remove("show");
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 300);
+        /* Cards con vulnerabilidades */
+        .card.has-vulnerabilities {
+            border-color: #dc2626;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, #0f1720 50%);
+            animation: pulse-alert 2s ease-in-out infinite;
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById("modalNuevoProyecto");
-            if (event.target === modal) {
-                cerrarModal();
+        .card.has-vulnerabilities::before {
+            background: linear-gradient(90deg, transparent, #dc2626, transparent);
+            opacity: 0.8;
+        }
+
+        .card.has-vulnerabilities:hover {
+            border-color: #ef4444;
+            box-shadow: 
+                0 20px 40px rgba(220, 38, 38, 0.3),
+                0 0 0 1px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Niveles de criticidad */
+        .card.vuln-critical {
+            border-color: #dc2626;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, #0f1720 50%);
+        }
+
+        .card.vuln-high {
+            border-color: #ea580c;
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, #0f1720 50%);
+        }
+
+        .card.vuln-medium {
+            border-color: #d97706;
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, #0f1720 50%);
+        }
+
+        .card.vuln-low {
+            border-color: #eab308;
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, #0f1720 50%);
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% {
+                box-shadow: 
+                    0 16px 32px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(220, 38, 38, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 16px 32px rgba(220, 38, 38, 0.2),
+                    0 0 0 1px rgba(220, 38, 38, 0.4);
             }
         }
-    </script>
+
+        /* Badge de vulnerabilidades */
+        .vuln-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            animation: pulse-badge 1.5s ease-in-out infinite;
+        }
+
+        /* COLORES ACTUALIZADOS EN DASHBOARD SEGÚN ESTÁNDARES DE CIBERSEGURIDAD */
+        .vuln-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .vuln-badge.critical {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);  /* Púrpura */
+            color: white;
+            border: 1px solid #a855f7;
+        }
+        
+        .vuln-badge.high {
+            background: linear-gradient(135deg, #ef4444, #dc2626);  /* Rojo */
+            color: white;
+            border: 1px solid #f87171;
+        }
+        
+        .vuln-badge.medium {
+            background: linear-gradient(135deg, #f97316, #ea580c);  /* Anaranjado */
+            color: white;
+            border: 1px solid #fb923c;
+        }
+        
+        .vuln-badge.low {
+            background: linear-gradient(135deg, #059669, #047857);  /* Verde oscuro */
+            color: white;
+            border: 1px solid #10b981;
+        }
+        
+        .has-vulnerabilities.vuln-critical {
+            border-left: 6px solid #8b5cf6;  /* Púrpura */
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(124, 58, 237, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-high {
+            border-left: 6px solid #ef4444;  /* Rojo */
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-medium {
+            border-left: 6px solid #f97316;  /* Anaranjado */
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(234, 88, 12, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-low {
+            border-left: 6px solid #059669;  /* Verde oscuro */
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(4, 120, 87, 0.1));
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .card h4 { 
+            margin: 0 0 12px 0; 
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 50%, #ffb86b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem; 
+            font-weight: 600;
+        }
+        
+        .muted { 
+            color: #8b949e; 
+            font-size: 0.9rem; 
+            margin-bottom: 16px;
+        }
+        
+        .btn { 
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 100%);
+            color: #0d1117; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-decoration: none; 
+            display: inline-block;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+        }
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 1px solid #21262d; 
+            color: #9fd8d6; 
+            padding: 11px 19px; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline:hover {
+            border-color: #0ea5a4;
+            background: rgba(14, 165, 164, 0.1);
+        }
+        
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            padding-top: 60px; 
+            background-color: rgba(13,17,23,0.9); 
+            align-items: center; 
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.show { display: flex; }
+        
+        .modal-content { 
+            background: #0f1720;
+            border: 1px solid #21262d;
+            border-radius: 16px;
+            padding: 40px;
+            width: 420px;
+            color: #c9d1d9;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5a4, transparent);
+        }
+        
+        .modal-content input, .modal-content select, .modal-content button {
+            width: 100%; 
+            padding: 12px 16px; 
+            margin: 8px 0; 
+            background-color: #161b22; 
+            color: #c9d1d9;
+            border: 1px solid #21262d; 
+            border-radius: 8px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-content input:focus, .modal-content select:focus {
+            outline: none;
+            border-color: #0ea5a4;
+            box-shadow: 0 0 0 3px rgba(14, 165, 164, 0.1);
+            background-color: #0d1117;
+        }
+        
+        .modal-content button { 
+            background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 100%);
+            color: #0d1117; 
+            border: none; 
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .modal-content button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+        }
+        
+        .close { 
+            color: #f85149; 
+            float: right; 
+            font-size: 22px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        
+        .close:hover {
+            color: #ff6b86;
+        }
+        
+        /* Animaciones para detección de vulnerabilidades en tiempo real */
+        @keyframes vulnerability-alert {
+            0% { 
+                transform: scale(1);
+                border-color: rgba(148, 163, 184, 0.2);
+            }
+            25% { 
+                transform: scale(1.02);
+                border-color: rgba(239, 68, 68, 0.6);
+            }
+            50% { 
+                transform: scale(1.05);
+                border-color: rgba(239, 68, 68, 0.8);
+            }
+            75% { 
+                transform: scale(1.02);
+                border-color: rgba(239, 68, 68, 0.6);
+            }
+            100% { 
+                transform: scale(1);
+                border-color: rgba(148, 163, 184, 0.2);
+            }
+        }
+        
+        @keyframes pulse-update {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.01);
+            }
+        }
+        
+        /* Efecto de glow para nuevas vulnerabilidades */
+        .vulnerability-glow {
+            animation: vulnerability-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes vulnerability-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.6),
+                           0 0 30px rgba(239, 68, 68, 0.4);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="banner" style="text-align: center; margin-bottom: 40px;">
+        <pre style="font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1; color: #0ea5a4; margin-bottom: 20px; text-shadow: 0 0 10px rgba(14, 165, 164, 0.3); white-space: pre;">
+██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+by Ignacio Pérez</pre>
+        <h2 style="font-size: 1.5rem; font-weight: 600; background: linear-gradient(135deg, #0ea5a4 0%, #9fd8d6 50%, #ffb86b 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">Bounty Hunter Dashboard</h2>
+        <p style="color: #8b949e; font-size: 1rem; margin-bottom: 30px;">BugBounty Automation Tool - Advanced Security Research Platform</p>
+        <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 16px; font-size: 0.9rem;">
+            {% if request.session.user_id %}
+                <span style="display: flex; align-items: center; gap: 12px;">
+                    <span style="color: #9fd8d6;">👤 {{ request.session.username }}</span>
+                    <a href="/logout" style="color: #0ea5a4; text-decoration: none; transition: color 0.2s ease;">Logout</a>
+                </span>
+            {% else %}
+                <a href="/login" style="color: #0ea5a4; text-decoration: none; margin-right: 16px; transition: color 0.2s ease;">Login</a>
+                <a href="/register" style="color: #0ea5a4; text-decoration: none; transition: color 0.2s ease;">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <style>
+        /* Estilos personalizados para botones de plataformas */
+        .platform-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* HackerOne - Fondo blanco */
+        .btn-hackerone {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-hackerone:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Intigriti - Fondo blanco */
+        .btn-intigriti {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-intigriti:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* YesWeHack - Fondo blanco */
+        .btn-yeswehack {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-yeswehack:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* BugCrowd - Fondo blanco */
+        .btn-bugcrowd {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-bugcrowd:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* New project - Dark gray */
+        .btn-new-project {
+            background: #343a40;
+            color: white;
+            border-color: #343a40;
+        }
+        .btn-new-project:hover {
+            background: #495057;
+        }
+        
+        .platform-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .platform-icon svg {
+            width: 80px;
+            height: 80px;
+        }
+        
+        /* Estilo especial para el icono SVG del botón New Project */
+        .btn-new-project .platform-icon svg {
+            width: 80px;
+            height: 80px;
+            fill: white;
+        }
+        
+        /* Special style for HackerOne logo - occupies the full button */
+        .btn-hackerone {
+            padding: 4px 8px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-hackerone .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-hackerone .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            filter: invert(1) brightness(0.9);
+        }
+        
+        /* Special style for Intigriti logo - occupies the full button */
+        .btn-intigriti {
+            padding: 4px 8px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-intigriti .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-intigriti .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            filter: invert(1) brightness(0.9);
+        }
+        
+        /* Special style for YesWeHack logo - occupies the full button */
+        .btn-yeswehack {
+            padding: 8px 12px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-yeswehack .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-yeswehack .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+            filter: none; /* YesWeHack logo is already light, no inversion needed */
+        }
+        
+        /* Special style for BugCrowd logo - occupies the full button */
+        .btn-bugcrowd {
+            padding: 8px 12px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-bugcrowd .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-bugcrowd .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+            filter: invert(1) brightness(0.9);
+        }
+    </style>
+
+    <div style="display:flex; gap:12px; margin:18px 0 22px 0; align-items:center; flex-wrap:wrap;">
+        <!-- New project -->
+        <a href="#" onclick="abrirModal()" class="platform-btn btn-new-project">
+            <div class="platform-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512">
+                    <path d="M501.558 245.558c5.766 0 10.442 4.676 10.442 10.443 0 5.767-4.676 10.442-10.442 10.442H313.113c-2.152 11.845-7.897 22.437-16.066 30.605-8.168 8.17-18.761 13.914-30.605 16.066v188.444c0 5.766-4.676 10.442-10.443 10.442-5.767 0-10.442-4.676-10.442-10.442V313.114c-11.845-2.152-22.437-7.896-30.605-16.066-8.17-8.168-13.914-18.76-16.066-30.605H10.442C4.676 266.443 0 261.768 0 256.001s4.676-10.443 10.442-10.443h188.444c2.152-11.844 7.896-22.437 16.066-30.605 8.168-8.169 18.76-13.914 30.605-16.066V10.442C245.557 4.676 250.232 0 255.999 0s10.443 4.676 10.443 10.442v188.445c11.844 2.152 22.437 7.897 30.605 16.066 8.169 8.168 13.914 18.761 16.066 30.605h188.445zM283.148 49.657c46.608 6.073 88.373 27.565 120 59.195 31.63 31.627 53.122 73.392 59.195 120h-21.085c-5.931-40.835-25.04-77.399-52.876-105.234-27.835-27.836-64.399-46.945-105.234-52.876V49.657zM462.343 283.15c-6.073 46.608-27.565 88.372-59.195 120-31.627 31.629-73.392 53.121-120 59.194V441.26c40.835-5.931 77.399-25.04 105.234-52.876 27.836-27.835 46.945-64.399 52.876-105.234h21.085zM228.85 462.344c-46.608-6.073-88.372-27.565-120-59.194-31.629-31.628-53.121-73.392-59.194-120H70.74c5.931 40.835 25.04 77.399 52.876 105.234 27.835 27.836 64.399 46.945 105.234 52.876v21.084zM49.656 228.852c6.073-46.608 27.565-88.373 59.194-120 31.628-31.63 73.392-53.122 120-59.195v21.085c-40.835 5.931-77.399 25.04-105.234 52.876-27.836 27.835-46.945 64.399-52.876 105.234H49.656zm233.492-104.453c26.206 5.379 49.631 18.388 67.849 36.604 18.216 18.218 31.225 41.643 36.604 67.849h-21.41c-5.015-20.428-15.562-38.682-29.961-53.082-14.4-14.399-32.654-24.946-53.082-29.961v-21.41zM387.601 283.15c-5.379 26.205-18.388 49.631-36.604 67.848-18.218 18.216-41.643 31.226-67.849 36.604v-21.409c20.428-5.016 38.682-15.562 53.082-29.961 14.399-14.401 24.946-32.654 29.961-53.082h21.41zM228.85 387.602c-26.205-5.378-49.631-18.388-67.848-36.604-18.216-18.217-31.226-41.643-36.604-67.848h21.409c5.016 20.428 15.562 38.681 29.961 53.082 14.401 14.399 32.654 24.945 53.082 29.961v21.409zm-104.452-158.75c5.378-26.206 18.388-49.631 36.604-67.849 18.217-18.216 41.643-31.225 67.848-36.604v21.41c-20.428 5.015-38.681 15.562-53.082 29.961-14.399 14.4-24.945 32.654-29.961 53.082h-21.409zm131.601-14.196c22.835 0 41.345 18.51 41.345 41.345 0 22.835-18.51 41.344-41.345 41.344-22.835 0-41.344-18.509-41.344-41.344s18.509-41.345 41.344-41.345z"/>
+                </svg>
+            </div>
+            <span>New Project</span>
+        </a>
+
+        <!-- Import HackerOne -->
+        <form action="/hackerone" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-hackerone">
+                <div class="platform-icon">
+                    <img src="/static/img/hackerone-logo.svg" alt="HackerOne">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import Intigriti -->
+        <form action="/import/intigriti" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-intigriti">
+                <div class="platform-icon">
+                    <img src="/static/img/intigriti-logo.png" alt="Intigriti">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import YesWeHack -->
+        <form action="/import/yeswehack" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-yeswehack">
+                <div class="platform-icon">
+                    <img src="/static/img/yeswehack-logo.png" alt="YesWeHack">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import BugCrowd -->
+        <form action="/import/bugcrowd" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-bugcrowd">
+                <div class="platform-icon">
+                    <img src="/static/img/bugcrowd-logo.png" alt="BugCrowd">
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <div class="grid">
+        {% for p in projects %}
+        <a href="{% if (p.platform and p.platform != 'Manual' and p.platform != 'None') or p.platform == 'Manual (Auto-expanded)' %}/project/{{ p.id }}/targets{% else %}/project/{{ p.id }}{% endif %}" 
+           class="card{% if p.has_vulnerabilities %} has-vulnerabilities vuln-{{ p.vulnerability_level }}{% endif %}"
+           data-project-id="{{ p.id }}">
+            
+            {% if p.has_vulnerabilities %}
+            <div class="vuln-badge {{ p.vulnerability_level }}">
+                {% if p.vulnerability_level == 'critical' %}🚨 CRITICAL
+                {% elif p.vulnerability_level == 'high' %}⚠️ HIGH
+                {% elif p.vulnerability_level == 'medium' %}⚡ MEDIUM
+                {% elif p.vulnerability_level == 'low' %}💡 LOW
+                {% else %}🔍 FINDINGS
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <h4>📁 {{ p.name }}</h4>
+            <p class="muted">
+                <span class="text-sm">
+                    <b>Platform:</b>
+                    {% if not p.platform or p.platform == 'None' %}
+                        Manual
+                    {% elif p.platform == 'Manual (Auto-expanded)' %}
+                        <span style="color: #0ea5a4;">Manual (Auto-expanded)</span> 🚀
+                    {% else %}
+                        {{ p.platform }}
+                    {% endif %}
+                </span>
+            </p>
+            <p class="muted"><strong>Targets:</strong>
+                {% if p.targets_text is defined and p.targets_text %}
+                    {{ p.targets_text }}
+                {% elif p.targets is defined %}
+                    {{ p.targets|length }}
+                {% elif p.targets_count is defined %}
+                    {{ p.targets_count }}
+                {% else %}
+                    0
+                {% endif %}
+            </p>
+            <p class="muted">
+                <strong>Progress:</strong>
+                <span class="progress-text">{{ p.progress }}</span>%
+                <span class="progress-stage" style="color:#8b949e; margin-left:6px;"></span>
+            </p>
+            <progress value="{{ p.progress }}" max="100" class="w-full mt-1 h-2 progress-bar"></progress>
+            
+            {% if p.has_vulnerabilities %}
+            <p class="muted" style="color: #dc2626; font-weight: 600; margin-top: 8px;">
+                🔥 Vulnerabilities detected!
+            </p>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal: New Project -->
+<div id="modalNewProject" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <h2>New Project</h2>
+        <form action="/projects" method="post">
+            <label for="name">Project Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="mode">Mode:</label>
+            <select name="mode">
+                <option value="domain">Domain</option>
+                <option value="url">URL</option>
+            </select>
+
+            <label for="target">Target:</label>
+            <input type="text" name="target" required>
+
+            <label for="start_now">Start Now?</label>
+            <select name="start_now">
+                <option value="yes">Yes, start now</option>
+                <option value="no">No, later</option>
+            </select>
+
+            <input type="hidden" name="username" value="{{ request.session.username }}">
+            <button type="submit">Create Project</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModal() {
+        const modal = document.getElementById("modalNewProject");
+        modal.style.display = "flex";
+        modal.classList.add("show");
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById("modalNewProject");
+        modal.classList.remove("show");
+        setTimeout(() => { modal.style.display = "none"; }, 200);
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("modalNewProject");
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    }
+
+    // Sistema de actualización automática de alertas de vulnerabilidades
+    let vulnerabilityCheckInterval;
+    let currentVulnerabilityStatus = new Map();
+
+    // Función para verificar el estado de vulnerabilidades de todos los proyectos
+    async function checkVulnerabilities() {
+        try {
+            const projectCards = document.querySelectorAll('.card[href*="/project/"]');
+            
+            for (const card of projectCards) {
+                const href = card.getAttribute('href');
+                const projectIdMatch = href.match(/\/project\/(\d+)/);
+                
+                if (projectIdMatch) {
+                    const projectId = projectIdMatch[1];
+                    
+                    const response = await fetch(`/api/project/${projectId}/vulnerability-status`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateProjectCard(card, projectId, data.project);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error checking vulnerabilities:', error);
+        }
+    }
+
+    // Función para actualizar la apariencia de una tarjeta de proyecto
+    function updateProjectCard(card, projectId, projectData) {
+        const previousStatus = currentVulnerabilityStatus.get(projectId);
+        const newStatus = {
+            hasVulnerabilities: projectData.has_vulnerabilities,
+            level: projectData.vulnerability_level
+        };
+
+        // Guardar el nuevo estado
+        currentVulnerabilityStatus.set(projectId, newStatus);
+
+        // Si es la primera verificación o no hay cambios, no hacer nada
+        if (!previousStatus) {
+            return;
+        }
+
+        // Si se detectaron nuevas vulnerabilidades
+        if (!previousStatus.hasVulnerabilities && newStatus.hasVulnerabilities) {
+            // Agregar clases de vulnerabilidad
+            card.classList.add('has-vulnerabilities', `vuln-${newStatus.level}`);
+            
+            // Crear y agregar badge de vulnerabilidad si no existe
+            let badge = card.querySelector('.vuln-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.className = `vuln-badge ${newStatus.level}`;
+                badge.innerHTML = getBadgeContent(newStatus.level);
+                card.insertBefore(badge, card.firstChild);
+            }
+
+            // Agregar texto de vulnerabilidad detectada si no existe
+            let vulnText = card.querySelector('.vulnerability-detected');
+            if (!vulnText) {
+                vulnText = document.createElement('p');
+                vulnText.className = 'muted vulnerability-detected';
+                vulnText.style.cssText = 'color: #dc2626; font-weight: 600; margin-top: 8px;';
+                vulnText.innerHTML = '🔥 Vulnerabilities detected!';
+                card.appendChild(vulnText);
+            }
+
+            // Efecto visual de notificación
+            showVulnerabilityNotification(card, newStatus.level);
+        }
+        
+        // Si cambió el nivel de criticidad
+        else if (previousStatus.hasVulnerabilities && newStatus.hasVulnerabilities && 
+                 previousStatus.level !== newStatus.level) {
+            // Actualizar clases
+            card.classList.remove(`vuln-${previousStatus.level}`);
+            card.classList.add(`vuln-${newStatus.level}`);
+            
+            // Actualizar badge
+            const badge = card.querySelector('.vuln-badge');
+            if (badge) {
+                badge.className = `vuln-badge ${newStatus.level}`;
+                badge.innerHTML = getBadgeContent(newStatus.level);
+            }
+
+            // Efecto visual de actualización
+            card.style.animation = 'pulse-update 1s ease-in-out';
+            setTimeout(() => {
+                card.style.animation = '';
+            }, 1000);
+        }
+    }
+
+    // Función para obtener el contenido del badge según el nivel
+    function getBadgeContent(level) {
+        switch(level) {
+            case 'critical': return '🚨 CRITICAL';
+            case 'high': return '⚠️ HIGH';
+            case 'medium': return '⚡ MEDIUM';
+            case 'low': return '💡 LOW';
+            default: return '🔍 FINDINGS';
+        }
+    }
+
+    // Función para mostrar notificación visual de nueva vulnerabilidad
+    function showVulnerabilityNotification(card, level) {
+        // Efecto de pulso y glow
+        card.style.animation = 'vulnerability-alert 2s ease-in-out';
+        card.style.boxShadow = `0 0 20px ${getGlowColor(level)}`;
+        
+        // Restaurar después de la animación
+        setTimeout(() => {
+            card.style.animation = '';
+            card.style.boxShadow = '';
+        }, 2000);
+
+        // Mostrar notificación del navegador si está permitido
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('🚨 Nueva Vulnerabilidad Detectada', {
+                body: `Se detectó una vulnerabilidad ${level.toUpperCase()} en tu proyecto`,
+                icon: '/static/favicon.ico'
+            });
+        }
+    }
+
+    // Función para obtener el color de glow según el nivel
+    function getGlowColor(level) {
+        switch(level) {
+            case 'critical': return 'rgba(239, 68, 68, 0.5)';
+            case 'high': return 'rgba(245, 158, 11, 0.5)';
+            case 'medium': return 'rgba(59, 130, 246, 0.5)';
+            case 'low': return 'rgba(34, 197, 94, 0.5)';
+            default: return 'rgba(107, 114, 128, 0.5)';
+        }
+    }
+
+    // Inicializar el sistema de actualizaciones automáticas
+    function initVulnerabilityMonitoring() {
+        // Pedir permiso para notificaciones
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // Verificar inmediatamente al cargar
+        checkVulnerabilities();
+        
+        // Configure periodic check every 10 seconds
+        vulnerabilityCheckInterval = setInterval(checkVulnerabilities, 10000);
+    }
+
+    // ------- Live Progress Updater -------
+    let progressInterval;
+
+    // Track the last request timestamp per project to ignore stale responses
+    const LAST_REQ_TS = Object.create(null);
+
+    function applyProgressToCard(card, pct, stage) {
+        const textEl = card.querySelector('.progress-text');
+        const stageEl = card.querySelector('.progress-stage');
+        const barEl  = card.querySelector('progress.progress-bar');
+        pct = Math.max(0, Math.min(100, Number(pct)||0));
+        if (textEl) textEl.textContent = pct.toString();
+        if (barEl)  barEl.value = pct;
+        if (stageEl) stageEl.textContent = stage ? `(${stage})` : '';
+    }
+
+    async function refreshProgress() {
+        try {
+            const projectCards = document.querySelectorAll('.card[data-project-id]');
+            for (const card of projectCards) {
+                const pid = card.getAttribute('data-project-id');
+                // Start request timestamp to avoid out-of-order updates
+                const startedAt = Date.now();
+                LAST_REQ_TS[pid] = startedAt;
+
+                // Prevent stale caching: add cache buster and disable cache
+                const url = `/api/project/${pid}/status?_=${Date.now()}`;
+                const res = await fetch(url, { cache: 'no-store' });
+                if (!res.ok) continue;
+                const data = await res.json();
+
+                // Strictly read backend contract: { status, progress, current_step }
+                let pct = 0;
+                try {
+                    pct = parseInt(String(data.progress), 10);
+                } catch (_) {
+                    pct = 0;
+                }
+                if (Number.isNaN(pct)) pct = 0;
+                pct = Math.max(0, Math.min(100, pct));
+
+                const stage = (data && data.current_step) ? String(data.current_step) : '';
+
+                // If a newer request finished later, ignore this update
+                if (LAST_REQ_TS[pid] !== startedAt) {
+                    continue;
+                }
+
+                applyProgressToCard(card, pct, stage);
+
+                // Optional status for completion check
+                const statusVal = (data && data.status) || '';
+                if (pct === 100 && String(statusVal).toLowerCase() === 'completed') {
+                    card.classList.add('progress-complete');
+                }
+            }
+        } catch (e) {
+            console.error('Error refreshing progress:', e);
+        }
+    }
+
+    function initProgressMonitoring() {
+        // Do an immediate refresh
+        refreshProgress();
+        // Then keep it updated every 5s
+        progressInterval = setInterval(refreshProgress, 5000);
+    }
+
+    // Limpiar interval cuando se salga de la página
+    window.addEventListener('beforeunload', () => {
+        if (vulnerabilityCheckInterval) clearInterval(vulnerabilityCheckInterval);
+        if (progressInterval) clearInterval(progressInterval);
+    });
+
+    // Inicializar cuando se cargue la página
+    document.addEventListener('DOMContentLoaded', function () {
+        initVulnerabilityMonitoring();
+        initProgressMonitoring();
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshProgress();
+            }
+        });
+    });
+
+    // JavaScript para dashboard con nuevos colores
+    document.addEventListener('DOMContentLoaded', function() {
+        // Aplicar colores correctos en el dashboard
+        document.querySelectorAll('.project-card.has-vulnerabilities').forEach(card => {
+            const vulnBadge = card.querySelector('.vuln-badge');
+            if (vulnBadge) {
+                const text = vulnBadge.textContent.toLowerCase();
+                
+                // Actualizar texto y clase según nivel
+                if (text.includes('critical')) {
+                    vulnBadge.textContent = '🟣 CRITICAL';
+                    vulnBadge.className = 'vuln-badge critical';
+                    card.classList.add('vuln-critical');
+                } else if (text.includes('high')) {
+                    vulnBadge.textContent = '🔴 HIGH';
+                    vulnBadge.className = 'vuln-badge high';
+                    card.classList.add('vuln-high');
+                } else if (text.includes('medium')) {
+                    vulnBadge.textContent = '🟠 MEDIUM';
+                    vulnBadge.className = 'vuln-badge medium';
+                    card.classList.add('vuln-medium');
+                } else if (text.includes('low')) {
+                    vulnBadge.textContent = '🟢 LOW';
+                    vulnBadge.className = 'vuln-badge low';
+                    card.classList.add('vuln-low');
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

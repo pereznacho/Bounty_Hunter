@@ -1,0 +1,8 @@
+http://dojo.me/favicon.ico
+http://dojo.me/robots.txt
+http://dojo.me/st.aspx
+http://www.dojo.me:80/
+https://admin.dojo.me
+https://dojo.me
+https://dojo.me/sitemap.xml
+https://www.dojo.me

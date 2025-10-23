@@ -17,14 +17,25 @@ def run_ffuf(param_urls_file, result_dir, log_file):
 
     if not os.path.exists(wordlist):
         cprint(f"[✘] Wordlist no encontrada: {wordlist}", "red")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
-    if not os.path.exists(param_urls_file):
-        cprint(f"[✘] {param_urls_file} no encontrado.", "red")
+    
+    # Verificar si el archivo param_urls.txt existe y no está vacío
+    if not os.path.exists(param_urls_file) or os.path.getsize(param_urls_file) == 0:
+        cprint("[!] No se encontraron URLs con parámetros para analizar con FFUF.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
 
     urls = [line.strip() for line in open(param_urls_file) if "FUZZ" not in line and line.strip()]
     if not urls:
         cprint("[!] No hay URLs válidas para escanear.", "yellow")
+        # Crear archivo vacío para mantener consistencia
+        with open(output_file, "w") as out:
+            out.write("")
         return
 
     with open(output_file, "w") as out, open(log_file, "a") as log:
@@ -58,11 +69,11 @@ def run_ffuf(param_urls_file, result_dir, log_file):
                     cprint("[-] Sin resultados relevantes.", "yellow")
 
             except subprocess.CalledProcessError:
-                cprint(f"[✘] Error en FFUF para: {url}", "red")
+                cprint(f"[✘] FFUF error for: {url}", "red")
             except Exception as e:
                 cprint(f"[✘] Excepción: {e}", "red")
 
-    cprint(f"{GREEN}[✔] Fuzzing FFUF finalizado. Resultados en {output_file}{RESET}")
+    cprint(f"{GREEN}[✔] FFUF fuzzing completed. Results in {output_file}{RESET}")
     return output_file
 
 if __name__ == "__main__":
