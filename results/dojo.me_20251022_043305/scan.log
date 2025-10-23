@@ -1,4 +1,0 @@
-[[92mdns-waf-detect[0m:[1;92mcloudflare[0m] [[94mdns[0m] [[34minfo[0m] dojo.me
-[[92mazure-domain-tenant[0m] [[94mhttp[0m] [[34minfo[0m] https://login.microsoftonline.com:443/dojo.me/v2.0/.well-known/openid-configuration [[96m"31a90a83-5fb4-4a79-907d-0fc80f73b9e9"[0m]
-[[92mexternal-service-interaction[0m] [[94mhttp[0m] [[34minfo[0m] http://dojo.me
-[[92mdns-waf-detect[0m:[1;92mcloudflare[0m] [[94mdns[0m] [[34minfo[0m] dojo.me

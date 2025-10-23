@@ -1,6 +1,0 @@
-🔗 URL: http://testaspnet.vulnweb.com/Comments.aspx?id=1337
-🧩 Payload: PAYLOAD
-🧪 Técnica detectada: ssti
-📄 Evidencia:
-http://testaspnet.vulnweb.com/Comments.aspx?id=PAYLOAD
---------------------------------------------------

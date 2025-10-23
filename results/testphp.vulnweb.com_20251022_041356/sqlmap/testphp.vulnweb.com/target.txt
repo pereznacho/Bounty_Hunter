@@ -1,1 +1,0 @@
-http://testphp.vulnweb.com/redir.php?lYs9Ox= (GET)  # /usr/local/bin/sqlmap -u http://testphp.vulnweb.com/redir.php?lYs9Ox= --batch --level=3 --risk=2 --random-agent --dbs --current-user --output-dir results/testphp.vulnweb.com_20251022_041356/sqlmap

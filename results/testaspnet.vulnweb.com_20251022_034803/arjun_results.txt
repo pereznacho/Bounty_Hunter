@@ -1,3 +1,0 @@
-🔗 URL: http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=
-🧩 Parámetro encontrado: http://testaspnet.vulnweb.com/acuservice/service.asmx?WSDL=&WSDL=1828&schema=9689&op=7460&wsdl=5192
---------------------------------------------------

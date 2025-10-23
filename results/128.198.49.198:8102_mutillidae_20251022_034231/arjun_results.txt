@@ -1,6 +1,0 @@
-🔗 URL: http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php
-🧩 Parámetro encontrado: http://128.198.49.198:8102/mutillidae/index.php?page=show-log.php&page=5740
---------------------------------------------------
-🔗 URL: https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl
-🧩 Parámetro encontrado: https://128.198.49.198:8102/mutillidae/index.php?do=toggle-enforce-ssl&page=9363
---------------------------------------------------

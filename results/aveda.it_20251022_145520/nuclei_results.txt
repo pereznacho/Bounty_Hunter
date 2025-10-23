@@ -1,9 +1,0 @@
-# Resultados para http://aveda.it:
-[[92mazure-domain-tenant[0m] [[94mhttp[0m] [[34minfo[0m] https://login.microsoftonline.com:443/aveda.it/v2.0/.well-known/openid-configuration [[96m"0c5638da-d686-4d6a-8df4-e0552c70cb17"[0m]
-[[92mexternal-service-interaction[0m] [[94mhttp[0m] [[34minfo[0m] http://aveda.it
-
-# Resultados para https://aveda.it:
-[[92mazure-domain-tenant[0m] [[94mhttp[0m] [[34minfo[0m] https://login.microsoftonline.com:443/aveda.it/v2.0/.well-known/openid-configuration [[96m"0c5638da-d686-4d6a-8df4-e0552c70cb17"[0m]
-[[92mexternal-service-interaction[0m] [[94mhttp[0m] [[34minfo[0m] https://aveda.it
-[[92mwaf-detect[0m:[1;92makamai[0m] [[94mhttp[0m] [[34minfo[0m] https://aveda.it
-

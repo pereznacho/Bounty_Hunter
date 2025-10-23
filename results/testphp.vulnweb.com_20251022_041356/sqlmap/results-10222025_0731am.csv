@@ -1,2 +1,0 @@
-Target URL,Place,Parameter,Technique(s),Note(s)
-http://testphp.vulnweb.com:80/product.php?pic=5,GET,pic,BETU,

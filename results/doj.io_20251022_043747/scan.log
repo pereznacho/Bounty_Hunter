@@ -1,42 +1,0 @@
-[[92mexternal-service-interaction[0m] [[94mhttp[0m] [[34minfo[0m] https://doj.io
-[[92mmissing-sri[0m] [[94mhttp[0m] [[34minfo[0m] https://www.classdojo.com/ [[96m"https://cdn.cookielaw.org/consent/488d15e8-5436-4ecc-b202-0d14fac3afe8/OtAutoBlock.js"[0m,[96m"https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"[0m,[96m"https://static.classdojo.com/fonts/DojoText/DojoText.css"[0m]
-
-[SQLI - TIMEOUT] https://doj.io/s/?s=66dba28940836c7ff9c66789
-
-[SQLI - TIMEOUT] https://doj.io/s/?t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb
-
-[WFUZZ] https://doj.io/s/?s=66dba28940836c7ff9c66789
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[WFUZZ] https://doj.io/s/?t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb
- /usr/local/lib/python3.11/site-packages/wfuzz/wfuzz.py:77: UserWarning:Fatal exception: Error opening file. [Errno 2] No such file or directory: '/usr/share/wordlists/dirb/common.txt'
-default
-default
-
-
-[XSS] https://doj.io/s/?s=66dba28940836c7ff9c66789
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing s/?s=66dba28940836c7ff9c66789            [0m[92m[+][0m Potentially vulnerable objects found at https://doj.io/s/ [0m
-[91m------------------------------------------------------------[0m
-4   const url = (window && [91m[91mwindow.location[0m[0m) ? window.[93mlocation.search[0m : null;
-[91m------------------------------------------------------------[0m
-[93m[!][0m Progress: 2/2 [0m
-
-
-[XSS] https://doj.io/s/?t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb
-[91m
-	XSStrike [97mv3.1.5
-[0m
-[97m[~][0m Crawling the target [0m
-[97m[~][0m Parsing ydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb [0m[92m[+][0m Potentially vulnerable objects found at https://doj.io/s/ [0m
-[91m------------------------------------------------------------[0m
-4   const url = (window && [91m[91mwindow.location[0m[0m) ? window.[93mlocation.search[0m : null;
-[91m------------------------------------------------------------[0m
-[93m[!][0m Progress: 2/2 [0m
-

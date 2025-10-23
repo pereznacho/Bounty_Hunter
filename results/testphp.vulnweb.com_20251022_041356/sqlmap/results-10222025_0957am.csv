@@ -1,3 +1,0 @@
-Target URL,Place,Parameter,Technique(s),Note(s)
-http://testphp.vulnweb.com/artists.php? artist=1-SLEEP(3),GET,artist,BETU,
-http://testphp.vulnweb.com/artists.php? artist=1-SLEEP(3),GET,artist,BETU,

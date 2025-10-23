@@ -1,9 +1,0 @@
-https://doj.io/s/?s=66dba28940836c7ff9c66789&t=2PcZgEN8jYrY3TiFCoptCnieoVydniKEvzgRNgATCBCqE4XxSKD7nPZ4iaLbi9zurb
-https://doj.io
-http://www.doj.io:80/
-https://doj.io/s/?s=669736778bec1826d23ede4d&t=3xxbf82yYnBEimaKqG1sbsf2ZMQCtWwMFfqnb7u3NCB1myrYfXtQEf9He7FV1SAWLc
-https://doj.io/sitemap.xml
-http://doj.io/favicon.ico
-http://doj.io/robots.txt
-http://www.doj.io:80/p7adtse
-http://doj.io:80/wS42CY

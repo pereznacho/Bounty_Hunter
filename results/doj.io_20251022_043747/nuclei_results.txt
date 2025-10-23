@@ -1,4 +1,0 @@
-# Resultados para https://doj.io:
-[[92mexternal-service-interaction[0m] [[94mhttp[0m] [[34minfo[0m] https://doj.io
-[[92mmissing-sri[0m] [[94mhttp[0m] [[34minfo[0m] https://www.classdojo.com/ [[96m"https://cdn.cookielaw.org/consent/488d15e8-5436-4ecc-b202-0d14fac3afe8/OtAutoBlock.js"[0m,[96m"https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"[0m,[96m"https://static.classdojo.com/fonts/DojoText/DojoText.css"[0m]
-
