@@ -1,4 +1,4 @@
-# 🎯 Bounty_Hunter2
+# 🎯 Bounty_Hunter
 
 **Advanced Bug Bounty Automation Tool** - Complete bug bounty automation platform with multi-platform integration, real-time vulnerability detection and auto-expanded mode.
 
@@ -93,8 +93,8 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/your-user/Bounty_Hunter2.git
-cd Bounty_Hunter2
+git clone https://github.com/your-user/Bounty_Hunter.git
+cd Bounty_Hunter
 
 # Build and run
 docker-compose up --build
@@ -215,7 +215,7 @@ CHECK_INTERVAL=10
 
 ### 📁 **Directory Structure**
 ```
-Bounty_Hunter2/
+Bounty_Hunter/
 ├── backend/           # FastAPI application
 ├── templates/         # HTML templates  
 ├── static/           # CSS, JS, images
@@ -266,4 +266,4 @@ MIT License - See [LICENSE](LICENSE) for more details.
 
 ---
 
-**🎯 Bounty_Hunter2 - Automating security, one scan at a time.**
+**🎯 Bounty_Hunter - Automating security, one scan at a time.**
