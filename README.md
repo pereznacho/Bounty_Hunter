@@ -101,6 +101,10 @@ docker-compose up --build
 
 # Access application
 # http://localhost:8000
+
+# Or Download from DockerHub
+docker pull nachin519/bounty_hunter
+
 ```
 
 ### 🔐 **Initial Setup**
