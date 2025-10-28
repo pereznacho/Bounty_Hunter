@@ -93,7 +93,7 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/your-user/Bounty_Hunter.git
+git clone https://github.com/pereznacho/Bounty_Hunter.git
 cd Bounty_Hunter
 
 # Build and run
