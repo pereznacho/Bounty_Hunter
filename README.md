@@ -28,7 +28,7 @@
 
 ---
 
-## �🚀 Key Features
+## 🚀 Key Features
 
 ### 🔄 **Auto-Expanded Mode** ⭐ NEW
 - **Automatic domain expansion**: Domains automatically expand to all their active URLs
