@@ -8,7 +8,7 @@ from datetime import datetime
 import requests
 import logging
 import os
-import threading
+import threading as threading_mod
 import re
 
 from backend.models import SessionLocal, Project, Target, ScanState, User
@@ -343,7 +343,7 @@ async def start_scan_from_intigriti(request: Request):
                 logger.exception("INTIGRITI: Error in auto-expanded scan worker for project %s", project.id)
         
         # start background thread with auto-expanded logic
-        threading.Thread(target=run_scan_with_auto_expanded, daemon=True).start()
+        threading_mod.Thread(target=run_scan_with_auto_expanded, daemon=True).start()
         logger.info("Started imported-scope background scan for Intigriti project %s with AUTO-EXPANDED", project.id)
         return RedirectResponse("/dashboard", status_code=303)
     finally:

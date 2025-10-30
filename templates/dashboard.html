@@ -409,6 +409,42 @@
                            0 0 30px rgba(239, 68, 68, 0.4);
             }
         }
+
+        /* Estilos para el estado del progreso */
+        .progress-stage {
+            color: #8b949e;
+            margin-left: 6px;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
+        }
+
+        .progress-stage.syncing {
+            color: #f59e0b;
+        }
+
+        .progress-stage.running {
+            color: #0ea5a4;
+        }
+
+        .progress-stage.completed {
+            color: #10b981;
+        }
+
+        .progress-stage.error {
+            color: #ef4444;
+        }
+
+        .progress-complete {
+            border-left: 3px solid #10b981 !important;
+        }
+
+        .progress-running {
+            border-left: 3px solid #0ea5a4;
+        }
+
+        .progress-syncing {
+            border-left: 3px solid #f59e0b;
+        }
     </style>
 </head>
 <body>
@@ -942,14 +978,60 @@ by Ignacio Pérez</pre>
     // Track the last request timestamp per project to ignore stale responses
     const LAST_REQ_TS = Object.create(null);
 
-    function applyProgressToCard(card, pct, stage) {
+    function applyProgressToCard(card, pct, stage, status) {
         const textEl = card.querySelector('.progress-text');
         const stageEl = card.querySelector('.progress-stage');
         const barEl  = card.querySelector('progress.progress-bar');
+        
+        // Ensure percentage is valid
         pct = Math.max(0, Math.min(100, Number(pct)||0));
+        
+        // Update progress text and bar
         if (textEl) textEl.textContent = pct.toString();
         if (barEl)  barEl.value = pct;
-        if (stageEl) stageEl.textContent = stage ? `(${stage})` : '';
+        
+        // Update stage with better formatting and status info
+        if (stageEl) {
+            let stageText = '';
+            let stageClass = '';
+            
+            if (status === 'running' && stage) {
+                stageText = `(${stage})`;
+                stageClass = 'running';
+                card.classList.add('progress-running');
+                card.classList.remove('progress-complete', 'progress-syncing');
+            } else if (status === 'completed') {
+                stageText = '(Completed)';
+                stageClass = 'completed';
+                card.classList.add('progress-complete');
+                card.classList.remove('progress-running', 'progress-syncing');
+            } else if (status === 'paused') {
+                stageText = '(Paused)';
+                stageClass = 'syncing';
+            } else if (status === 'failed' || status === 'error') {
+                stageText = '(Failed)';
+                stageClass = 'error';
+            } else if (pct === 0 && !stage) {
+                stageText = '(Ready to start)';
+                stageClass = '';
+            } else if (stage && stage.includes('Syncing')) {
+                stageText = `(${stage})`;
+                stageClass = 'syncing';
+                card.classList.add('progress-syncing');
+                card.classList.remove('progress-complete', 'progress-running');
+            } else if (stage) {
+                stageText = `(${stage})`;
+                stageClass = status === 'running' ? 'running' : '';
+            }
+            
+            stageEl.textContent = stageText;
+            
+            // Remove existing stage classes and add new one
+            stageEl.classList.remove('syncing', 'running', 'completed', 'error');
+            if (stageClass) {
+                stageEl.classList.add(stageClass);
+            }
+        }
     }
 
     async function refreshProgress() {
@@ -963,33 +1045,83 @@ by Ignacio Pérez</pre>
 
                 // Prevent stale caching: add cache buster and disable cache
                 const url = `/api/project/${pid}/status?_=${Date.now()}`;
-                const res = await fetch(url, { cache: 'no-store' });
-                if (!res.ok) continue;
-                const data = await res.json();
-
-                // Strictly read backend contract: { status, progress, current_step }
-                let pct = 0;
-                try {
-                    pct = parseInt(String(data.progress), 10);
-                } catch (_) {
-                    pct = 0;
+                const res = await fetch(url, { 
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                
+                if (!res.ok) {
+                    console.warn(`Failed to fetch status for project ${pid}: ${res.status}`);
+                    continue;
                 }
-                if (Number.isNaN(pct)) pct = 0;
-                pct = Math.max(0, Math.min(100, pct));
+                
+                const data = await res.json();
+                console.log(`Project ${pid} status:`, data); // Debug log
 
-                const stage = (data && data.current_step) ? String(data.current_step) : '';
+                // Extract progress with better error handling
+                let pct = 0;
+                if (data && typeof data.progress !== 'undefined') {
+                    pct = parseInt(String(data.progress), 10);
+                    if (isNaN(pct)) pct = 0;
+                }
+
+                // Defensive merge with local/state to avoid regressions when API returns stale 0s
+                const currentText = card.querySelector('.progress-text');
+                const currentPct = currentText ? parseInt(currentText.textContent || '0', 10) : 0;
+                const saved = loadProgressFromStorage(pid) || null;
+
+                // If server returns NaN or undefined, keep current/saved
+                if (!Number.isFinite(pct)) {
+                    pct = saved ? saved.progress : currentPct;
+                }
+
+                // Extract current step and status
+                const stage = data && data.current_step ? String(data.current_step) : '';
+                const status = data && data.status ? String(data.status) : '';
+
+                // Prefer most-recent higher progress while status is running/unknown
+                if (saved) {
+                    const recentEnough = Date.now() - saved.timestamp < 60 * 1000; // 60s
+                    const savedPct = Math.max(0, Math.min(100, Number(saved.progress) || 0));
+                    const savedStage = String(saved.stage || '');
+                    const savedStatus = String(saved.status || '');
+
+                    const isRunning = (status || '').toLowerCase() === 'running' || !status;
+                    if (recentEnough && isRunning && (pct < savedPct)) {
+                        pct = savedPct;
+                        // keep server stage if present; otherwise use saved
+                        if (!stage) { stage = savedStage; }
+                        if (!status) { status = savedStatus; }
+                    }
+                }
+
+                // If API reports 0 but card already shows higher progress, keep card value
+                if ((status || '').toLowerCase() !== 'completed' && pct < currentPct) {
+                    pct = currentPct;
+                }
 
                 // If a newer request finished later, ignore this update
                 if (LAST_REQ_TS[pid] !== startedAt) {
                     continue;
                 }
 
-                applyProgressToCard(card, pct, stage);
+                // Clamp and ensure numeric before applying
+                pct = Math.max(0, Math.min(100, Number(pct) || 0));
+                // Apply the progress update
+                applyProgressToCard(card, pct, stage, status);
 
-                // Optional status for completion check
-                const statusVal = (data && data.status) || '';
-                if (pct === 100 && String(statusVal).toLowerCase() === 'completed') {
+                // Guardar el progreso en localStorage para persistencia
+                saveProgressToStorage(pid, pct, stage, status);
+
+                // Add visual completion indicator
+                if (pct === 100 && status.toLowerCase() === 'completed') {
                     card.classList.add('progress-complete');
+                } else {
+                    card.classList.remove('progress-complete');
                 }
             }
         } catch (e) {
@@ -998,10 +1130,21 @@ by Ignacio Pérez</pre>
     }
 
     function initProgressMonitoring() {
-        // Do an immediate refresh
+        // Do an immediate refresh when page loads
         refreshProgress();
-        // Then keep it updated every 5s
-        progressInterval = setInterval(refreshProgress, 5000);
+        
+        // Set up frequent updates (every 2 seconds for better responsiveness)
+        progressInterval = setInterval(refreshProgress, 2000);
+        
+        // Also refresh when user focuses the tab (in case they switched away)
+        window.addEventListener('focus', refreshProgress);
+        
+        // Refresh when page becomes visible again
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshProgress();
+            }
+        });
     }
 
     // Limpiar interval cuando se salga de la página
@@ -1009,11 +1152,15 @@ by Ignacio Pérez</pre>
         if (vulnerabilityCheckInterval) clearInterval(vulnerabilityCheckInterval);
         if (progressInterval) clearInterval(progressInterval);
     });
-
     // Inicializar cuando se cargue la página
     document.addEventListener('DOMContentLoaded', function () {
         initVulnerabilityMonitoring();
         initProgressMonitoring();
+        
+        // Inicialización inmediata del progreso desde el HTML
+        initializeProgressFromHTML();
+        
+        // Refrescar cuando la página se vuelve visible
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 refreshProgress();
@@ -1021,10 +1168,115 @@ by Ignacio Pérez</pre>
         });
     });
 
+    // Función para limpiar localStorage antiguo
+    function cleanupOldProgressData() {
+        try {
+            const keys = Object.keys(localStorage);
+            const now = Date.now();
+            const oneHour = 60 * 60 * 1000; // 1 hora en millisegundos
+            
+            keys.forEach(key => {
+                if (key.startsWith('project_') && key.endsWith('_progress')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data && data.timestamp && (now - data.timestamp > oneHour)) {
+                            localStorage.removeItem(key);
+                        }
+                    } catch (e) {
+                        // Remover entradas corruptas
+                        localStorage.removeItem(key);
+                    }
+                }
+            });
+        } catch (e) {
+            console.warn('Could not cleanup old progress data:', e);
+        }
+    }
+
+    // Limpiar datos antiguos al cargar la página
+    cleanupOldProgressData();
+
+    // Función para cargar progreso desde localStorage y HTML
+    function initializeProgressFromHTML() {
+        const projectCards = document.querySelectorAll('.card[data-project-id]');
+        projectCards.forEach(card => {
+            const progressBar = card.querySelector('progress.progress-bar');
+            const progressText = card.querySelector('.progress-text');
+            const stageEl = card.querySelector('.progress-stage');
+            const projectId = card.getAttribute('data-project-id');
+            
+            if (progressBar && progressText && projectId) {
+                // Intentar cargar desde localStorage primero
+                const savedProgress = loadProgressFromStorage(projectId);
+                
+                let progress = 0;
+                let stage = '';
+                let status = '';
+                
+                if (savedProgress && savedProgress.timestamp > Date.now() - 30000) { // 30 segundos de validez
+                    // Usar datos guardados si son recientes
+                    progress = savedProgress.progress;
+                    stage = savedProgress.stage;
+                    status = savedProgress.status;
+                    console.log(`Loading project ${projectId} from localStorage: ${progress}% - ${stage}`);
+                } else {
+                    // Usar datos del HTML como fallback
+                    progress = Number(progressBar.value || 0);
+                    stage = stageEl.textContent || '';
+                    console.log(`Loading project ${projectId} from HTML: ${progress}%`);
+                }
+                
+                // Aplicar el progreso inmediatamente
+                applyProgressToCard(card, progress, stage, status);
+                
+                // Si no hay datos recientes, mostrar que está cargando
+                if (!savedProgress || savedProgress.timestamp <= Date.now() - 30000) {
+                    if (stageEl && progress > 0) {
+                        stageEl.textContent = '(Syncing with server...)';
+                        stageEl.style.color = '#f59e0b';
+                    }
+                }
+            }
+        });
+        
+        // Hacer refresh inmediato después de cargar datos locales
+        setTimeout(() => {
+            refreshProgress();
+        }, 500);
+    }
+
+    // Función para guardar progreso en localStorage
+    function saveProgressToStorage(projectId, progress, stage, status) {
+        try {
+            const data = {
+                progress: progress,
+                stage: stage,
+                status: status,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(`project_${projectId}_progress`, JSON.stringify(data));
+        } catch (e) {
+            console.warn('Could not save progress to localStorage:', e);
+        }
+    }
+
+    // Función para cargar progreso desde localStorage
+    function loadProgressFromStorage(projectId) {
+        try {
+            const data = localStorage.getItem(`project_${projectId}_progress`);
+            if (data) {
+                return JSON.parse(data);
+            }
+        } catch (e) {
+            console.warn('Could not load progress from localStorage:', e);
+        }
+        return null;
+    }
+
     // JavaScript para dashboard con nuevos colores
     document.addEventListener('DOMContentLoaded', function() {
         // Aplicar colores correctos en el dashboard
-        document.querySelectorAll('.project-card.has-vulnerabilities').forEach(card => {
+        document.querySelectorAll('.card.has-vulnerabilities').forEach(card => {
             const vulnBadge = card.querySelector('.vuln-badge');
             if (vulnBadge) {
                 const text = vulnBadge.textContent.toLowerCase();
