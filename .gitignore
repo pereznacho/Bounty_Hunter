@@ -9,3 +9,7 @@ tools/Gf-Patterns
 tools/Arjun
 tools/Gf-Patterns
 db.sqlite3
+__pycache__/
+*.pyc
+.DS_Store
+db.sqlite3
