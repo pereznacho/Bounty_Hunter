@@ -2,10 +2,23 @@ version: "3.9"
 
 services:
   web:
+    platform: linux/arm64
     build: .
     container_name: bounty_hunter_web
     ports:
       - "8000:8000"
     volumes:
       - .:/app
+    environment:
+      - SQLALCHEMY_DATABASE_URL=sqlite:////db.sqlite3
     command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+        reservations:
+          memory: 1g
+
+volumes:
+  db_data:
