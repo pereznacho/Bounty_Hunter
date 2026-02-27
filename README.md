@@ -111,44 +111,50 @@ flowchart TB
 ### Recon → Discovered URLs → Selection → Scan
 
 ```mermaid
-flowchart LR
-    A[Domain(s)] --> B[Subfinder] --> C[Httpx] --> D[Active URLs]
-    D --> E[DiscoveredURL] --> F[ScanState: awaiting_url_selection]
-    F --> G[Targets view: URL checkboxes] --> H[POST discovered-urls/scan]
-    H --> I[Target per URL] --> J[launch_scans_for_new_targets] --> K[run_scan_target per target]
+graph LR;
+    A[Domain(s)] --> B[Subfinder];
+    B --> C[Httpx];
+    C --> D[Active URLs];
+    D --> E[DiscoveredURL];
+    E --> F[ScanState: awaiting_url_selection];
+    F --> G[Targets view: URL checkboxes];
+    G --> H[POST discovered-urls/scan];
+    H --> I[Target per URL];
+    I --> J[launch_scans_for_new_targets];
+    J --> K[run_scan_target per target];
 ```
 
 ### Scan worker flow (per target)
 
 ```mermaid
-flowchart TB
-    subgraph run_scan
-        A[Get project and targets]
-        A --> B[For each target: run_scan_target]
-    end
-    subgraph run_scan_target
-        C[Create results/target_timestamp]
-        D[Mark target running]
-        E[For each module in MODULES]
-        E --> F[execute_single_module]
-        F --> G[run_module_isolated: subprocess driver]
-        G --> H{Recon and domain?}
-        H -->|Yes| I[create_targets_from_recon]
-        I --> J[launch_scans_for_new_targets]
-        J --> K[Threads run_scan_target for new URLs]
-        H -->|No| L[Next module]
-        L --> E
-        E --> M[Mark target completed]
-        M --> N[generate_final_report]
-    end
-    B --> C
+graph TB;
+    RS[run_scan] --> RT[run_scan_target];
+    RT --> C[Create results directory];
+    C --> D[Mark target running];
+    D --> E[For each module];
+    E --> X[execute_single_module];
+    X --> Y[run_module_isolated];
+    Y --> Z[Recon and domain decision];
+    Z --> A[create_targets_from_recon];
+    A --> B[launch_scans_for_new_targets];
 ```
 
 ### Module order (pipeline)
 
 ```mermaid
-flowchart LR
-    M1[Recon] --> M2[Directory & Files] --> M3[Arjun] --> M4[Nuclei Scan] --> M5[WAF Detection] --> M6[LFI] --> M7[XSStrike] --> M8[SQLMap] --> M9[FFUF] --> M10[WFUZZ] --> M11[Dalfox] --> M12[Tplmap] --> M13[GF+qsreplace]
+graph LR;
+    M1[Recon] --> M2[Directory and Files];
+    M2 --> M3[Arjun];
+    M3 --> M4[Nuclei Scan];
+    M4 --> M5[WAF Detection];
+    M5 --> M6[LFI];
+    M6 --> M7[XSStrike];
+    M7 --> M8[SQLMap];
+    M8 --> M9[FFUF];
+    M9 --> M10[WFUZZ];
+    M10 --> M11[Dalfox];
+    M11 --> M12[Tplmap];
+    M12 --> M13[GF plus qsreplace];
 ```
 
 ---
