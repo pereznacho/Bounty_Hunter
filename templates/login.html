@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bounty_Hunter - Access Terminal</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--th-bg) 0%, var(--th-bg2) 50%, var(--th-bg) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--th-text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--th-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--th-glow) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, var(--th-glow) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: center;
+            padding: 0 40px;
+        }
+        
+        /* Left side - Branding */
+        .brand-section {
+            text-align: left;
+        }
+        
+        .ascii-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: var(--th-accent);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--th-glow);
+            white-space: pre;
+        }
+        
+        .brand-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 50%, var(--th-warm) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.025em;
+        }
+        
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: var(--th-muted);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            flex-wrap: wrap;
+            max-width: 100%;
+            margin-top: 8px;
+        }
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--th-accent2);
+            flex-shrink: 0;
+        }
+        .process-step-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--th-accent), var(--th-accent2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--th-bg);
+            font-weight: 600;
+        }
+        .process-step-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--th-accent2);
+        }
+        .process-connector {
+            flex: 1;
+            min-width: 12px;
+            max-width: 28px;
+            height: 0;
+            border-top: 2px solid var(--th-accent);
+            margin: 0 2px;
+            position: relative;
+        }
+        .process-connector::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border: 4px solid transparent;
+            border-left-color: var(--th-accent);
+            border-right: none;
+            margin-top: -4px;
+        }
+        
+        .brand-panel {
+            padding: 24px 28px;
+        }
+        
+        /* Right side - Login form */
+        .form-container {
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px var(--th-border);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--th-accent), transparent);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--th-text);
+            margin-bottom: 8px;
+        }
+        
+        .form-subtitle {
+            color: var(--th-muted);
+            font-size: 0.9rem;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--th-text);
+            margin-bottom: 8px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--th-bg2);
+            border: 1px solid var(--th-border);
+            border-radius: 8px;
+            color: var(--th-text);
+            font-size: 14px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--th-accent);
+            box-shadow: 0 0 0 3px var(--th-glow);
+            background-color: var(--th-bg);
+        }
+        
+        .input-field::placeholder {
+            color: var(--th-muted);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 100%);
+            color: var(--th-bg);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--th-glow);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .register-section {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--th-border);
+        }
+        
+        .register-text {
+            color: var(--th-muted);
+            font-size: 0.9rem;
+        }
+        
+        .register-link {
+            color: var(--th-accent2);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .register-link:hover {
+            color: var(--th-accent);
+            text-decoration: none;
+        }
+        
+        /* Security indicators */
+        .security-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--th-glow);
+            border: 1px solid var(--th-border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            color: var(--th-accent2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 20px;
+                text-align: center;
+            }
+            
+            .brand-section {
+                text-align: center;
+            }
+            
+            .ascii-logo {
+                font-size: 8px;
+            }
+            
+            .brand-title {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 32px 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ascii-logo {
+                font-size: 6px;
+            }
+            
+            .brand-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-container {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('login') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('login') }}">
+    <div class="login-theme-wrap" style="position: fixed; top: 16px; right: 16px; z-index: 100; display: flex; align-items: center; gap: 8px;">
+        <label for="theme-select-login" style="color: var(--th-muted); font-size: 0.875rem;">Theme</label>
+        <select id="theme-select-login" aria-label="Select theme" style="background: var(--th-card); border: 1px solid var(--th-border); color: var(--th-text); padding: 6px 10px; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">
+            <option value="default" {% if theme == 'default' %}selected{% endif %}>Default</option>
+            <option value="cyberpunk" {% if theme == 'cyberpunk' %}selected{% endif %}>Cyberpunk</option>
+            <option value="neon" {% if theme == 'neon' %}selected{% endif %}>Neon</option>
+            <option value="matrix" {% if theme == 'matrix' %}selected{% endif %}>Matrix</option>
+            <option value="tron" {% if theme == 'tron' %}selected{% endif %}>Tron</option>
+            <option value="purple" {% if theme == 'purple' %}selected{% endif %}>Purple</option>
+            <option value="hackthebox" {% if theme == 'hackthebox' %}selected{% endif %}>HackTheBox</option>
+            <option value="military" {% if theme == 'military' %}selected{% endif %}>Military</option>
+            <option value="parrot" {% if theme == 'parrot' %}selected{% endif %}>Parrot</option>
+        </select>
+    </div>
+    <div class="login-container">
+        <!-- Left Side - Branding (variants per theme) -->
+        <div class="brand-section">
+            <div class="brand-panel">
+            {% if theme == 'matrix' %}
+            <div class="ascii-logo" style="font-size: 12px; margin-bottom: 12px;">&gt; BOUNTY_HUNTER_LOGIN</div>
+            <p class="brand-subtitle" style="font-family: monospace;">ACCESS TERMINAL — ENTER CREDENTIALS</p>
+            {% elif theme == 'military' %}
+            <h1 class="brand-title">Bounty Hunter</h1>
+            <p class="brand-subtitle">Mission login — secure access</p>
+            {% elif theme == 'hackthebox' %}
+            <h1 class="brand-title">Bounty Hunter</h1>
+            <p class="brand-subtitle">Bug Bounty Automation — Secure access</p>
+            {% else %}
+            <div class="ascii-logo">
+██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗
+██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝
+██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝ 
+██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝  
+██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║   
+╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝   
+
+██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗ 
+██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+               by Ignacio Perez
+            </div>
+            <h1 class="brand-title">Bounty Hunter</h1>
+            <p class="brand-subtitle">Advanced Bug Bounty Automation Platform</p>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="process-step-icon">🔎</div>
+                    <span class="process-step-label">Recon</span>
+                </div>
+                <span class="process-connector" aria-hidden="true"></span>
+                <div class="process-step">
+                    <div class="process-step-icon">🔗</div>
+                    <span class="process-step-label">Find URL</span>
+                </div>
+                <span class="process-connector" aria-hidden="true"></span>
+                <div class="process-step">
+                    <div class="process-step-icon">⚡</div>
+                    <span class="process-step-label">Exploit</span>
+                </div>
+                <span class="process-connector" aria-hidden="true"></span>
+                <div class="process-step">
+                    <div class="process-step-icon">💰</div>
+                    <span class="process-step-label">Profit</span>
+                </div>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+        
+        <!-- Right Side - Login Form (theme-specific wrapper and copy) -->
+        {% if theme == 'matrix' %}
+        <div class="form-container auth-terminal">
+            <div class="auth-terminal-titlebar">BOUNTY_HUNTER — LOGIN</div>
+            <div class="form-header">
+                <h2 class="form-title">&gt; ENTER CREDENTIALS</h2>
+                <p class="form-subtitle">user@bounty-hunter:~$</p>
+            </div>
+            <form method="post" action="/login" class="auth-terminal-form">
+                <div class="input-group">
+                    <label for="username" class="input-label">&gt; USERNAME:</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">&gt; PASSWORD:</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="********" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">[ AUTHENTICATE ]</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">No account? <a href="/register" class="register-link">&gt; REGISTER</a></p>
+            </div>
+        </div>
+        {% elif theme == 'tron' %}
+        <div class="form-container auth-tron-panel">
+            <div class="form-header">
+                <h2 class="form-title">Access Panel</h2>
+                <p class="form-subtitle">Connect to the grid</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Connect</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need access? <a href="/register" class="register-link">Request Account</a></p>
+            </div>
+        </div>
+        {% elif theme == 'cyberpunk' %}
+        <div class="form-container auth-cyberpunk-frame">
+            <div class="form-header">
+                <h2 class="form-title">Grant Access</h2>
+                <p class="form-subtitle">HUD authentication</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Grant Access</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need access credentials? <a href="/register" class="register-link">Request Account</a></p>
+            </div>
+        </div>
+        {% elif theme == 'neon' %}
+        <div class="form-container auth-neon-card">
+            <div class="form-header">
+                <h2 class="form-title">Access Terminal</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Initialize Session</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need access credentials? <a href="/register" class="register-link">Request Account</a></p>
+            </div>
+        </div>
+        {% elif theme == 'purple' %}
+        <div class="form-container auth-purple-card">
+            <div class="form-header">
+                <h2 class="form-title">Access Terminal</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Initialize Session</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need access credentials? <a href="/register" class="register-link">Request Account</a></p>
+            </div>
+        </div>
+        {% elif theme == 'hackthebox' %}
+        <div class="form-container auth-hackthebox-panel">
+            <div class="form-header">
+                <h2 class="form-title">Sign in</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+            </div>
+            {% if error %}
+            <p class="auth-error" style="color: #ef4444; margin-bottom: 12px; font-size: 0.9rem;">{{ error }}</p>
+            {% endif %}
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Sign in</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need an account? <a href="/register" class="register-link">Register</a></p>
+            </div>
+        </div>
+        {% elif theme == 'military' %}
+        <div class="form-container auth-military-panel">
+            <div class="form-header">
+                <h2 class="form-title">Mission login</h2>
+                <p class="form-subtitle">Enter credentials for secure access</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Authenticate</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">No credentials? <a href="/register" class="register-link">Request access</a></p>
+            </div>
+        </div>
+        {% else %}
+        <div class="form-container auth-default">
+            <div class="form-header">
+                <h2 class="form-title">Access Terminal</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+            </div>
+            <form method="post" action="/login">
+                <div class="input-group">
+                    <label for="username" class="input-label">Username</label>
+                    <input type="text" id="username" name="username" class="input-field" placeholder="Enter your username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Initialize Session</button>
+            </form>
+            <div class="register-section">
+                <p class="register-text">Need access credentials? <a href="/register" class="register-link">Request Account</a></p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        // Theme selector: cookie + body class (no API when not logged in)
+        (function() {
+            var COOKIE_NAME = 'bounty_theme';
+            var MAX_AGE = 365 * 24 * 60 * 60;
+            function setThemeCookie(theme) {
+                document.cookie = COOKIE_NAME + '=' + encodeURIComponent(theme) + '; path=/; max-age=' + MAX_AGE + '; SameSite=Lax';
+            }
+            function applyTheme(theme) {
+                theme = (theme || 'default').trim().toLowerCase();
+                var valid = ['default', 'cyberpunk', 'neon', 'matrix', 'tron', 'purple', 'hackthebox', 'military'];
+                if (valid.indexOf(theme) === -1) theme = 'default';
+                document.body.className = (document.body.className || '').replace(/\btheme-\w+/g, '').trim() + ' theme-' + theme;
+                document.body.setAttribute('data-theme', theme);
+                setThemeCookie(theme);
+                return theme;
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                var sel = document.getElementById('theme-select-login');
+                if (sel) {
+                    sel.addEventListener('change', function() {
+                        applyTheme(this.value);
+                    });
+                }
+            });
+        })();
+        // Add subtle animations and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus animation for input fields
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Button click effect
+            const loginBtn = document.querySelector('.login-btn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            }
+        });
+    </script>
+    
+    <style>
+        .input-group {
+            transition: transform 0.2s ease;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Additional security styling */
+        .security-badge::before {
+            content: '🔒 ';
+            margin-right: 4px;
+        }
+    </style>
+</body>
+</html>

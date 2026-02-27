@@ -1,0 +1,17 @@
+{
+  "subfinder": true,
+  "assetfinder": true,
+  "httpx": true,
+  "gau": true,
+  "waybackurls": true,
+  "katana": true,
+  "sqlmap": true,
+  "ffuf": true,
+  "wfuzz": true,
+  "dalfox": true,
+  "arjun": true,
+  "tplmap": true,
+  "gf": true,
+  "qsreplace": true,
+  "seclists": true
+}

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--th-bg) 0%, var(--th-bg2) 50%, var(--th-bg) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--th-text);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 40px 20px;
+            color: var(--th-text);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 100%);
+            color: var(--th-bg);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(14, 165, 164, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--th-border);
+            color: var(--th-accent2);
+            padding: 11px 19px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--th-accent);
+            background: rgba(14, 165, 164, 0.1);
+        }
+
+        .card {
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--th-accent), transparent);
+        }
+
+        .file-block {
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            border-radius: 12px;
+            margin: 16px 0;
+            padding: 20px;
+            border-left: 3px solid var(--th-accent);
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .file-block summary {
+            cursor: pointer;
+            color: var(--th-warm);
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+            background: linear-gradient(135deg, var(--th-warm) 0%, var(--th-warm) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .file-block summary:hover {
+            color: var(--th-accent);
+            -webkit-text-fill-color: var(--th-accent);
+        }
+
+        .file-content {
+            background: var(--th-bg2);
+            border: 1px solid var(--th-border);
+            padding: 16px;
+            color: var(--th-text);
+            border-radius: 8px;
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            line-height: 1.5;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--th-accent), var(--th-accent2));
+            color: var(--th-bg);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .muted {
+            color: var(--th-muted);
+            font-size: 0.9rem;
+        }
+
+        .export-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .critical { 
+            color: #ff4c9b; 
+            font-weight: bold; 
+            background: #3b002b; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .high { 
+            color: #ff5b5b; 
+            background: #3b1b1b; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .medium { 
+            color: #facc15; 
+            background: #3a2f00; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .low { 
+            color: #4ade80; 
+            background: #0f2d1c; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+        .info { 
+            color: #60a5fa; 
+            background: #1e3a8a; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+        }
+
+        /* NUEVOS COLORES PARA PROJECT DETAIL SEGÚN ESTÁNDARES DE CIBERSEGURIDAD */
+        .vulnerability-badge.critical {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;  /* Púrpura */
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3) !important;
+        }
+        
+        .vulnerability-badge.high {
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;  /* Rojo */
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3) !important;
+        }
+        
+        .vulnerability-badge.medium {
+            background: linear-gradient(135deg, #f97316, #ea580c) !important;  /* Anaranjado */
+            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3) !important;
+        }
+        
+        .vulnerability-badge.low {
+            background: linear-gradient(135deg, #059669, #047857) !important;  /* Verde oscuro */
+            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3) !important;
+        }
+        
+        /* Actualizar texto de badges según nivel */
+        .vulnerability-badge.critical::before { content: "🟣 CRITICAL"; }
+        .vulnerability-badge.high::before { content: "🔴 HIGH"; }
+        .vulnerability-badge.medium::before { content: "🟠 MEDIUM"; }
+        .vulnerability-badge.low::before { content: "🟢 LOW"; }
+
+        progress {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background-color: var(--th-bg2);
+            border: 1px solid var(--th-border);
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        progress::-webkit-progress-value {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+        
+        progress::-moz-progress-bar {
+            background: linear-gradient(135deg, #0ea5a4, #9fd8d6);
+            border-radius: 6px;
+        }
+
+        /* Header styling */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .ascii-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            line-height: 1;
+            color: var(--th-accent);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(14, 165, 164, 0.3);
+            white-space: pre;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 50%, var(--th-warm) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: var(--th-muted);
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('project_detail') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('project_detail') }}">
+
+<div class="container">
+    {% set state = state or {} %}
+    <!-- Banner -->
+    <div class="page-header">
+        <pre class="ascii-logo">
+██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝</pre>
+        <h1 class="page-title">Scan Results Detail</h1>
+        <p class="page-subtitle">Advanced Security Research Platform - Project Analysis</p>
+    </div>
+    {% if target %}
+      <script>document.title = "Target: {{ target.target }}";</script>
+    {% endif %}
+
+    <a href="/dashboard" class="btn-outline" style="margin-bottom: 20px;">← Back to Dashboard</a>
+
+    <h1>📁 Bounty Program: {{ project.name }}</h1>
+    {% if target %}
+      <h2>🎯 Target: {{ target.target }}</h2>
+      <p class="muted">🧭 Scope Type: {{ target.scope_type }}</p>
+      <p class="muted">📌 URL/Domain: {{ target.url }}</p>
+      <hr style="margin: 16px 0; border-color: var(--th-border);">
+    {% endif %}
+    <p class="muted">🌐 Platform: {{ project.platform }}</p>
+    <p class="muted">🏷 Program Handle: {{ project.program_handle }}</p>
+    <p class="muted">🧭 <strong>Created:</strong> {{ project.created_at.strftime('%Y-%m-%d') }}</p>
+
+    <hr style="margin: 16px 0; border-color: var(--th-border);">
+    <h2>🎯 Selected Targets</h2>
+    {% if project.domains %}
+        <h3>🌍 Domains</h3>
+        <ul>
+        {% for domain in project.domains %}
+            <li>{{ domain }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if project.urls %}
+        <h3>🔗 URLs</h3>
+        <ul>
+        {% for url in project.urls %}
+            <li>{{ url }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>📊 Active Scans</h2>
+    {% if scans %}
+        {% for scan in scans %}
+            <div class="card" style="margin-bottom: 20px;">
+                <p><strong>🔍 Target:</strong> {{ scan.target }}</p>
+                <p><strong>Mode:</strong> {{ scan.mode }}</p>
+                <p><strong>Status:</strong> {{ scan.status }}</p>
+                <p><strong>Step:</strong> {{ scan.current_step }}</p>
+                <p><strong>Progress:</strong> {{ scan.progress }}%</p>
+                <progress max="100" value="{{ scan.progress }}"></progress>
+
+                <div class="export-btns" style="margin-top: 10px;">
+                    {% if target %}
+                      <a href="/project/{{ project.id }}/target/{{ target.id }}" class="btn-outline">🔎 View Target</a>
+                    {% else %}
+                      <a href="/project/{{ scan.id }}/detail" class="btn-outline">🔎 View Details</a>
+                    {% endif %}
+                    {% if scan.status == 'completed' %}
+                        <a href="/project/{{ scan.id }}/export" class="btn">📄 Export PDF</a>
+                        <a href="/results/{{ scan.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+                        <a href="/project/{{ scan.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Controles -->
+    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+        {% if state and state.status == "running" %}
+            <form action="/project/{{ project.id }}/stop" method="post">
+                <button type="submit" class="btn" style="background:#dc2626; color:white;">⛔ Stop</button>
+            </form>
+            <form action="/project/{{ project.id }}/stop-scan" method="post">
+                <button type="submit" class="btn" style="background:#b91c1c; color:white;">⛔ Stop Scan (all targets)</button>
+            </form>
+            <form action="/project/{{ project.id }}/skip" method="post">
+                <button type="submit" class="btn" style="background:#047857;">⏭ Skip Step</button>
+            </form>
+            <form action="/project/{{ project.id }}/repeat" method="post">
+                <button type="submit" class="btn">🔁 Repeat Step</button>
+            </form>
+        {% else %}
+            <form action="/project/{{ project.id }}/start" method="post">
+                <button type="submit" class="btn">▶ Start</button>
+            </form>
+        {% endif %}
+        <form action="/project/{{ project.id }}/delete" method="post">
+            <button type="submit" class="btn" style="background:#dc2626; color:white;">🗑 Delete</button>
+        </form>
+    </div>
+
+    {% if state and state.status == "completed" %}
+    <div class="export-btns">
+        <a href="/project/{{ project.id }}/export" class="btn">📄 Export PDF Report</a>
+        <a href="/results/{{ project.results_dir }}/reporte.md" download class="btn-outline">📘 Download Markdown</a>
+        <a href="/project/{{ project.id }}/export/burp" class="btn-outline">🧩 Export BurpSuite</a>
+    </div>
+    {% endif %}
+
+    <hr style="margin: 24px 0; border-color: var(--th-border);">
+
+    <!-- BLOQUE DE ARCHIVOS (actualizado para evitar errores) -->
+    <h2>📂 Generated Files</h2>
+    <div id="files-output">
+        {% if files is defined and files %}
+            {% for fname, content in files.items() %}
+                {% set line_count = content.splitlines() | length %}
+                <details class="file-block">
+                    <summary class="file-header">
+                        <strong>📄 {{ fname }}</strong>
+                        <span class="muted">({{ line_count }} lines)</span>
+                    </summary>
+                    <div class="file-content">
+                        {% if 'nuclei' in fname %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_nuclei }}</pre>
+                        {% elif 'xss' in fname or 'XSS' in fname or fname == 'xss_vulnerables.txt' %}
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_xss }}</pre>
+                        {% else %}
+                            {{ content
+                                | e
+                                | replace('\x1b[1;91m', '<span class="critical">')
+                                | replace('\x1b[91m', '<span class="critical">')
+                                | replace('\x1b[1;93m', '<span class="medium">')
+                                | replace('\x1b[93m', '<span class="medium">')
+                                | replace('\x1b[1;92m', '<span class="low">')
+                                | replace('\x1b[92m', '<span class="low">')
+                                | replace('\x1b[1;94m', '<span class="info">')
+                                | replace('\x1b[94m', '<span class="info">')
+                                | replace('\x1b[1;96m', '<span class="info">')
+                                | replace('\x1b[96m', '<span class="info">')
+                                | replace('\x1b[34m', '<span class="info">')
+                                | replace('\x1b[0m', '</span>')
+                                | replace('\x1b[97m[~]', '🔸')
+                                | replace('[~]', '🔸')
+                                | replace('\x1b[97m', '')
+                                | replace('\x1b[91m', '')
+                                | replace('\x1b[92m', '')
+                                | replace('\x1b[93m', '')
+                                | replace('\x1b[94m', '')
+                                | replace('\x1b[96m', '')
+                                | safe
+                            }}
+                        {% endif %}
+                    </div>
+                </details>
+            {% endfor %}
+        {% else %}
+            <p class="muted">⚠️ No files have been generated yet for this project.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function updateStatus() {
+    fetch("/api/project/{{ project.id }}/status")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("progress").value = data.progress;
+            document.getElementById("progress_text").innerText = data.progress + "%";
+            document.getElementById("status_text").innerText = data.status;
+            document.getElementById("stage_text").innerText = data.current_step;
+            if (data.progress < 100 && data.status !== "cancelled") {
+                setTimeout(updateStatus, 3000);
+            }
+        });
+}
+updateStatus();
+
+// JavaScript para aplicar colores correctos en project detail
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('[🎨] Applying new color scheme to project detail...');
+    
+    // Función para determinar el nivel de vulnerabilidad y aplicar colores
+    function updateProjectColors() {
+        // Buscar badge de vulnerabilidad en el proyecto
+        const vulnBadge = document.querySelector('.vulnerability-badge');
+        if (vulnBadge) {
+            const text = vulnBadge.textContent.toLowerCase();
+            
+            // Limpiar contenido actual y clases
+            vulnBadge.innerHTML = '';
+            vulnBadge.className = 'vulnerability-badge';
+            
+            // Aplicar clase y contenido según nivel detectado
+            if (text.includes('critical') || text.includes('sql') || text.includes('lfi')) {
+                vulnBadge.classList.add('critical');
+                vulnBadge.textContent = '🟣 CRITICAL';
+            } else if (text.includes('high') || text.includes('xss') || text.includes('dalfox') || text.includes('ffuf')) {
+                vulnBadge.classList.add('high');
+                vulnBadge.textContent = '🔴 HIGH';
+            } else if (text.includes('medium') || text.includes('template') || text.includes('tplmap')) {
+                vulnBadge.classList.add('medium');
+                vulnBadge.textContent = '🟠 MEDIUM';
+            } else if (text.includes('low') || text.includes('wfuzz')) {
+                vulnBadge.classList.add('low');
+                vulnBadge.textContent = '🟢 LOW';
+            } else if (text.includes('vulnerabilit')) {
+                // Caso genérico - aplicar high por defecto
+                vulnBadge.classList.add('high');
+                vulnBadge.textContent = '🔴 HIGH';
+            }
+            
+            console.log('[✅] Project vulnerability badge updated with new colors');
+        }
+        
+        // Buscar otras referencias de vulnerabilidades en la página
+        document.querySelectorAll('.stats-item, .project-stat').forEach(item => {
+            if (item.textContent.toLowerCase().includes('vulnerabilit')) {
+                item.style.color = 'var(--th-warm)';
+                item.style.fontWeight = 'bold';
+            }
+        });
+    }
+    
+    // Ejecutar actualización
+    updateProjectColors();
+    
+    // Re-ejecutar cada 5 segundos por si hay cambios dinámicos
+    setInterval(updateProjectColors, 5000);
+});
+</script>
+</body>
+</html>

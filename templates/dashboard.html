@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bounty_Hunter - Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--th-bg) 0%, var(--th-bg2) 50%, var(--th-bg) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--th-text);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background patterns */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(159, 216, 214, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .container { 
+            position: relative;
+            z-index: 10;
+            max-width: 1200px; 
+            margin: 24px auto; 
+            padding: 40px 20px; 
+            color: var(--th-text); 
+        }
+        
+        .grid { 
+            display: grid; 
+            gap: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+        }
+        
+        .card { 
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--th-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--th-accent);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 1px var(--th-glow);
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Cards con vulnerabilidades */
+        .card.has-vulnerabilities {
+            border-color: #dc2626;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, var(--th-card) 50%);
+            animation: pulse-alert 2s ease-in-out infinite;
+        }
+
+        .card.has-vulnerabilities::before {
+            background: linear-gradient(90deg, transparent, #dc2626, transparent);
+            opacity: 0.8;
+        }
+
+        .card.has-vulnerabilities:hover {
+            border-color: #ef4444;
+            box-shadow: 
+                0 20px 40px rgba(220, 38, 38, 0.3),
+                0 0 0 1px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Niveles de criticidad */
+        .card.vuln-critical {
+            border-color: #dc2626;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, var(--th-card) 50%);
+        }
+
+        .card.vuln-high {
+            border-color: #ea580c;
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, var(--th-card) 50%);
+        }
+
+        .card.vuln-medium {
+            border-color: #d97706;
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, var(--th-card) 50%);
+        }
+
+        .card.vuln-low {
+            border-color: #eab308;
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, var(--th-card) 50%);
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% {
+                box-shadow: 
+                    0 16px 32px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(220, 38, 38, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 16px 32px rgba(220, 38, 38, 0.2),
+                    0 0 0 1px rgba(220, 38, 38, 0.4);
+            }
+        }
+
+        /* Badge de vulnerabilidades */
+        .vuln-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            animation: pulse-badge 1.5s ease-in-out infinite;
+        }
+
+        /* COLORES ACTUALIZADOS EN DASHBOARD SEGÚN ESTÁNDARES DE CIBERSEGURIDAD */
+        .vuln-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .vuln-badge.critical {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);  /* Púrpura */
+            color: white;
+            border: 1px solid #a855f7;
+        }
+        
+        .vuln-badge.high {
+            background: linear-gradient(135deg, #ef4444, #dc2626);  /* Rojo */
+            color: white;
+            border: 1px solid #f87171;
+        }
+        
+        .vuln-badge.medium {
+            background: linear-gradient(135deg, #f97316, #ea580c);  /* Anaranjado */
+            color: white;
+            border: 1px solid #fb923c;
+        }
+        
+        .vuln-badge.low {
+            background: linear-gradient(135deg, #059669, #047857);  /* Verde oscuro */
+            color: white;
+            border: 1px solid #10b981;
+        }
+        
+        .has-vulnerabilities.vuln-critical {
+            border-left: 6px solid #8b5cf6;  /* Púrpura */
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(124, 58, 237, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-high {
+            border-left: 6px solid #ef4444;  /* Rojo */
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-medium {
+            border-left: 6px solid #f97316;  /* Anaranjado */
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(234, 88, 12, 0.1));
+        }
+        
+        .has-vulnerabilities.vuln-low {
+            border-left: 6px solid #059669;  /* Verde oscuro */
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(4, 120, 87, 0.1));
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .card h4 { 
+            margin: 0 0 12px 0; 
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 50%, var(--th-warm) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem; 
+            font-weight: 600;
+        }
+        
+        .muted { 
+            color: var(--th-muted); 
+            font-size: 0.9rem; 
+            margin-bottom: 16px;
+        }
+        
+        .btn { 
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 100%);
+            color: var(--th-bg); 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            text-decoration: none; 
+            display: inline-block;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--th-glow);
+        }
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 1px solid var(--th-border); 
+            color: var(--th-accent2); 
+            padding: 11px 19px; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--th-accent);
+            background: var(--th-glow);
+        }
+        
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            padding-top: 60px; 
+            background-color: rgba(13,17,23,0.9); 
+            align-items: center; 
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.show { display: flex; }
+        
+        .modal-content { 
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            border-radius: 16px;
+            padding: 40px;
+            width: 420px;
+            color: var(--th-text);
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--th-accent), transparent);
+        }
+        
+        .modal-content input, .modal-content select, .modal-content button {
+            width: 100%; 
+            padding: 12px 16px; 
+            margin: 8px 0; 
+            background-color: var(--th-bg2); 
+            color: var(--th-text);
+            border: 1px solid var(--th-border); 
+            border-radius: 8px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-content input:focus, .modal-content select:focus {
+            outline: none;
+            border-color: var(--th-accent);
+            box-shadow: 0 0 0 3px var(--th-glow);
+            background-color: var(--th-bg);
+        }
+        
+        .modal-content button { 
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 100%);
+            color: var(--th-bg); 
+            border: none; 
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .modal-content button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--th-glow);
+        }
+        
+        .close { 
+            color: var(--th-warm); 
+            float: right; 
+            font-size: 22px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        
+        .close:hover {
+            color: var(--th-accent);
+        }
+        
+        /* Animaciones para detección de vulnerabilidades en tiempo real */
+        @keyframes vulnerability-alert {
+            0% { 
+                transform: scale(1);
+                border-color: rgba(148, 163, 184, 0.2);
+            }
+            25% { 
+                transform: scale(1.02);
+                border-color: rgba(239, 68, 68, 0.6);
+            }
+            50% { 
+                transform: scale(1.05);
+                border-color: rgba(239, 68, 68, 0.8);
+            }
+            75% { 
+                transform: scale(1.02);
+                border-color: rgba(239, 68, 68, 0.6);
+            }
+            100% { 
+                transform: scale(1);
+                border-color: rgba(148, 163, 184, 0.2);
+            }
+        }
+        
+        @keyframes pulse-update {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.01);
+            }
+        }
+        
+        /* Efecto de glow para nuevas vulnerabilidades */
+        .vulnerability-glow {
+            animation: vulnerability-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes vulnerability-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.6),
+                           0 0 30px rgba(239, 68, 68, 0.4);
+            }
+        }
+
+        /* Estilos para el estado del progreso */
+        .progress-stage {
+            color: var(--th-muted);
+            margin-left: 6px;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
+        }
+
+        .progress-stage.syncing {
+            color: var(--th-warm);
+        }
+
+        .progress-stage.running {
+            color: var(--th-accent);
+        }
+
+        .progress-stage.completed {
+            color: #10b981;
+        }
+
+        .progress-stage.error {
+            color: #ef4444;
+        }
+
+        .progress-complete {
+            border-left: 3px solid #10b981 !important;
+        }
+
+        .progress-running {
+            border-left: 3px solid var(--th-accent);
+        }
+
+        .progress-syncing {
+            border-left: 3px solid var(--th-warm);
+        }
+
+        /* Alert when recon is done and user must select URLs to scan */
+        .awaiting-selection-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .awaiting-selection-alert:hover {
+            background: var(--th-glow);
+            border-color: var(--th-warm);
+        }
+        .awaiting-selection-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .awaiting-selection-alert strong {
+            color: var(--th-warm);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('dashboard') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('dashboard') }}">
+<script>window.INITIAL_THEME = "{{ theme | default('default') }}";</script>
+<div class="container">
+    <div id="version-update-banner" class="version-banner" style="display: none; margin-bottom: 16px; padding: 12px 16px; background: var(--th-card); border: 1px solid var(--th-accent); border-radius: 8px; color: var(--th-text); position: relative;">
+        <span>New version <strong id="version-latest"></strong> available.</span>
+        <a id="version-link" href="#" target="_blank" rel="noopener" style="margin-left: 8px; color: var(--th-accent);">View release</a>
+        <button type="button" onclick="dismissVersionBanner()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--th-text); cursor: pointer; font-size: 1.2rem; padding: 0 4px;">&times;</button>
+    </div>
+    <div id="banner" class="app-banner">
+        <pre class="banner-ascii">
+ ██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ██████╔╝╚██████╔╝╚██████╔╝██║ ╚████║   ██║      ██║       ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝      ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+by Ignacio Pérez</pre>
+        <h2 class="banner-title">Bounty Hunter Dashboard</h2>
+        <p class="banner-subtitle">BugBounty Automation Tool - Advanced Security Research Platform</p>
+        <div class="banner-actions">
+            {% if request.session.user_id %}
+                <div class="theme-select-wrap">
+                    <label for="theme-select">Theme</label>
+                    <select id="theme-select" aria-label="Select theme">
+                        <option value="default" {% if theme == 'default' %}selected{% endif %}>Default</option>
+                        <option value="cyberpunk" {% if theme == 'cyberpunk' %}selected{% endif %}>Cyberpunk</option>
+                        <option value="neon" {% if theme == 'neon' %}selected{% endif %}>Neon</option>
+                        <option value="matrix" {% if theme == 'matrix' %}selected{% endif %}>Matrix</option>
+                        <option value="tron" {% if theme == 'tron' %}selected{% endif %}>Tron</option>
+                        <option value="purple" {% if theme == 'purple' %}selected{% endif %}>Purple</option>
+                        <option value="hackthebox" {% if theme == 'hackthebox' %}selected{% endif %}>HackTheBox</option>
+                        <option value="military" {% if theme == 'military' %}selected{% endif %}>Military</option>
+                        <option value="parrot" {% if theme == 'parrot' %}selected{% endif %}>Parrot</option>
+                    </select>
+                </div>
+                <span class="banner-user">
+                    <span>👤 {{ request.session.username }}</span>
+                    <a href="/logout">Logout</a>
+                </span>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <style>
+        /* Estilos base de botones (estructura común a todos los temas) */
+        .platform-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        /* Colores/fondos por plataforma (no aplican a HackTheBox; themes.css los controla) */
+        body:not(.theme-hackthebox) .platform-btn:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* HackerOne - Fondo blanco */
+        body:not(.theme-hackthebox) .btn-hackerone {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        body:not(.theme-hackthebox) .btn-hackerone:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Intigriti - Fondo blanco */
+        body:not(.theme-hackthebox) .btn-intigriti {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        body:not(.theme-hackthebox) .btn-intigriti:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* YesWeHack - Fondo blanco */
+        body:not(.theme-hackthebox) .btn-yeswehack {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        body:not(.theme-hackthebox) .btn-yeswehack:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* BugCrowd - Fondo blanco */
+        body:not(.theme-hackthebox) .btn-bugcrowd {
+            background: white;
+            color: #333;
+            border-color: #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        body:not(.theme-hackthebox) .btn-bugcrowd:hover {
+            background: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* New project - Dark gray (solo cuando no es HackTheBox; themes.css lo controla) */
+        body:not(.theme-hackthebox) .btn-new-project {
+            background: #343a40;
+            color: white;
+            border-color: #343a40;
+        }
+        body:not(.theme-hackthebox) .btn-new-project:hover {
+            background: #495057;
+        }
+        
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+        .platform-icon svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        body:not(.theme-hackthebox) .btn-new-project .platform-icon svg {
+            fill: white;
+        }
+        
+        /* Special style for HackerOne logo - occupies the full button */
+        .btn-hackerone {
+            padding: 4px 8px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-hackerone .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-hackerone .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 24px;
+            min-height: 24px;
+            object-fit: contain;
+            filter: invert(1) brightness(0.9);
+        }
+        
+        /* Special style for Intigriti logo - occupies the full button */
+        .btn-intigriti {
+            padding: 4px 8px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-intigriti .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-intigriti .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 24px;
+            min-height: 24px;
+            object-fit: contain;
+            filter: invert(1) brightness(0.9);
+        }
+        
+        /* Special style for YesWeHack logo - occupies the full button */
+        .btn-yeswehack {
+            padding: 8px 12px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-yeswehack .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-yeswehack .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 24px;
+            min-height: 24px;
+            object-fit: contain;
+            filter: none;
+        }
+        
+        /* Special style for BugCrowd logo - occupies the full button */
+        .btn-bugcrowd {
+            padding: 8px 12px;
+            min-width: 120px;
+            height: 48px;
+            justify-content: center;
+        }
+        
+        .btn-bugcrowd .platform-icon {
+            background: transparent;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .btn-bugcrowd .platform-icon img {
+            width: 100% !important;
+            height: 100% !important;
+            min-width: 24px;
+            min-height: 24px;
+            object-fit: contain;
+            filter: invert(1) brightness(0.9);
+        }
+    </style>
+
+    <div class="platform-actions" style="display:flex; gap:12px; margin:18px 0 22px 0; align-items:center; flex-wrap:wrap;">
+        <!-- New project -->
+        <a href="#" onclick="abrirModal()" class="platform-btn btn-new-project">
+            <div class="platform-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512">
+                    <path d="M501.558 245.558c5.766 0 10.442 4.676 10.442 10.443 0 5.767-4.676 10.442-10.442 10.442H313.113c-2.152 11.845-7.897 22.437-16.066 30.605-8.168 8.17-18.761 13.914-30.605 16.066v188.444c0 5.766-4.676 10.442-10.443 10.442-5.767 0-10.442-4.676-10.442-10.442V313.114c-11.845-2.152-22.437-7.896-30.605-16.066-8.17-8.168-13.914-18.76-16.066-30.605H10.442C4.676 266.443 0 261.768 0 256.001s4.676-10.443 10.442-10.443h188.444c2.152-11.844 7.896-22.437 16.066-30.605 8.168-8.169 18.76-13.914 30.605-16.066V10.442C245.557 4.676 250.232 0 255.999 0s10.443 4.676 10.443 10.442v188.445c11.844 2.152 22.437 7.897 30.605 16.066 8.169 8.168 13.914 18.761 16.066 30.605h188.445zM283.148 49.657c46.608 6.073 88.373 27.565 120 59.195 31.63 31.627 53.122 73.392 59.195 120h-21.085c-5.931-40.835-25.04-77.399-52.876-105.234-27.835-27.836-64.399-46.945-105.234-52.876V49.657zM462.343 283.15c-6.073 46.608-27.565 88.372-59.195 120-31.627 31.629-73.392 53.121-120 59.194V441.26c40.835-5.931 77.399-25.04 105.234-52.876 27.836-27.835 46.945-64.399 52.876-105.234h21.085zM228.85 462.344c-46.608-6.073-88.372-27.565-120-59.194-31.629-31.628-53.121-73.392-59.194-120H70.74c5.931 40.835 25.04 77.399 52.876 105.234 27.835 27.836 64.399 46.945 105.234 52.876v21.084zM49.656 228.852c6.073-46.608 27.565-88.373 59.194-120 31.628-31.63 73.392-53.122 120-59.195v21.085c-40.835 5.931-77.399 25.04-105.234 52.876-27.836 27.835-46.945 64.399-52.876 105.234H49.656zm233.492-104.453c26.206 5.379 49.631 18.388 67.849 36.604 18.216 18.218 31.225 41.643 36.604 67.849h-21.41c-5.015-20.428-15.562-38.682-29.961-53.082-14.4-14.399-32.654-24.946-53.082-29.961v-21.41zM387.601 283.15c-5.379 26.205-18.388 49.631-36.604 67.848-18.218 18.216-41.643 31.226-67.849 36.604v-21.409c20.428-5.016 38.682-15.562 53.082-29.961 14.399-14.401 24.946-32.654 29.961-53.082h21.41zM228.85 387.602c-26.205-5.378-49.631-18.388-67.848-36.604-18.216-18.217-31.226-41.643-36.604-67.848h21.409c5.016 20.428 15.562 38.681 29.961 53.082 14.401 14.399 32.654 24.945 53.082 29.961v21.409zm-104.452-158.75c5.378-26.206 18.388-49.631 36.604-67.849 18.217-18.216 41.643-31.225 67.848-36.604v21.41c-20.428 5.015-38.681 15.562-53.082 29.961-14.399 14.4-24.945 32.654-29.961 53.082h-21.409zm131.601-14.196c22.835 0 41.345 18.51 41.345 41.345 0 22.835-18.51 41.344-41.345 41.344-22.835 0-41.344-18.509-41.344-41.344s18.509-41.345 41.344-41.345z"/>
+                </svg>
+            </div>
+            <span>New Project</span>
+        </a>
+
+        <!-- Import HackerOne -->
+        <form action="/hackerone" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-hackerone">
+                <div class="platform-icon">
+                    <img src="/static/img/hackerone-logo.svg" alt="HackerOne">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import Intigriti -->
+        <form action="/import/intigriti" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-intigriti">
+                <div class="platform-icon">
+                    <img src="/static/img/intigriti-logo.png" alt="Intigriti">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import YesWeHack -->
+        <form action="/import/yeswehack" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-yeswehack">
+                <div class="platform-icon">
+                    <img src="/static/img/yeswehack-logo.png" alt="YesWeHack">
+                </div>
+            </button>
+        </form>
+
+        <!-- Import BugCrowd -->
+        <form action="/import/bugcrowd" method="get" style="margin:0;">
+            <button type="submit" class="platform-btn btn-bugcrowd">
+                <div class="platform-icon">
+                    <img src="/static/img/bugcrowd-logo.png" alt="BugCrowd">
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <div class="grid">
+        {% for p in projects %}
+        <a href="{% if (p.platform and p.platform != 'Manual' and p.platform != 'None') or p.platform == 'Manual (Auto-expanded)' %}/project/{{ p.id }}/targets{% else %}/project/{{ p.id }}{% endif %}" 
+           class="card{% if p.has_vulnerabilities %} has-vulnerabilities vuln-{{ p.vulnerability_level }}{% endif %}"
+           data-project-id="{{ p.id }}"
+           data-project-name="{{ p.name|e }}">
+            
+            {% if p.has_vulnerabilities %}
+            <div class="vuln-badge {{ p.vulnerability_level }}">
+                {% if p.vulnerability_level == 'critical' %}🚨 CRITICAL
+                {% elif p.vulnerability_level == 'high' %}⚠️ HIGH
+                {% elif p.vulnerability_level == 'medium' %}⚡ MEDIUM
+                {% elif p.vulnerability_level == 'low' %}💡 LOW
+                {% else %}🔍 FINDINGS
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if p.awaiting_url_selection %}
+            <div class="awaiting-selection-alert" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='/project/{{ p.id }}/targets';">
+                <span class="awaiting-selection-icon">🔍</span>
+                <div>
+                    <strong>Action required</strong>
+                    <p class="muted" style="margin: 4px 0 0 0; font-size: 0.85rem;">Recon finished. Select which URLs to scan.</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <h4>📁 {{ p.name }}</h4>
+            <p class="muted">
+                <span class="text-sm">
+                    <b>Platform:</b>
+                    {% if not p.platform or p.platform == 'None' %}
+                        Manual
+                    {% elif p.platform == 'Manual (Auto-expanded)' %}
+                        <span style="color: var(--th-accent);">Manual (Auto-expanded)</span> 🚀
+                    {% else %}
+                        {{ p.platform }}
+                    {% endif %}
+                </span>
+            </p>
+            <p class="muted"><strong>Targets:</strong>
+                {% if p.targets_text is defined and p.targets_text %}
+                    {{ p.targets_text }}
+                {% elif p.targets is defined %}
+                    {{ p.targets|length }}
+                {% elif p.targets_count is defined %}
+                    {{ p.targets_count }}
+                {% else %}
+                    0
+                {% endif %}
+            </p>
+            <p class="muted">
+                <strong>Progress:</strong>
+                <span class="progress-text">{{ p.progress }}</span>%
+                <span class="progress-stage" style="color: var(--th-muted); margin-left:6px;"></span>
+            </p>
+            <progress value="{{ p.progress }}" max="100" class="w-full mt-1 h-2 progress-bar"></progress>
+            
+            {% if p.has_vulnerabilities %}
+            <p class="muted" style="color: var(--th-warm); font-weight: 600; margin-top: 8px;">
+                🔥 Vulnerabilities detected!
+            </p>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal: New Project -->
+<div id="modalNewProject" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <h2>New Project</h2>
+        <form action="/project/new" method="post">
+            <label for="name">Project Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="mode">Mode:</label>
+            <select name="mode">
+                <option value="domain">Domain</option>
+                <option value="url">URL</option>
+            </select>
+
+            <label for="target">Target:</label>
+            <input type="text" name="target" required>
+
+            <label for="start_now">Start Now?</label>
+            <select name="start_now">
+                <option value="yes">Yes, start now</option>
+                <option value="no">No, later</option>
+            </select>
+
+            <input type="hidden" name="username" value="{{ request.session.username }}">
+            <button type="submit">Create Project</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    window.THEME_COLORS = {
+        default: { bg: "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)", fg: "#c9d1d9", cardBg: "#0f1720", cardBorder: "#21262d", accent: "#0ea5a4", muted: "#8b949e", beforeBg: "radial-gradient(circle at 20% 30%, rgba(14,165,164,.05) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,184,107,.05) 0%, transparent 50%)" },
+        cyberpunk: { bg: "linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%)", fg: "#e0c0ff", cardBg: "#16102a", cardBorder: "#3d2a5c", accent: "#ff00ff", muted: "#a080c0", beforeBg: "radial-gradient(circle at 20% 30%, rgba(255,0,255,.08) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,0,.05) 0%, transparent 50%)" },
+        neon: { bg: "linear-gradient(135deg, #050508 0%, #0a0a1a 50%, #050508 100%)", fg: "#b0f0f0", cardBg: "#0f0f1a", cardBorder: "rgba(0,255,255,.3)", accent: "#00ffff", muted: "#6080a0", beforeBg: "radial-gradient(circle at 30% 20%, rgba(0,255,255,.1) 0%, transparent 45%), radial-gradient(circle at 70% 80%, rgba(255,0,255,.08) 0%, transparent 45%)" },
+        matrix: { bg: "#000", fg: "#00ff41", cardBg: "#0d150d", cardBorder: "#003300", accent: "#00ff41", muted: "#008f20", beforeBg: "radial-gradient(ellipse at 50% 0%, rgba(0,255,65,.06) 0%, transparent 60%)" },
+        tron: { bg: "linear-gradient(180deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%)", fg: "#b8e6f5", cardBg: "#0f2847", cardBorder: "rgba(0,212,255,.4)", accent: "#00d4ff", muted: "#4a9fb8", beforeBg: "linear-gradient(90deg, transparent 0%, rgba(0,212,255,.03) 50%, transparent 100%), linear-gradient(0deg, transparent 0%, rgba(0,212,255,.03) 50%, transparent 100%)" },
+        purple: { bg: "linear-gradient(135deg, #1a0a2e 0%, #251038 50%, #1a0a2e 100%)", fg: "#e9d5ff", cardBg: "#2d1545", cardBorder: "#6b4c7a", accent: "#b794f6", muted: "#9f7aea", beforeBg: "radial-gradient(circle at 20% 30%, rgba(183,148,246,.08) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(192,132,252,.06) 0%, transparent 50%)" },
+        military: { bg: "#0a0a0c", fg: "#ffffff", cardBg: "#1a1a20", cardBorder: "#2a2a32", accent: "#00bcd4", muted: "#9e9e9e", beforeBg: "linear-gradient(90deg, rgba(40,40,44,.65) 0%, transparent 1px), linear-gradient(rgba(40,40,44,.65) 0%, transparent 1px), linear-gradient(45deg, rgba(50,50,56,.45) 0%, transparent 1px); background-size: 8px 8px, 8px 8px, 6px 6px" },
+        hackthebox: { bg: "#101927", fg: "#ffffff", cardBg: "#162238", cardBorder: "rgba(159,239,0,0.35)", accent: "#9fef00", muted: "rgba(255,255,255,0.75)", beforeBg: "none" },
+        parrot: { bg: "#0a0e12", fg: "#e6edf3", cardBg: "#161b22", cardBorder: "rgba(0,255,240,0.25)", accent: "#00fff0", muted: "#8b949e", beforeBg: "" }
+    };
+    function applyTheme(theme) {
+        theme = (theme || "default").trim().toLowerCase();
+        if (!window.THEME_COLORS || !window.THEME_COLORS.hasOwnProperty(theme)) theme = "default";
+        var c = window.THEME_COLORS[theme];
+        document.body.setAttribute("data-theme", theme);
+        document.body.className = (document.body.className || "").replace(/\btheme-\w+/g, "").trim() + " theme-" + theme;
+        if (theme === "hackthebox") {
+            document.body.style.setProperty("background", "#101927", "important");
+            document.body.style.setProperty("color", c.fg, "important");
+        } else if (theme === "parrot") {
+            document.body.style.setProperty("background", "#0a0e12", "important");
+            document.body.style.setProperty("color", c.fg, "important");
+        } else {
+            document.body.style.setProperty("background", c.bg, "important");
+            document.body.style.setProperty("color", c.fg, "important");
+        }
+        var styleEl = document.getElementById("theme-dynamic-style");
+        if (!styleEl) { styleEl = document.createElement("style"); styleEl.id = "theme-dynamic-style"; document.body.appendChild(styleEl); }
+        if (theme === "hackthebox") {
+            styleEl.textContent = ".card,.modal-content{background:" + c.cardBg + "!important;border-color:" + c.cardBorder + "!important;} .container{color:" + c.fg + "!important;} a:not(.platform-btn){color:" + c.accent + "!important;} pre{color:" + c.accent + "!important;} .muted,.progress-text{color:" + c.muted + "!important;}";
+        } else if (theme === "parrot") {
+            styleEl.textContent = ".card,.modal-content{background:" + c.cardBg + "!important;border-color:" + c.cardBorder + "!important;} .container{color:" + c.fg + "!important;} a:not(.platform-btn){color:" + c.accent + "!important;} pre{color:" + c.accent + "!important;} .muted,.progress-text{color:" + c.muted + "!important;}";
+        } else {
+            styleEl.textContent = [
+                "body::before{background:" + c.beforeBg + "!important;}",
+                ".card,.modal-content{background:" + c.cardBg + "!important;border-color:" + c.cardBorder + "!important;}",
+                ".container{color:" + c.fg + "!important;}",
+                "a:not(.platform-btn){color:" + c.accent + "!important;}",
+                "pre{color:" + c.accent + "!important;}",
+                ".muted,.progress-text{color:" + c.muted + "!important;}"
+            ].join("\n");
+        }
+        var sel = document.getElementById("theme-select");
+        if (sel && sel.value !== theme) sel.value = theme;
+        try { localStorage.setItem("bounty_theme", theme); } catch (e) {}
+        return theme;
+    }
+    (function() {
+        function loadAndApplyTheme() {
+            fetch("/api/user/theme", { method: "GET", credentials: "same-origin" })
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(data) {
+                    var t = (data && data.theme) ? data.theme : (window.INITIAL_THEME || "default");
+                    if (!window.THEME_COLORS || !window.THEME_COLORS.hasOwnProperty(t)) t = "default";
+                    applyTheme(t);
+                })
+                .catch(function() {
+                    var fallback = window.INITIAL_THEME || localStorage.getItem("bounty_theme") || "default";
+                    applyTheme(fallback);
+                });
+        }
+        function saveAndApplyTheme(rawVal) {
+            rawVal = (rawVal || "default").trim().toLowerCase();
+            applyTheme(rawVal);
+            fetch("/api/user/theme", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
+                body: JSON.stringify({ theme: rawVal })
+            }).then(function(r) {
+                if (!r.ok) console.warn("Theme save failed:", r.status);
+            }).catch(function() {});
+        }
+        function bindThemeControls() {
+            var themeSelectEl = document.getElementById("theme-select");
+            if (themeSelectEl) {
+                themeSelectEl.addEventListener("change", function() {
+                    saveAndApplyTheme(themeSelectEl.value);
+                });
+            }
+        }
+        loadAndApplyTheme();
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", bindThemeControls);
+        } else {
+            bindThemeControls();
+        }
+    })();
+    // #region agent log
+    (function debugRecuadroAlignment() {
+        function sendLog(message, data, hypothesisId) {
+            var payload = { sessionId: "910e4b", location: "dashboard.html:recuadro", message: message, data: data || {}, timestamp: Date.now(), runId: "recuadro-align" };
+            if (hypothesisId) payload.hypothesisId = hypothesisId;
+            fetch("http://127.0.0.1:7243/ingest/fe778f08-6cd1-4c52-9d30-3b1c04dbda25", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "910e4b" }, body: JSON.stringify(payload) }).catch(function() {});
+        }
+        function run() {
+            var bodyClass = document.body.className || "";
+            var dataTheme = document.body.getAttribute("data-theme") || "";
+            var isParrot = bodyClass.indexOf("theme-parrot") !== -1 || dataTheme === "parrot";
+            sendLog("Theme state", { bodyClass: bodyClass, dataTheme: dataTheme, isParrot: isParrot }, "H2");
+            var recuadro = document.querySelector(".platform-actions");
+            if (!recuadro) {
+                sendLog("Recuadro not found", {}, "H5");
+                return;
+            }
+            var cs = window.getComputedStyle(recuadro);
+            var justify = cs.getPropertyValue("justify-content");
+            var width = cs.getPropertyValue("width");
+            var display = cs.getPropertyValue("display");
+            var hasSelectorMatch = !!document.querySelector(".container > div.platform-actions");
+            sendLog("Recuadro computed styles", { justifyContent: justify, width: width, display: display, hasClass: true, hasSelectorMatch: hasSelectorMatch }, "H1");
+            sendLog("Recuadro width check", { width: width, parentWidth: recuadro.parentElement ? window.getComputedStyle(recuadro.parentElement).getPropertyValue("width") : "no-parent" }, "H3");
+            sendLog("Recuadro alignment verify", { width: width, marginLeft: cs.getPropertyValue("margin-left"), marginRight: cs.getPropertyValue("margin-right") }, "verify");
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+        else run();
+    })();
+    // #endregion
+    function abrirModal() {
+        const modal = document.getElementById("modalNewProject");
+        modal.style.display = "flex";
+        modal.classList.add("show");
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById("modalNewProject");
+        modal.classList.remove("show");
+        setTimeout(() => { modal.style.display = "none"; }, 200);
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("modalNewProject");
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    }
+
+    // Sistema de actualización automática de alertas de vulnerabilidades
+    let vulnerabilityCheckInterval;
+    let currentVulnerabilityStatus = new Map();
+
+    // Función para verificar el estado de vulnerabilidades de todos los proyectos
+    async function checkVulnerabilities() {
+        try {
+            const projectCards = document.querySelectorAll('.card[href*="/project/"]');
+            
+            for (const card of projectCards) {
+                const href = card.getAttribute('href');
+                const projectIdMatch = href.match(/\/project\/(\d+)/);
+                
+                if (projectIdMatch) {
+                    const projectId = projectIdMatch[1];
+                    
+                    const response = await fetch(`/api/project/${projectId}/vulnerability-status`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateProjectCard(card, projectId, data.project);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error checking vulnerabilities:', error);
+        }
+    }
+
+    // Función para actualizar la apariencia de una tarjeta de proyecto
+    function updateProjectCard(card, projectId, projectData) {
+        const previousStatus = currentVulnerabilityStatus.get(projectId);
+        const newStatus = {
+            hasVulnerabilities: projectData.has_vulnerabilities,
+            level: projectData.vulnerability_level
+        };
+
+        // Guardar el nuevo estado
+        currentVulnerabilityStatus.set(projectId, newStatus);
+
+        // Si es la primera verificación o no hay cambios, no hacer nada
+        if (!previousStatus) {
+            return;
+        }
+
+        // Si se detectaron nuevas vulnerabilidades
+        if (!previousStatus.hasVulnerabilities && newStatus.hasVulnerabilities) {
+            // Agregar clases de vulnerabilidad
+            card.classList.add('has-vulnerabilities', `vuln-${newStatus.level}`);
+            
+            // Crear y agregar badge de vulnerabilidad si no existe
+            let badge = card.querySelector('.vuln-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.className = `vuln-badge ${newStatus.level}`;
+                badge.innerHTML = getBadgeContent(newStatus.level);
+                card.insertBefore(badge, card.firstChild);
+            }
+
+            // Agregar texto de vulnerabilidad detectada si no existe
+            let vulnText = card.querySelector('.vulnerability-detected');
+            if (!vulnText) {
+                vulnText = document.createElement('p');
+                vulnText.className = 'muted vulnerability-detected';
+                vulnText.style.cssText = 'color: var(--th-warm); font-weight: 600; margin-top: 8px;';
+                vulnText.innerHTML = '🔥 Vulnerabilities detected!';
+                card.appendChild(vulnText);
+            }
+
+            // Efecto visual de notificación
+            showVulnerabilityNotification(card, newStatus.level);
+        }
+        
+        // Si cambió el nivel de criticidad
+        else if (previousStatus.hasVulnerabilities && newStatus.hasVulnerabilities && 
+                 previousStatus.level !== newStatus.level) {
+            // Actualizar clases
+            card.classList.remove(`vuln-${previousStatus.level}`);
+            card.classList.add(`vuln-${newStatus.level}`);
+            
+            // Actualizar badge
+            const badge = card.querySelector('.vuln-badge');
+            if (badge) {
+                badge.className = `vuln-badge ${newStatus.level}`;
+                badge.innerHTML = getBadgeContent(newStatus.level);
+            }
+
+            // Efecto visual de actualización
+            card.style.animation = 'pulse-update 1s ease-in-out';
+            setTimeout(() => {
+                card.style.animation = '';
+            }, 1000);
+        }
+    }
+
+    // Función para obtener el contenido del badge según el nivel
+    function getBadgeContent(level) {
+        switch(level) {
+            case 'critical': return '🚨 CRITICAL';
+            case 'high': return '⚠️ HIGH';
+            case 'medium': return '⚡ MEDIUM';
+            case 'low': return '💡 LOW';
+            default: return '🔍 FINDINGS';
+        }
+    }
+
+    // Función para mostrar notificación visual de nueva vulnerabilidad
+    function showVulnerabilityNotification(card, level) {
+        // Efecto de pulso y glow
+        card.style.animation = 'vulnerability-alert 2s ease-in-out';
+        card.style.boxShadow = `0 0 20px ${getGlowColor(level)}`;
+        
+        // Restaurar después de la animación
+        setTimeout(() => {
+            card.style.animation = '';
+            card.style.boxShadow = '';
+        }, 2000);
+
+        // Mostrar notificación del navegador si está permitido
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('🚨 Nueva Vulnerabilidad Detectada', {
+                body: `Se detectó una vulnerabilidad ${level.toUpperCase()} en tu proyecto`,
+                icon: '/static/favicon.ico'
+            });
+        }
+    }
+
+    // Función para obtener el color de glow según el nivel
+    function getGlowColor(level) {
+        switch(level) {
+            case 'critical': return 'rgba(239, 68, 68, 0.5)';
+            case 'high': return 'rgba(245, 158, 11, 0.5)';
+            case 'medium': return 'rgba(59, 130, 246, 0.5)';
+            case 'low': return 'rgba(34, 197, 94, 0.5)';
+            default: return 'rgba(107, 114, 128, 0.5)';
+        }
+    }
+
+    // Inicializar el sistema de actualizaciones automáticas
+    function initVulnerabilityMonitoring() {
+        // Pedir permiso para notificaciones
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // Verificar inmediatamente al cargar
+        checkVulnerabilities();
+        
+        // Configure periodic check every 10 seconds
+        vulnerabilityCheckInterval = setInterval(checkVulnerabilities, 5000);
+    }
+
+    // ------- Live Progress Updater -------
+    let progressInterval;
+
+    // Track the last request timestamp per project to ignore stale responses
+    const LAST_REQ_TS = Object.create(null);
+    // Projects we already showed "Recon finished" browser notification for (avoid repeat)
+    const NOTIFIED_AWAITING_URL = new Set();
+
+    function applyProgressToCard(card, pct, stage, status) {
+        const textEl = card.querySelector('.progress-text');
+        const stageEl = card.querySelector('.progress-stage');
+        const barEl  = card.querySelector('progress.progress-bar');
+        
+        // Ensure percentage is valid
+        pct = Math.max(0, Math.min(100, Number(pct)||0));
+        
+        // Update progress text and bar
+        if (textEl) textEl.textContent = pct.toString();
+        if (barEl)  barEl.value = pct;
+        
+        // Update stage with better formatting and status info
+        if (stageEl) {
+            let stageText = '';
+            let stageClass = '';
+            
+            if (status === 'running' && stage) {
+                stageText = `(${stage})`;
+                stageClass = 'running';
+                card.classList.add('progress-running');
+                card.classList.remove('progress-complete', 'progress-syncing');
+            } else if (status === 'completed') {
+                stageText = '(Completed)';
+                stageClass = 'completed';
+                card.classList.add('progress-complete');
+                card.classList.remove('progress-running', 'progress-syncing');
+            } else if (status === 'paused') {
+                stageText = '(Paused)';
+                stageClass = 'syncing';
+            } else if (status === 'failed' || status === 'error') {
+                stageText = '(Failed)';
+                stageClass = 'error';
+            } else if (pct === 0 && !stage) {
+                stageText = '(Ready to start)';
+                stageClass = '';
+            } else if (stage && stage.includes('Syncing')) {
+                stageText = `(${stage})`;
+                stageClass = 'syncing';
+                card.classList.add('progress-syncing');
+                card.classList.remove('progress-complete', 'progress-running');
+            } else if (stage) {
+                stageText = `(${stage})`;
+                stageClass = status === 'running' ? 'running' : '';
+            }
+            
+            stageEl.textContent = stageText;
+            
+            // Remove existing stage classes and add new one
+            stageEl.classList.remove('syncing', 'running', 'completed', 'error');
+            if (stageClass) {
+                stageEl.classList.add(stageClass);
+            }
+        }
+    }
+
+    async function refreshProgress() {
+        try {
+            const projectCards = document.querySelectorAll('.card[data-project-id]');
+            for (const card of projectCards) {
+                const pid = card.getAttribute('data-project-id');
+                // Start request timestamp to avoid out-of-order updates
+                const startedAt = Date.now();
+                LAST_REQ_TS[pid] = startedAt;
+
+                // Prevent stale caching: add cache buster and disable cache
+                const url = `/api/project/${pid}/status?_=${Date.now()}`;
+                const res = await fetch(url, { 
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                
+                if (!res.ok) {
+                    console.warn(`Failed to fetch status for project ${pid}: ${res.status}`);
+                    continue;
+                }
+                
+                const data = await res.json();
+                console.log(`Project ${pid} status:`, data); // Debug log
+
+                // Extract progress with better error handling
+                let pct = 0;
+                if (data && typeof data.progress !== 'undefined') {
+                    pct = parseInt(String(data.progress), 10);
+                    if (isNaN(pct)) pct = 0;
+                }
+
+                // Defensive merge with local/state to avoid regressions when API returns stale 0s
+                const currentText = card.querySelector('.progress-text');
+                const currentPct = currentText ? parseInt(currentText.textContent || '0', 10) : 0;
+                const saved = loadProgressFromStorage(pid) || null;
+
+                // If server returns NaN or undefined, keep current/saved
+                if (!Number.isFinite(pct)) {
+                    pct = saved ? saved.progress : currentPct;
+                }
+
+                // Extract current step and status
+                const stage = data && data.current_step ? String(data.current_step) : '';
+                const status = data && data.status ? String(data.status) : '';
+
+                // Prefer most-recent higher progress while status is running/unknown
+                if (saved) {
+                    const recentEnough = Date.now() - saved.timestamp < 60 * 1000; // 60s
+                    const savedPct = Math.max(0, Math.min(100, Number(saved.progress) || 0));
+                    const savedStage = String(saved.stage || '');
+                    const savedStatus = String(saved.status || '');
+
+                    const isRunning = (status || '').toLowerCase() === 'running' || !status;
+                    if (recentEnough && isRunning && (pct < savedPct)) {
+                        pct = savedPct;
+                        // keep server stage if present; otherwise use saved
+                        if (!stage) { stage = savedStage; }
+                        if (!status) { status = savedStatus; }
+                    }
+                }
+
+                // If API reports 0 but card already shows higher progress, keep card value
+                if ((status || '').toLowerCase() !== 'completed' && pct < currentPct) {
+                    pct = currentPct;
+                }
+
+                // If a newer request finished later, ignore this update
+                if (LAST_REQ_TS[pid] !== startedAt) {
+                    continue;
+                }
+
+                // Clamp and ensure numeric before applying
+                pct = Math.max(0, Math.min(100, Number(pct) || 0));
+                // Apply the progress update
+                applyProgressToCard(card, pct, stage, status);
+
+                // Guardar el progreso en localStorage para persistencia
+                saveProgressToStorage(pid, pct, stage, status);
+
+                // Add visual completion indicator
+                if (pct === 100 && status.toLowerCase() === 'completed') {
+                    card.classList.add('progress-complete');
+                } else {
+                    card.classList.remove('progress-complete');
+                }
+
+                // Real-time: show "Recon finished, select URLs" when status is awaiting_url_selection
+                if ((status || '').toLowerCase() === 'awaiting_url_selection') {
+                    let alertEl = card.querySelector('.awaiting-selection-alert');
+                    if (!alertEl) {
+                        alertEl = document.createElement('div');
+                        alertEl.className = 'awaiting-selection-alert';
+                        alertEl.onclick = function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = '/project/' + pid + '/targets'; };
+                        alertEl.innerHTML = '<span class="awaiting-selection-icon">🔍</span><div><strong>Action required</strong><p class="muted" style="margin: 4px 0 0 0; font-size: 0.85rem;">Recon finished. Select which URLs to scan.</p></div>';
+                        const firstContent = card.querySelector('.vuln-badge') || card.querySelector('h4');
+                        if (firstContent) card.insertBefore(alertEl, firstContent);
+                        else card.appendChild(alertEl);
+                    }
+                    if (!NOTIFIED_AWAITING_URL.has(pid)) {
+                        NOTIFIED_AWAITING_URL.add(pid);
+                        const name = card.getAttribute('data-project-name') || ('Project ' + pid);
+                        if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+                            new Notification('Recon finished', { body: 'Select which URLs to scan for ' + name + '.', icon: '/static/favicon.ico' });
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('Error refreshing progress:', e);
+        }
+    }
+
+    function initProgressMonitoring() {
+        // Do an immediate refresh when page loads
+        refreshProgress();
+        
+        // Set up frequent updates (every 2 seconds for better responsiveness)
+        progressInterval = setInterval(refreshProgress, 2000);
+        
+        // Also refresh when user focuses the tab (in case they switched away)
+        window.addEventListener('focus', refreshProgress);
+        
+        // Refresh when page becomes visible again
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshProgress();
+            }
+        });
+    }
+
+    // Limpiar interval cuando se salga de la página
+    window.addEventListener('beforeunload', () => {
+        if (vulnerabilityCheckInterval) clearInterval(vulnerabilityCheckInterval);
+        if (progressInterval) clearInterval(progressInterval);
+    });
+    // ------- New version check (once per 12h, dismissible banner) -------
+    const VERSION_CHECK_KEY = 'bounty_version_last_check';
+    const DISMISSED_VERSION_KEY = 'bounty_version_dismissed';
+    const VERSION_CHECK_INTERVAL_MS = 12 * 60 * 60 * 1000; // 12 hours
+
+    function parseVersion(s) {
+        const v = (s || '').replace(/^v/, '').trim();
+        return v.split('.').map(n => parseInt(n, 10) || 0);
+    }
+
+    function isNewer(latest, current) {
+        const a = parseVersion(latest);
+        const b = parseVersion(current);
+        for (let i = 0; i < Math.max(a.length, b.length); i++) {
+            const x = a[i] || 0, y = b[i] || 0;
+            if (x > y) return true;
+            if (x < y) return false;
+        }
+        return false;
+    }
+
+    function dismissVersionBanner() {
+        const latest = document.getElementById('version-latest') && document.getElementById('version-latest').textContent;
+        if (latest) try { localStorage.setItem(DISMISSED_VERSION_KEY, latest); } catch (e) {}
+        const el = document.getElementById('version-update-banner');
+        if (el) el.style.display = 'none';
+    }
+
+    async function checkNewVersion() {
+        try {
+            const last = parseInt(localStorage.getItem(VERSION_CHECK_KEY) || '0', 10);
+            if (Date.now() - last < VERSION_CHECK_INTERVAL_MS) return;
+            localStorage.setItem(VERSION_CHECK_KEY, String(Date.now()));
+
+            const [rVer, rCheck] = await Promise.all([
+                fetch('/api/version').then(r => r.json()),
+                fetch('/api/version/check').then(r => r.json())
+            ]);
+            const current = (rVer && rVer.version) || '';
+            const latest = (rCheck && rCheck.latest) || '';
+            const url = (rCheck && rCheck.url) || '#';
+            const dismissed = localStorage.getItem(DISMISSED_VERSION_KEY) || '';
+
+            if (!latest || !isNewer(latest, current)) return;
+            if (dismissed && !isNewer(latest, dismissed)) return;
+
+            const banner = document.getElementById('version-update-banner');
+            const linkEl = document.getElementById('version-link');
+            const latestEl = document.getElementById('version-latest');
+            if (banner && latestEl) {
+                latestEl.textContent = latest;
+                if (linkEl) { linkEl.href = url; }
+                banner.style.display = 'block';
+            }
+        } catch (e) {
+            console.warn('Version check failed:', e);
+        }
+    }
+
+    // Inicializar cuando se cargue la página
+    document.addEventListener('DOMContentLoaded', function () {
+        initVulnerabilityMonitoring();
+        initProgressMonitoring();
+        checkNewVersion();
+
+        // Inicialización inmediata del progreso desde el HTML
+        initializeProgressFromHTML();
+
+        // Refrescar cuando la página se vuelve visible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshProgress();
+            }
+        });
+    });
+
+    // Función para limpiar localStorage antiguo
+    function cleanupOldProgressData() {
+        try {
+            const keys = Object.keys(localStorage);
+            const now = Date.now();
+            const oneHour = 60 * 60 * 1000; // 1 hora en millisegundos
+            
+            keys.forEach(key => {
+                if (key.startsWith('project_') && key.endsWith('_progress')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data && data.timestamp && (now - data.timestamp > oneHour)) {
+                            localStorage.removeItem(key);
+                        }
+                    } catch (e) {
+                        // Remover entradas corruptas
+                        localStorage.removeItem(key);
+                    }
+                }
+            });
+        } catch (e) {
+            console.warn('Could not cleanup old progress data:', e);
+        }
+    }
+
+    // Limpiar datos antiguos al cargar la página
+    cleanupOldProgressData();
+
+    // Función para cargar progreso desde localStorage y HTML
+    function initializeProgressFromHTML() {
+        const projectCards = document.querySelectorAll('.card[data-project-id]');
+        projectCards.forEach(card => {
+            const progressBar = card.querySelector('progress.progress-bar');
+            const progressText = card.querySelector('.progress-text');
+            const stageEl = card.querySelector('.progress-stage');
+            const projectId = card.getAttribute('data-project-id');
+            
+            if (progressBar && progressText && projectId) {
+                // Intentar cargar desde localStorage primero
+                const savedProgress = loadProgressFromStorage(projectId);
+                
+                let progress = 0;
+                let stage = '';
+                let status = '';
+                
+                if (savedProgress && savedProgress.timestamp > Date.now() - 30000) { // 30 segundos de validez
+                    // Usar datos guardados si son recientes
+                    progress = savedProgress.progress;
+                    stage = savedProgress.stage;
+                    status = savedProgress.status;
+                    console.log(`Loading project ${projectId} from localStorage: ${progress}% - ${stage}`);
+                } else {
+                    // Usar datos del HTML como fallback
+                    progress = Number(progressBar.value || 0);
+                    stage = stageEl.textContent || '';
+                    console.log(`Loading project ${projectId} from HTML: ${progress}%`);
+                }
+                
+                // Aplicar el progreso inmediatamente
+                applyProgressToCard(card, progress, stage, status);
+                
+                // Si no hay datos recientes, mostrar que está cargando
+                if (!savedProgress || savedProgress.timestamp <= Date.now() - 30000) {
+                    if (stageEl && progress > 0) {
+                        stageEl.textContent = '(Syncing with server...)';
+                        stageEl.style.color = 'var(--th-warm)';
+                    }
+                }
+            }
+        });
+        
+        // Hacer refresh inmediato después de cargar datos locales
+        setTimeout(() => {
+            refreshProgress();
+        }, 500);
+    }
+
+    // Función para guardar progreso en localStorage
+    function saveProgressToStorage(projectId, progress, stage, status) {
+        try {
+            const data = {
+                progress: progress,
+                stage: stage,
+                status: status,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(`project_${projectId}_progress`, JSON.stringify(data));
+        } catch (e) {
+            console.warn('Could not save progress to localStorage:', e);
+        }
+    }
+
+    // Función para cargar progreso desde localStorage
+    function loadProgressFromStorage(projectId) {
+        try {
+            const data = localStorage.getItem(`project_${projectId}_progress`);
+            if (data) {
+                return JSON.parse(data);
+            }
+        } catch (e) {
+            console.warn('Could not load progress from localStorage:', e);
+        }
+        return null;
+    }
+
+    // JavaScript para dashboard con nuevos colores
+    document.addEventListener('DOMContentLoaded', function() {
+        // Aplicar colores correctos en el dashboard
+        document.querySelectorAll('.card.has-vulnerabilities').forEach(card => {
+            const vulnBadge = card.querySelector('.vuln-badge');
+            if (vulnBadge) {
+                const text = vulnBadge.textContent.toLowerCase();
+                
+                // Actualizar texto y clase según nivel
+                if (text.includes('critical')) {
+                    vulnBadge.textContent = '🟣 CRITICAL';
+                    vulnBadge.className = 'vuln-badge critical';
+                    card.classList.add('vuln-critical');
+                } else if (text.includes('high')) {
+                    vulnBadge.textContent = '🔴 HIGH';
+                    vulnBadge.className = 'vuln-badge high';
+                    card.classList.add('vuln-high');
+                } else if (text.includes('medium')) {
+                    vulnBadge.textContent = '🟠 MEDIUM';
+                    vulnBadge.className = 'vuln-badge medium';
+                    card.classList.add('vuln-medium');
+                } else if (text.includes('low')) {
+                    vulnBadge.textContent = '🟢 LOW';
+                    vulnBadge.className = 'vuln-badge low';
+                    card.classList.add('vuln-low');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

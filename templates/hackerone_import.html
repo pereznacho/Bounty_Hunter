@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HackerOne Import</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-5xl mx-auto mt-10 bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold mb-4 text-center text-indigo-700">Import HackerOne Programs</h1>
+        <form method="post" action="/hackerone/import/submit">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for entry in entries %}
+                    <div class="p-4 border rounded hover:shadow transition duration-200 {% if entry.type == 'domain' %}bg-blue-50{% elif entry.type == 'url' %}bg-green-50{% else %}bg-gray-50{% endif %}">
+                        <label class="flex items-start space-x-2">
+                            <input type="checkbox" name="selected" value="{{ entry.asset }}" class="mt-1">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700">{{ entry.asset }}</p>
+                                <p class="text-xs text-gray-500">{{ entry.name }} ({{ entry.handle }})</p>
+                                <span class="inline-block mt-1 text-xs px-2 py-0.5 rounded 
+                                    {% if entry.type == 'domain' %}bg-blue-200 text-blue-800
+                                    {% elif entry.type == 'url' %}bg-green-200 text-green-800
+                                    {% else %}bg-gray-300 text-gray-800{% endif %}">
+                                    {{ entry.type | capitalize }}
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mt-6 text-center">
+                <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">
+                    Import Selected
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

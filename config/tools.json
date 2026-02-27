@@ -1,0 +1,19 @@
+[
+  { "name": "subfinder", "repo": "github.com/projectdiscovery/subfinder/v2/cmd/subfinder" },
+  { "name": "assetfinder", "repo": "github.com/tomnomnom/assetfinder" },
+  { "name": "httpx", "repo": "github.com/projectdiscovery/httpx/cmd/httpx" },
+  { "name": "gau", "repo": "github.com/tomnomnom/gau" },
+  { "name": "waybackurls", "repo": "github.com/tomnomnom/waybackurls" },
+  { "name": "katana", "repo": "github.com/projectdiscovery/katana/cmd/katana" },
+  { "name": "sqlmap", "repo": "github.com/sqlmapproject/sqlmap" },
+
+  { "name": "ffuf", "repo": "github.com/ffuf/ffuf/v2" },
+  { "name": "wfuzz", "install": "pip3 install wfuzz" },
+  { "name": "dalfox", "repo": "github.com/hahwul/dalfox/v2" },
+  { "name": "arjun", "install": "git clone https://github.com/s0md3v/Arjun.git tools/Arjun && ln -s $(pwd)/tools/Arjun/arjun.py bin/arjun" },
+  { "name": "tplmap", "install": "git clone https://github.com/epinna/tplmap.git tools/tplmap && ln -s $(pwd)/tools/tplmap/tplmap.py bin/tplmap" },
+  {   "name": "gf",
+  "install": "go install github.com/tomnomnom/gf@latest && git clone https://github.com/1ndianl33t/Gf-Patterns tools/Gf-Patterns && mkdir -p ~/.gf && cp tools/Gf-Patterns/*.json ~/.gf/" },
+  { "name": "qsreplace", "repo": "github.com/tomnomnom/qsreplace" },
+  { "name": "seclists", "check": "/usr/share/seclists", "install": "git clone https://github.com/danielmiessler/SecLists.git /usr/share/seclists" }
+]

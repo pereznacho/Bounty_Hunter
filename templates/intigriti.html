@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intigriti Integration</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .container { max-width: 1100px; margin: 24px auto; padding: 18px; color: #ddd; }
+        .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        .card { background:#0f1720; border:1px solid #222; padding:16px; border-radius:10px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+        .card h3 { margin:0 0 8px 0; color:#7ef0c7; font-size:1.05rem; }
+        .muted { color:#9aa4ad; font-size:0.9rem; }
+        .badge { display:inline-block; background:#123; color:#7ef0c7; padding:4px 8px; border-radius:6px; font-size:0.8rem; margin-left:8px; }
+        .section { margin-top:14px; }
+        .list { max-height:260px; overflow:auto; padding:8px; background:#071018; border-radius:6px; border:1px solid #18222b; }
+        .list label { display:flex; gap:8px; align-items:center; padding:6px 8px; border-bottom:1px dashed rgba(255,255,255,0.03); }
+        .btn { background:#0ea5a4; color:#012; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+        .btn-outline { background:transparent; border:1px solid #264653; color:#9fd8d6; padding:7px 12px; border-radius:8px; cursor:pointer; }
+        .header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+        .back { color:#7ef0c7; text-decoration:none; }
+        .program-type-badge { 
+            font-size:0.7rem; 
+            font-weight:700; 
+            padding:3px 8px; 
+            border-radius:12px; 
+            text-transform:uppercase; 
+            letter-spacing:0.5px;
+        }
+        .program-type-badge.bbp { 
+            background:linear-gradient(135deg, #7ef0c7, #0ea5a4); 
+            color:#012; 
+        }
+        .program-type-badge.vdp { 
+            background:linear-gradient(135deg, #ffb86b, #ff9d3d); 
+            color:#012; 
+        }
+        .program-card.hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <a class="back" href="/dashboard">⬅️ Back to Dashboard</a>
+                <h1 style="margin:6px 0 0 0; color:#7ef0c7;">🧩 Intigriti</h1>
+                <p class="muted">🎯 Programs with Available Scope</p>
+            </div>
+        </div>
+
+        {% if api_error %}
+            <div class="card" style="border-left:4px solid #ff6b6b;">
+                <strong>Error:</strong> {{ api_error }}
+            </div>
+        {% endif %}
+
+        <!-- Filter Controls -->
+        <div class="card" style="margin-bottom:16px; border-left:4px solid #7ef0c7;">
+            <h3 style="margin-bottom:12px; color:#7ef0c7;">🔍 Filters</h3>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Program Type:</label>
+                    <select id="programTypeFilter" style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px;">
+                        <option value="">All Programs</option>
+                        <option value="bbp">BBP (Bug Bounty)</option>
+                        <option value="vdp">VDP (Vulnerability Disclosure)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Min Targets:</label>
+                    <input type="number" id="minTargetsFilter" min="0" placeholder="0" style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px; width:80px;">
+                </div>
+                <div>
+                    <label style="color:#ddd; font-size:0.9rem;">Search:</label>
+                    <input type="text" id="programSearchFilter" placeholder="Program name..." style="margin-left:6px; padding:4px 8px; background:#161b22; color:#ddd; border:1px solid #21262d; border-radius:4px; width:200px;">
+                </div>
+                <button onclick="clearFilters()" style="background:#ff6b86; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.85rem;">Clear Filters</button>
+            </div>
+        </div>
+
+        <div class="grid" id="programsGrid">
+            {% for p in programs %}
+            <div class="card program-card" data-program-type="{{ 'bbp' if p.offers_bounties else 'vdp' }}" data-target-count="{{ p.scope_total }}" data-program-name="{{ p.name|lower }}">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <h3>📁 {{ p.name }}</h3>
+                    <span class="program-type-badge {{ 'bbp' if p.offers_bounties else 'vdp' }}">
+                        {{ 'BBP' if p.offers_bounties else 'VDP' }}
+                    </span>
+                </div>
+                <div class="muted">Program Handle: {{ p.handle }}</div>
+                {% if p.offers_bounties %}
+                    <div style="margin:4px 0; color:#7ef0c7; font-size:0.85rem;">💰 Bug Bounty Program</div>
+                {% else %}
+                    <div style="margin:4px 0; color:#ffb86b; font-size:0.85rem;">🔍 Vulnerability Disclosure Program</div>
+                {% endif %}
+                <div style="margin-top:10px;">
+                    Targets in Scope: {{ p.scope_total }}
+                    <span class="badge">🌐 Domains: {{ p.scope_domain }}</span>
+                    <span class="badge">🔗 URLs: {{ p.scope_url }}</span>
+                </div>
+                <div class="section">
+                    <form method="get" action="/intigriti/{{ p.handle }}/targets">
+                        <button type="submit" class="btn-outline">View and select targets</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        function applyFilters() {
+            const typeFilter = document.getElementById('programTypeFilter').value;
+            const minTargets = parseInt(document.getElementById('minTargetsFilter').value) || 0;
+            const searchTerm = document.getElementById('programSearchFilter').value.toLowerCase();
+            
+            const cards = document.querySelectorAll('.program-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const programType = card.getAttribute('data-program-type');
+                const targetCount = parseInt(card.getAttribute('data-target-count'));
+                const programName = card.getAttribute('data-program-name');
+                
+                let shouldShow = true;
+                
+                // Type filter
+                if (typeFilter && typeFilter !== programType) {
+                    shouldShow = false;
+                }
+                
+                // Min targets filter
+                if (targetCount < minTargets) {
+                    shouldShow = false;
+                }
+                
+                // Search filter
+                if (searchTerm && !programName.includes(searchTerm)) {
+                    shouldShow = false;
+                }
+                
+                if (shouldShow) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            console.log(`Showing ${visibleCount} of ${cards.length} programs`);
+        }
+
+        function clearFilters() {
+            document.getElementById('programTypeFilter').value = '';
+            document.getElementById('minTargetsFilter').value = '';
+            document.getElementById('programSearchFilter').value = '';
+            applyFilters();
+        }
+
+        // Add event listeners for real-time filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeFilter = document.getElementById('programTypeFilter');
+            const minTargetsFilter = document.getElementById('minTargetsFilter');
+            const searchFilter = document.getElementById('programSearchFilter');
+            
+            if (typeFilter) typeFilter.addEventListener('change', applyFilters);
+            if (minTargetsFilter) minTargetsFilter.addEventListener('input', applyFilters);
+            if (searchFilter) searchFilter.addEventListener('input', applyFilters);
+        });
+    </script>
+</body>
+</html>

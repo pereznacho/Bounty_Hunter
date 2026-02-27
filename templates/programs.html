@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HackerOne integration</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+    <link rel="stylesheet" href="/static/hackerone.css">
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+        .btn-save {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .btn-save:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('program_list') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('program_list') }}">
+    <div class="container">
+        <h1>🔗 HackerOneTESTER</h1>
+
+
+        {% if programs %}
+            <h2>🎯 Programs with Available Scope</h2>
+            
+            {% if selected_program %}
+                <div class="card program-detail">
+                    <h2>📁 {{ selected_program.name }}</h2>
+                    <p><strong>Program ID:</strong> {{ selected_program.handle }}</p>
+                    <p><a href="{{ selected_program.url }}" target="_blank" rel="noopener noreferrer">🔗 View on HackerOne</a></p>
+                    
+                    {% if selected_program.filtered_targets %}
+                        <form action="/hackerone/scan" method="post" class="targets-form" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="handle" value="{{ selected_program.handle }}">
+                            
+                            <div class="targets-header">
+                                <div class="targets-title">
+                                    <h3>🎯 Available Targets</h3>
+                                    <div class="targets-summary">
+                                        <span class="summary-item">Total: {{ selected_program.summary.total }}</span>
+                                        <span class="summary-item">🌐 Dominios: {{ selected_program.summary.domains }}</span>
+                                        <span class="summary-item">🔗 URLs: {{ selected_program.summary.urls }}</span>
+                                        <span class="summary-item">💰 Eligible: {{ selected_program.summary.eligible }}</span>
+                                    </div>
+                                </div>
+                                <button type="submit" name="scan_all" value="true" class="btn-scan-all">
+                                    🚀 Scan All
+                                </button>
+                            </div>
+                            
+                            <div class="targets-sections">
+                                {% if selected_program.filtered_targets|selectattr("type", "equalto", "domain")|list %}
+                                <div class="targets-section">
+                                    <h4>🌐 Dominios</h4>
+                                    <div class="targets-list">
+                                        {% for target in selected_program.filtered_targets %}
+                                        {% if target.type == 'domain' %}
+                                        <div class="target-item">
+                                            <input type="checkbox" 
+                                                   id="target-{{ loop.index }}" 
+                                                   name="targets" 
+                                                   value="domain:{{ target.identifier }}">
+                                            <label for="target-{{ loop.index }}">
+                                                {{ target.identifier }}
+                                                {% if target.eligibility %}
+                                                    <span class="bounty-eligible" title="Bounty eligible">💰</span>
+                                                {% endif %}
+                                            </label>
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if selected_program.filtered_targets|selectattr("type", "equalto", "url")|list %}
+                                <div class="targets-section">
+                                    <h4>🔗 URLs</h4>
+                                    <div class="targets-list">
+                                        {% for target in selected_program.filtered_targets %}
+                                        {% if target.type == 'url' %}
+                                        <div class="target-item">
+                                            <input type="checkbox" 
+                                                   id="target-{{ loop.index }}" 
+                                                   name="targets" 
+                                                   value="url:{{ target.identifier }}">
+                                            <label for="target-{{ loop.index }}">
+                                                {{ target.identifier }}
+                                                {% if target.eligibility %}
+                                                    <span class="bounty-eligible" title="Bounty eligible">💰</span>
+                                                {% endif %}
+                                            </label>
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <button type="submit" class="btn-scan-selected">
+                                🎯 Scan Selected
+                            </button>
+                        </form>
+                    {% else %}
+                        <p class="no-targets">No valid targets to scan in this program.</p>
+                    {% endif %}
+                    
+                    <a href="/hackerone" class="btn-back">← Back to list</a>
+                </div>
+            {% else %}
+                {% for p in programs %}
+                <div class="card program-card" onclick="window.location.href='/hackerone/program/{{ p.handle }}'">
+                    <h3>📁 {{ p.name }}</h3>
+                    <p><strong>Program ID:</strong> {{ p.handle }}</p>
+                    <p><strong>Targets in Scope:</strong> {{ p.in_scope|length }}</p>
+                    {% if p.offers_bounties %}
+                        <p class="bounty-info">💰 Offers bounties</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endif %}
+            
+        {% elif not error %}
+            <div class="card" style="text-align: center;">
+                <h3>👋 Bienvenido</h3>
+                <p>To get started, enter your HackerOne API key above.</p>
+                <p style="color: #888; font-size: 0.9em;">Once configured, you'll see the available programs to scan here.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
