@@ -1,7 +1,13 @@
 import os
+import subprocess
 from urllib.parse import urlparse, parse_qs
 from termcolor import cprint
 from utils.helpers import run_command, get_httpx_binary
+from modules.dir_discovery import run_dir_discovery
+
+# Timeouts for recon (subfinder/httpx) - large domains (e.g. nasa.gov) need more time
+SUBFINDER_RECON_TIMEOUT = 600  # 10 minutes
+HTTPX_RECON_TIMEOUT = 600      # 10 minutes
 
 
 def get_unique_param_urls(input_file, param_output_file, urls_output_file):
@@ -129,6 +135,35 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
                         run_command(f"katana -u {url} -silent >> {raw_urls_file}", silent=True)
                         run_command(f"gau {url} >> {raw_urls_file}", silent=True)
                         run_command(f"waybackurls {url} >> {raw_urls_file}", silent=True)
+            # Directory & file discovery: once per unique host (dirb, gobuster, dirsearch) to avoid re-scanning same host
+            cprint("[*] Buscando directorios y archivos por dominio vivo (dirb, gobuster, dirsearch, -x 400-499)...", "blue")
+            try:
+                seen_bases = set()
+                with open(live_file) as lf:
+                    for url in lf:
+                        url = url.strip()
+                        if not url:
+                            continue
+                        try:
+                            p = urlparse(url)
+                            if not p.scheme or not p.netloc:
+                                continue
+                            base = f"{p.scheme}://{p.netloc}/"
+                            if base in seen_bases:
+                                continue
+                            seen_bases.add(base)
+                        except Exception:
+                            continue
+                        dir_out = run_dir_discovery(base, result_dir, exclude_status_4xx=True)
+                        if dir_out and os.path.exists(dir_out):
+                            with open(dir_out, "r", encoding="utf-8", errors="ignore") as df:
+                                with open(raw_urls_file, "a") as ruf:
+                                    for line in df:
+                                        line = line.strip()
+                                        if line and not line.startswith("#") and line.startswith(("http://", "https://")):
+                                            ruf.write(line + "\n")
+            except Exception as e:
+                cprint(f"[!] dir_discovery skip: {e}", "yellow")
         else:
             cprint("[!] live_file vacío. No hay URLs para recon.", "yellow")
             # Crear archivo vacío
@@ -153,6 +188,20 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
 
         cprint("[*] Ejecutando waybackurls sobre la URL...", "blue")
         run_command(f"waybackurls {target_url} >> {raw_urls_file}", silent=True)
+
+        # Directory & file discovery (dirb, gobuster, dirsearch) with -x 400-499
+        cprint("[*] Buscando directorios y archivos (dirb, gobuster, dirsearch, -x 400-499)...", "blue")
+        try:
+            dir_out = run_dir_discovery(target_url, result_dir, exclude_status_4xx=True)
+            if dir_out and os.path.exists(dir_out):
+                with open(dir_out, "r", encoding="utf-8", errors="ignore") as df:
+                    with open(raw_urls_file, "a") as ruf:
+                        for line in df:
+                            line = line.strip()
+                            if line and not line.startswith("#") and line.startswith(("http://", "https://")):
+                                ruf.write(line + "\n")
+        except Exception as e:
+            cprint(f"[!] dir_discovery skip: {e}", "yellow")
 
     # Filtrar duplicados solo si el archivo existe y no está vacío
     if os.path.exists(raw_urls_file) and os.path.getsize(raw_urls_file) > 0:
@@ -352,68 +401,57 @@ def run_bounty_program_recon_and_scan(project_id, target_list, results_dir):
                 found_subdomains = []
                 try:
                     print(f"[🔍] Running subfinder for {domain}...")
-                    result = subprocess.run(subfinder_cmd, shell=True, capture_output=True, text=True, timeout=300)
-                    
+                    subprocess.run(subfinder_cmd, shell=True, capture_output=True, text=True, timeout=SUBFINDER_RECON_TIMEOUT)
                     if os.path.exists(subdomains_file):
                         with open(subdomains_file, 'r') as f:
                             found_subdomains = [line.strip() for line in f if line.strip()]
-                    
-                    # Agregar dominio original si no está en la lista
-                    if domain not in found_subdomains:
-                        found_subdomains.append(domain)
-                    
-                    print(f"[✅] Total subdomains for {domain}: {len(found_subdomains)}")
-                    
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] subfinder timed out for {domain} after {SUBFINDER_RECON_TIMEOUT}s; using partial subdomains if any")
+                    if os.path.exists(subdomains_file):
+                        with open(subdomains_file, 'r') as f:
+                            found_subdomains = [line.strip() for line in f if line.strip()]
                 except Exception as e:
                     print(f"[!] Subfinder error for {domain}: {e}")
-                    found_subdomains = [domain]  # Al menos el dominio original
+                if not found_subdomains:
+                    found_subdomains = [domain]
+                if domain not in found_subdomains:
+                    found_subdomains.append(domain)
+                print(f"[✅] Total subdomains for {domain}: {len(found_subdomains)}")
                 
                 # Paso 1.B: Verificar sitios web activos con httpx (puertos 80, 443)
                 if found_subdomains:
-                    print(f"[🌐] Checking active websites for {len(found_subdomains)} subdomains...")
-                    
-                    # Crear archivo temporal con subdominios
-                    temp_subdomains_file = os.path.join(results_dir, f"temp_subdomains_{domain.replace('.', '_')}.txt")
-                    with open(temp_subdomains_file, 'w') as f:
-                        for subdomain in found_subdomains:
-                            f.write(f"{subdomain}\n")
-                    
-                    # Ejecutar httpx para encontrar sitios web activos
-                    httpx_output = os.path.join(results_dir, f"active_websites_{domain.replace('.', '_')}.txt")
-                    httpx_cmd = f"httpx -l {temp_subdomains_file} -o {httpx_output} -silent -timeout 10 -ports 80,443 -follow-redirects"
-                    
                     try:
-                        result = subprocess.run(httpx_cmd, shell=True, capture_output=True, text=True, timeout=300)
-                        
-                        # Leer URLs activas encontradas
+                        print(f"[🌐] Checking active websites for {len(found_subdomains)} subdomains...")
+                        temp_subdomains_file = os.path.join(results_dir, f"temp_subdomains_{domain.replace('.', '_')}.txt")
+                        with open(temp_subdomains_file, 'w') as f:
+                            for subdomain in found_subdomains:
+                                f.write(f"{subdomain}\n")
+                        httpx_output = os.path.join(results_dir, f"active_websites_{domain.replace('.', '_')}.txt")
+                        httpx_cmd = f"httpx -l {temp_subdomains_file} -o {httpx_output} -silent -timeout 10 -ports 80,443 -follow-redirects"
+                        try:
+                            subprocess.run(httpx_cmd, shell=True, capture_output=True, text=True, timeout=HTTPX_RECON_TIMEOUT)
+                        except subprocess.TimeoutExpired:
+                            print(f"[⚠️] httpx timed out for {domain} after {HTTPX_RECON_TIMEOUT}s; using partial results if any")
                         active_urls = []
                         if os.path.exists(httpx_output):
                             with open(httpx_output, 'r') as f:
                                 active_urls = [line.strip() for line in f if line.strip() and line.startswith(('http://', 'https://'))]
-                        
                         if active_urls:
                             web_targets.extend(active_urls)
                             print(f"[✅] Found {len(active_urls)} active websites for {domain}")
-                            
-                            # Mostrar ejemplos
                             for i, url in enumerate(active_urls[:3]):
                                 print(f"  • {url}")
                             if len(active_urls) > 3:
                                 print(f"  • ... and {len(active_urls) - 3} more")
                         else:
                             print(f"[⚠️] No active websites found for {domain}")
-                            # Agregar como dominio simple para escaneo básico
                             expanded_targets.append(domain)
-                        
-                        # Limpiar archivos temporales
                         try:
                             os.remove(temp_subdomains_file)
-                        except:
+                        except Exception:
                             pass
-                            
                     except Exception as e:
                         print(f"[!] Httpx error for {domain}: {e}")
-                        # Agregar dominio original como fallback
                         expanded_targets.append(domain)
         
         # FASE 2: COMBINAR TODOS LOS TARGETS ENCONTRADOS
@@ -593,29 +631,26 @@ def simple_bounty_program_scan(project_id, target_list, results_dir):
                 os.makedirs(results_dir, exist_ok=True)
                 
                 cmd = f"subfinder -d {domain} -o {subdomains_file} -silent"
-                subprocess.run(cmd, shell=True, timeout=180)
-                
-                # Leer subdominios
-                subdomains = [domain]  # Al menos el dominio original
+                try:
+                    subprocess.run(cmd, shell=True, timeout=SUBFINDER_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] subfinder timed out for {domain} after {SUBFINDER_RECON_TIMEOUT}s; using partial subdomains if any")
+                subdomains = [domain]
                 if os.path.exists(subdomains_file):
                     with open(subdomains_file, 'r') as f:
                         found = [line.strip() for line in f if line.strip()]
                         subdomains.extend(found)
-                
                 print(f"[✅] Subdomains: {len(subdomains)}")
-                
-                # Paso 2: Httpx
                 httpx_file = f"{results_dir}/httpx_{domain.replace('.', '_')}.txt"
                 temp_file = f"{results_dir}/temp_{domain.replace('.', '_')}.txt"
-                
                 with open(temp_file, 'w') as f:
                     for sub in subdomains:
                         f.write(f"{sub}\n")
-                
                 cmd = f"httpx -l {temp_file} -o {httpx_file} -silent -timeout 10"
-                subprocess.run(cmd, shell=True, timeout=300)
-                
-                # Leer URLs activas
+                try:
+                    subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] httpx timed out for {domain} after {HTTPX_RECON_TIMEOUT}s; using partial results if any")
                 domain_urls = []
                 if os.path.exists(httpx_file):
                     with open(httpx_file, 'r') as f:
@@ -830,46 +865,39 @@ def immediate_bounty_target_creation(project_id, target_list, results_dir):
         print(f"🏠 Processing {len(domains)} domains...")
         
         for domain in domains:
-            print(f"\n🔍 Domain: {domain}")
-            
-            # Subfinder rápido
-            subs_file = f"{results_dir}/quick_subs_{domain.replace('.', '_')}.txt"
-            cmd = f"subfinder -d {domain} -o {subs_file} -silent -timeout 30"
-            
             try:
-                subprocess.run(cmd, shell=True, timeout=60)
-                
+                print(f"\n🔍 Domain: {domain}")
+                subs_file = f"{results_dir}/quick_subs_{domain.replace('.', '_')}.txt"
+                cmd = f"subfinder -d {domain} -o {subs_file} -silent -timeout 30"
+                try:
+                    subprocess.run(cmd, shell=True, timeout=SUBFINDER_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] subfinder timed out for {domain}; using partial subdomains if any")
                 subs = [domain]
                 if os.path.exists(subs_file):
                     with open(subs_file, 'r') as f:
                         subs.extend([line.strip() for line in f if line.strip()])
-                
                 print(f"📊 Found {len(subs)} subdomains")
-                
-                # Httpx rápido
                 temp_file = f"{results_dir}/temp_quick_{domain.replace('.', '_')}.txt"
                 httpx_file = f"{results_dir}/quick_httpx_{domain.replace('.', '_')}.txt"
-                
                 with open(temp_file, 'w') as f:
                     for sub in subs:
                         f.write(f"{sub}\n")
-                
                 cmd = f"httpx -l {temp_file} -o {httpx_file} -silent -timeout 5 -threads 50"
-                subprocess.run(cmd, shell=True, timeout=120)
-                
+                try:
+                    subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] httpx timed out for {domain}; using partial results if any")
                 if os.path.exists(httpx_file):
                     with open(httpx_file, 'r') as f:
                         domain_urls = [line.strip() for line in f if line.strip() and line.startswith(('http', 'https'))]
                         all_discovered_urls.extend(domain_urls)
                         print(f"✅ Found {len(domain_urls)} active URLs")
-                
-                # Limpiar
                 for temp in [temp_file, subs_file]:
                     try:
                         os.remove(temp)
-                    except:
+                    except Exception:
                         pass
-                        
             except Exception as e:
                 print(f"❌ Error processing {domain}: {e}")
         
@@ -958,37 +986,32 @@ def expand_domain_to_urls(domain, results_dir):
         print(f"[1/3] Discovering subdomains for {domain}...")
         subdomains_file = os.path.join(results_dir, f"expand_subs_{domain.replace('.', '_')}.txt")
         
-        # Subfinder con timeout rápido
-        subprocess.run(
-            f"subfinder -d {domain} -o {subdomains_file} -silent -timeout 60", 
-            shell=True, timeout=120
-        )
-        
-        # Leer subdominios encontrados
-        discovered_subdomains = [domain]  # Incluir dominio original
+        try:
+            subprocess.run(
+                f"subfinder -d {domain} -o {subdomains_file} -silent -timeout 60",
+                shell=True, timeout=SUBFINDER_RECON_TIMEOUT
+            )
+        except subprocess.TimeoutExpired:
+            print(f"[⚠️] subfinder timed out for {domain} after {SUBFINDER_RECON_TIMEOUT}s; using partial subdomains if any")
+        discovered_subdomains = [domain]
         if os.path.exists(subdomains_file):
             with open(subdomains_file, 'r') as f:
                 found_subs = [line.strip() for line in f if line.strip()]
                 discovered_subdomains.extend(found_subs)
-        
         print(f"[✅] Found {len(discovered_subdomains)} subdomains")
-        
-        # Paso 2: Verificar URLs activas
         print(f"[2/3] Checking active URLs...")
-        
-        # Crear archivo temporal con subdominios
         temp_subs_file = os.path.join(results_dir, f"temp_expand_{domain.replace('.', '_')}.txt")
         with open(temp_subs_file, 'w') as f:
             for sub in discovered_subdomains:
                 f.write(f"{sub}\n")
-        
-        # Httpx para encontrar URLs activas
         active_urls_file = os.path.join(results_dir, f"expand_urls_{domain.replace('.', '_')}.txt")
-        subprocess.run(
-            f"httpx -l {temp_subs_file} -o {active_urls_file} -silent -timeout 10 -follow-redirects -mc 200,301,302,403", 
-            shell=True, timeout=300
-        )
-        
+        try:
+            subprocess.run(
+                f"httpx -l {temp_subs_file} -o {active_urls_file} -silent -timeout 10 -follow-redirects -mc 200,301,302,403",
+                shell=True, timeout=HTTPX_RECON_TIMEOUT
+            )
+        except subprocess.TimeoutExpired:
+            print(f"[⚠️] httpx timed out for {domain} after {HTTPX_RECON_TIMEOUT}s; using partial results if any")
         # Leer URLs activas
         active_urls = []
         if os.path.exists(active_urls_file):
@@ -1140,22 +1163,24 @@ def bounty_program_target_hook(project_id, target_list, results_dir):
                 temp_file = f"{results_dir}/hook_temp_{target.replace('.', '_')}.txt"
                 
                 # 1. Subfinder
-                cmd = f"timeout 90 subfinder -d {target} -o {subs_file} -silent"
-                subprocess.run(cmd, shell=True)
-                
-                # 2. Preparar lista
+                cmd = f"subfinder -d {target} -o {subs_file} -silent"
+                try:
+                    subprocess.run(cmd, shell=True, timeout=SUBFINDER_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] subfinder timed out for {target}; using partial subdomains if any")
                 subs = [target]
                 if os.path.exists(subs_file):
                     with open(subs_file, 'r') as f:
                         subs.extend([line.strip() for line in f if line.strip()])
-                
                 with open(temp_file, 'w') as f:
                     for sub in subs:
                         f.write(f"{sub}\n")
-                
                 # 3. Httpx
-                cmd = f"timeout 120 httpx -l {temp_file} -o {httpx_file} -silent -timeout 5"
-                subprocess.run(cmd, shell=True)
+                cmd = f"httpx -l {temp_file} -o {httpx_file} -silent -timeout 5"
+                try:
+                    subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] httpx timed out for {target}; using partial results if any")
                 
                 # 4. Leer URLs
                 if os.path.exists(httpx_file):
@@ -1216,12 +1241,12 @@ def check_active_url(domain, results_dir):
         with open(temp_file, 'w') as f:
             f.write(f"{domain}\n")
         
-        # Ejecutar httpx
         output_file = os.path.join(results_dir, f"active_{domain.replace('.', '_')}.txt")
         cmd = f"httpx -l {temp_file} -o {output_file} -silent -timeout 10"
-        subprocess.run(cmd, shell=True, timeout=60)
-        
-        # Leer resultado
+        try:
+            subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            pass  # use partial result if any
         active_url = None
         if os.path.exists(output_file):
             with open(output_file, 'r') as f:
@@ -1298,30 +1323,28 @@ def replicate_manual_domain_behavior(project_id, domain_list, results_dir):
                 # Es dominio - hacer EXACTAMENTE lo mismo que manual
                 print(f"[🔍] MANUAL-STYLE PROCESSING: {domain}")
                 
-                # 1. Subfinder (igual que manual)
                 subs_file = os.path.join(results_dir, f"manual_subs_{domain.replace('.', '_')}.txt")
                 cmd = f"subfinder -d {domain} -o {subs_file} -silent"
-                subprocess.run(cmd, shell=True, timeout=120)
-                
-                # 2. Leer subdominios
-                subdomains = [domain]  # Incluir original
+                try:
+                    subprocess.run(cmd, shell=True, timeout=SUBFINDER_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] subfinder timed out for {domain}; using partial subdomains if any")
+                subdomains = [domain]
                 if os.path.exists(subs_file):
                     with open(subs_file, 'r') as f:
                         subdomains.extend([line.strip() for line in f if line.strip()])
-                
                 print(f"[📊] Found {len(subdomains)} subdomains for {domain}")
-                
-                # 3. Httpx en todos (igual que manual)
                 temp_file = os.path.join(results_dir, f"manual_temp_{domain.replace('.', '_')}.txt")
                 with open(temp_file, 'w') as f:
                     for sub in subdomains:
                         f.write(f"{sub}\n")
-                
                 urls_file = os.path.join(results_dir, f"manual_urls_{domain.replace('.', '_')}.txt")
                 cmd = f"httpx -l {temp_file} -o {urls_file} -silent -timeout 10"
-                subprocess.run(cmd, shell=True, timeout=180)
-                
-                # 4. Crear targets para URLs activas (igual que manual)
+                try:
+                    subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+                except subprocess.TimeoutExpired:
+                    print(f"[⚠️] httpx timed out for {domain}; using partial results if any")
+                # 4. Crear targets para URLs activas
                 if os.path.exists(urls_file):
                     with open(urls_file, 'r') as f:
                         for line in f:
@@ -1351,3 +1374,79 @@ def replicate_manual_domain_behavior(project_id, domain_list, results_dir):
         if 'db' in locals():
             db.close()
         return False
+
+
+def run_domain_recon_save_for_selection(project_id, domain_list, results_dir):
+    """
+    Recon (subfinder + httpx), guardar URLs en DiscoveredURL y status awaiting_url_selection.
+    NO crea Target; el consultor elige en la UI y luego POST discovered-urls/scan crea targets y lanza run_scan.
+    """
+    try:
+        from backend.models import SessionLocal, DiscoveredURL, ScanState
+        import subprocess
+        import os
+
+        db = SessionLocal()
+        os.makedirs(results_dir, exist_ok=True)
+        db.query(DiscoveredURL).filter(DiscoveredURL.project_id == project_id).delete()
+
+        all_urls = []
+        for domain in domain_list:
+            domain = domain.strip()
+            if domain.startswith(('http://', 'https://')):
+                all_urls.append(domain)
+                continue
+            print(f"[🔍] Recon for selection: {domain}")
+            subs_file = os.path.join(results_dir, f"manual_subs_{domain.replace('.', '_')}.txt")
+            cmd = f"subfinder -d {domain} -o {subs_file} -silent"
+            try:
+                subprocess.run(cmd, shell=True, timeout=SUBFINDER_RECON_TIMEOUT)
+            except subprocess.TimeoutExpired:
+                print(f"[⚠️] subfinder timed out for {domain} after {SUBFINDER_RECON_TIMEOUT}s; using partial subdomains if any")
+            subdomains = [domain]
+            if os.path.exists(subs_file):
+                with open(subs_file, 'r') as f:
+                    subdomains.extend([line.strip() for line in f if line.strip()])
+            print(f"[📊] Found {len(subdomains)} subdomains for {domain}")
+            temp_file = os.path.join(results_dir, f"manual_temp_{domain.replace('.', '_')}.txt")
+            with open(temp_file, 'w') as f:
+                for sub in subdomains:
+                    f.write(f"{sub}\n")
+            urls_file = os.path.join(results_dir, f"manual_urls_{domain.replace('.', '_')}.txt")
+            cmd = f"httpx -l {temp_file} -o {urls_file} -silent -timeout 10"
+            try:
+                subprocess.run(cmd, shell=True, timeout=HTTPX_RECON_TIMEOUT)
+            except subprocess.TimeoutExpired:
+                print(f"[⚠️] httpx timed out for {domain} after {HTTPX_RECON_TIMEOUT}s; using partial results if any")
+            if os.path.exists(urls_file):
+                with open(urls_file, 'r') as f:
+                    for line in f:
+                        url = line.strip()
+                        if url.startswith(('http://', 'https://')):
+                            all_urls.append(url)
+            for f in [subs_file, temp_file, urls_file]:
+                try:
+                    os.remove(f)
+                except Exception:
+                    pass
+
+        all_urls = list(dict.fromkeys(all_urls))
+        for url in all_urls:
+            db.add(DiscoveredURL(project_id=project_id, url=url))
+        state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
+        if state:
+            state.status = "awaiting_url_selection"
+            state.current_stage = "Awaiting URL selection"
+        db.commit()
+        db.close()
+        print(f"[✅] Saved {len(all_urls)} discovered URLs for project {project_id} (awaiting consultant selection)")
+        return len(all_urls)
+    except Exception as e:
+        print(f"[❌] Error in run_domain_recon_save_for_selection: {e}")
+        if 'db' in locals():
+            try:
+                db.rollback()
+                db.close()
+            except Exception:
+                pass
+        return 0

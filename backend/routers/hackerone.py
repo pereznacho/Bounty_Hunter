@@ -15,7 +15,7 @@ import httpx
 import json
 from backend.models import SessionLocal, Project, Target, ScanState, User, Platform, BountyProgram
 from backend.scan_worker import run_scan
-from modules.recon import replicate_manual_domain_behavior
+from modules.recon import run_domain_recon_save_for_selection
 from utils.path_utils import get_safe_name_from_target
 
 
@@ -40,6 +40,14 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def _theme_for_request(request: Request, db: Session) -> str:
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return "default"
+    user = db.query(User).filter(User.id == user_id).first()
+    return (getattr(user, "theme", None) or "default").strip() or "default"
 
 
 
@@ -98,11 +106,12 @@ def normalize_identifier(identifier: str, typ: str) -> str:
 
 
 @router.get("/hackerone", response_class=HTMLResponse)
-async def list_hackerone_programs(request: Request):
+async def list_hackerone_programs(request: Request, db: Session = Depends(get_db)):
     """
     Lista los programas (overview). Devuelve la plantilla import.html con
     una lista simplificada que incluye counts de dominios / urls.
     """
+    theme = _theme_for_request(request, db)
     try:
         programs = fetch_programs()
     except Exception:
@@ -111,7 +120,9 @@ async def list_hackerone_programs(request: Request):
             "request": request,
             "programs": [],
             "selected_program": None,
-            "error": "Hubo un problema al obtener los programas de HackerOne."
+            "error": "Hubo un problema al obtener los programas de HackerOne.",
+            "theme": theme,
+            "page_id": "import",
         })
 
     simplified_programs = []
@@ -166,11 +177,13 @@ async def list_hackerone_programs(request: Request):
         "request": request,
         "programs": simplified_programs,
         "selected_program": None,
-        "error": None
+        "error": None,
+        "theme": theme,
+        "page_id": "import",
     })
 
 @router.get("/hackerone/import", response_class=HTMLResponse)
-async def import_hackerone_programs(request: Request):
+async def import_hackerone_programs(request: Request, db: Session = Depends(get_db)):
     """
     Lista (vista de import) preparada para import.html — con counts y
     la lista normalizada para la plantilla.
@@ -179,6 +192,7 @@ async def import_hackerone_programs(request: Request):
     if not user_id:
         return RedirectResponse("/login", status_code=302)
 
+    theme = _theme_for_request(request, db)
     try:
         programs = fetch_programs()
     except Exception:
@@ -187,7 +201,9 @@ async def import_hackerone_programs(request: Request):
             "request": request,
             "programs": [],
             "selected_program": None,
-            "error": "Hubo un problema al obtener los programas de HackerOne."
+            "error": "Hubo un problema al obtener los programas de HackerOne.",
+            "theme": theme,
+            "page_id": "import",
         })
 
     # reusar la lógica de preparación igual que en list_hackerone_programs
@@ -237,11 +253,13 @@ async def import_hackerone_programs(request: Request):
         "request": request,
         "programs": simplified_programs,
         "selected_program": None,
-        "error": None
+        "error": None,
+        "theme": theme,
+        "page_id": "import",
     })
 
 @router.get("/hackerone/program/{handle}", response_class=HTMLResponse)
-async def show_program(request: Request, handle: str):
+async def show_program(request: Request, handle: str, db: Session = Depends(get_db)):
     """
     Muestra el detalle de un programa concreto. Extrae los targets (in_scope)
     y separa en domains / urls (con versión 'clean' y 'original') para la plantilla.
@@ -250,6 +268,7 @@ async def show_program(request: Request, handle: str):
     if not user_id:
         return RedirectResponse("/login", status_code=302)
 
+    theme = _theme_for_request(request, db)
     try:
         programs = fetch_programs()
     except Exception:
@@ -258,7 +277,9 @@ async def show_program(request: Request, handle: str):
             "request": request,
             "programs": [],
             "selected_program": None,
-            "error": "No se pudo obtener los programas de HackerOne."
+            "error": "No se pudo obtener los programas de HackerOne.",
+            "theme": theme,
+            "page_id": "import",
         })
 
     # construir overview con counts (para el listado lateral)
@@ -353,12 +374,14 @@ async def show_program(request: Request, handle: str):
         "request": request,
         "programs": overview,
         "selected_program": program_data,
-        "error": None
+        "error": None,
+        "theme": theme,
+        "page_id": "import",
     })
 
 
 @router.post("/hackerone/scan", response_class=HTMLResponse)
-async def start_scan_from_program(request: Request):
+async def start_scan_from_program(request: Request, db_session: Session = Depends(get_db)):
     """
     Recibe múltiples inputs 'targets' (checkboxes). Cada target puede ser:
       - 'domain:example.com' or 'url:https://...'
@@ -383,11 +406,14 @@ async def start_scan_from_program(request: Request):
     logger.info("Import scan request for program=%s targets=%d", program_handle, len(targets))
 
     if not targets:
+        theme = _theme_for_request(request, db_session)
         return templates.TemplateResponse("import.html", {
             "request": request,
             "programs": [],
             "selected_program": None,
-            "error": "No targets selected"
+            "error": "No targets selected",
+            "theme": theme,
+            "page_id": "import",
         })
 
     db = SessionLocal()
@@ -482,22 +508,16 @@ async def start_scan_from_program(request: Request):
                     db_worker.close()
 
                 if domain_list:
-                    logger.info("HACKERONE: found %d domains to auto-expand for project %s", len(domain_list), project.id)
-
-                    # replicate_manual_domain_behavior performs the same steps as the manual form
+                    logger.info("HACKERONE: found %d domain(s) - recon + save discovered URLs for selection (no auto-cards)", len(domain_list), project.id)
                     try:
-                        created_any = replicate_manual_domain_behavior(project.id, domain_list, results_dir_path)
-                        if created_any:
-                            logger.info("HACKERONE: Auto-expanded created URL targets for project %s", project.id)
-                        else:
-                            logger.info("HACKERONE: Auto-expanded ran but no new URL targets were created for project %s", project.id)
+                        count = run_domain_recon_save_for_selection(project.id, domain_list, results_dir_path)
+                        logger.info("HACKERONE: Saved %d discovered URLs for project %s - consultant selects which to scan", count, project.id)
                     except Exception as re:
-                        logger.exception("HACKERONE: Error during auto-expanded replication for project %s: %s", project.id, re)
+                        logger.exception("HACKERONE: Error during domain recon for project %s: %s", project.id, re)
+                    # No run_scan: consultant goes to project targets, selects URLs, then POST discovered-urls/scan
                 else:
-                    logger.info("HACKERONE: no domain targets to auto-expand for project %s", project.id)
-
-                # Finally, run the standard scan worker which will pick up the newly created URL targets
-                run_scan(project_id=project.id)
+                    logger.info("HACKERONE: no domain targets; running scan for URL targets")
+                    run_scan(project_id=project.id)
             except Exception:
                 logger.exception("HACKERONE: Error in auto-expanded scan worker for project %s", project.id)
 
@@ -512,7 +532,7 @@ async def start_scan_from_program(request: Request):
 
 
 @router.post("/scan", response_class=HTMLResponse)
-async def start_scan(request: Request):
+async def start_scan(request: Request, db_session: Session = Depends(get_db)):
     """
     Endpoint genérico que acepta el form con campos:
       - handle (program handle)
@@ -536,11 +556,14 @@ async def start_scan(request: Request):
     logger.info("Received scan request for program=%s, targets=%d", program_handle, len(targets))
 
     if not targets:
+        theme = _theme_for_request(request, db_session)
         return templates.TemplateResponse("import.html", {
             "request": request,
             "programs": [],
             "selected_program": None,
-            "error": "No targets selected"
+            "error": "No targets selected",
+            "theme": theme,
+            "page_id": "import",
         })
 
     db = SessionLocal()

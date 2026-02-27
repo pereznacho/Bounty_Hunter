@@ -1,6 +1,7 @@
 from backend.constants import VULN_RESULT_FILES, SEVERITY_KEYWORDS, NO_FINDINGS_HINTS, MIN_VALID_FILE_SIZE
 # backend/models.py
 
+import os
 from datetime import datetime
 from sqlalchemy import (
     Column, Integer, String, ForeignKey, DateTime,
@@ -8,15 +9,18 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base
 
-# Configuración de la base de datos
-SQLALCHEMY_DATABASE_URL = "sqlite:///./db.sqlite3"
+# Configuración de la base de datos (Docker: SQLALCHEMY_DATABASE_URL=sqlite:////app/db.sqlite3)
+SQLALCHEMY_DATABASE_URL = os.environ.get("SQLALCHEMY_DATABASE_URL", "sqlite:///./db.sqlite3")
+_connect_args = {"check_same_thread": False}
+if "sqlite" in SQLALCHEMY_DATABASE_URL:
+    _connect_args["timeout"] = 20  # wait up to 20s for lock (avoids "database is locked")
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, 
-    connect_args={"check_same_thread": False},
+    SQLALCHEMY_DATABASE_URL,
+    connect_args=_connect_args,
     pool_size=20,
     max_overflow=30,
     pool_timeout=60,
-    pool_recycle=3600
+    pool_recycle=3600,
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -41,6 +45,7 @@ class User(Base):
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
     email = Column(String, nullable=True)
+    theme = Column(String, nullable=True, default="default")  # default, cyberpunk, neon, matrix, tron, purple, military, hackthebox
 
     projects = relationship("Project", back_populates="owner")
 
@@ -66,7 +71,8 @@ class Project(Base):
     # ✅ Bounty Platform support
     platform = Column(String, nullable=True)  # Ej: 'HackerOne', 'BugCrowd', etc. NULL para Manual
     targets = relationship("Target", back_populates="project", cascade="all, delete-orphan")
-    
+    discovered_urls = relationship("DiscoveredURL", back_populates="project", cascade="all, delete-orphan")
+
     # Platform flags
     created_from_hackerone = Column(Boolean, default=False)
     created_from_intigriti = Column(Boolean, default=False)
@@ -344,6 +350,17 @@ class Target(Base):
     def has_unviewed_vulnerabilities(self):
         """Retorna True si tiene vulnerabilidades y no han sido vistas."""
         return self.has_vulnerabilities and not self.vulnerability_alert_viewed
+
+# -------------------------------
+# URLs descubiertas por recon (dominio) - consultor elige cuáles escanear
+# -------------------------------
+class DiscoveredURL(Base):
+    __tablename__ = "discovered_urls"
+    id = Column(Integer, primary_key=True, index=True)
+    project_id = Column(Integer, ForeignKey("projects.id"), nullable=False)
+    project = relationship("Project", back_populates="discovered_urls")
+    url = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 # -------------------------------
 # Estado del escaneo (ScanState)

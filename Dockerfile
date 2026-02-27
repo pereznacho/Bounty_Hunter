@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y procps
 # Instalar dependencias base
 RUN apt update && \
     apt install -y --no-install-recommends \
+        dirb \
         build-essential \
         gcc \
         g++ \
@@ -60,14 +61,15 @@ RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && 
     go install github.com/tomnomnom/waybackurls@latest && \
     go install github.com/tomnomnom/qsreplace@latest && \
     go install github.com/tomnomnom/gf@latest && \
-    go install -tags javascript,markdown github.com/projectdiscovery/katana/cmd/katana@latest
+    go install -tags javascript,markdown github.com/projectdiscovery/katana/cmd/katana@latest && \
+    go install github.com/OJ/gobuster/v3@latest
 
 
 # Move Go binaries to /usr/local/bin
 RUN cp -r /root/go/bin/* /usr/local/bin/
 
-# Instalar arjun (y otras herramientas que necesites)
-RUN pip install arjun
+# Instalar arjun y dirsearch
+RUN pip install arjun dirsearch
 
 # GF patterns
 RUN git clone https://github.com/1ndianl33t/Gf-Patterns.git /tmp/Gf-Patterns && \
@@ -96,7 +98,7 @@ RUN git clone https://github.com/epinna/tplmap.git /opt/tplmap && \
     ln -s /opt/tplmap/tplmap.py /usr/local/bin/tplmap
 
 # SecLists
-RUN git clone https://github.com/danielmiessler/SecLists.git /usr/share/seclists
+RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists
 
 # Make all .py tools executable
 RUN chmod +x /usr/local/bin/sqlmap \

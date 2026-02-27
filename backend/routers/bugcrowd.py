@@ -13,7 +13,7 @@ import re
 
 from backend.models import SessionLocal, Project, Target, ScanState, User
 from backend.scan_worker import run_scan
-from modules.recon import replicate_manual_domain_behavior
+from modules.recon import run_domain_recon_save_for_selection
 from backend.database import get_db
 from backend.auth import get_current_user
 from utils.path_utils import get_safe_name_from_target
@@ -66,15 +66,27 @@ def fetch_bugcrowd_programs() -> List[Dict]:
     resp.raise_for_status()
     return resp.json()
 
+
+def _theme_for_request(request: Request, db: Session) -> str:
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return "default"
+    user = db.query(User).filter(User.id == user_id).first()
+    return (getattr(user, "theme", None) or "default").strip() or "default"
+
+
 @router.get("/", response_class=HTMLResponse)
-async def list_bugcrowd_programs(request: Request):
+async def list_bugcrowd_programs(request: Request, db: Session = Depends(get_db)):
+    theme = _theme_for_request(request, db)
     try:
         programs = fetch_bugcrowd_programs()
     except Exception:
         logger.exception("Error fetching BugCrowd programs")
         return templates.TemplateResponse("bugcrowd_list.html", {
             "request": request,
-            "programs": []
+            "programs": [],
+            "theme": theme,
+            "page_id": "program_list",
         })
 
     simplified_programs = []
@@ -118,11 +130,14 @@ async def list_bugcrowd_programs(request: Request):
 
     return templates.TemplateResponse("bugcrowd_list.html", {
         "request": request,
-        "programs": simplified_programs
+        "programs": simplified_programs,
+        "theme": theme,
+        "page_id": "program_list",
     })
 
 @router.get("/program/{handle}", response_class=HTMLResponse)
-async def bugcrowd_program_detail(request: Request, handle: str):
+async def bugcrowd_program_detail(request: Request, handle: str, db: Session = Depends(get_db)):
+    theme = _theme_for_request(request, db)
     try:
         programs = fetch_bugcrowd_programs()
     except Exception:
@@ -131,7 +146,9 @@ async def bugcrowd_program_detail(request: Request, handle: str):
             "request": request,
             "selected_program": None,
             "programs": [],
-            "api_error": "Could not load program data"
+            "api_error": "Could not load program data",
+            "theme": theme,
+            "page_id": "program_list",
         })
 
     # Buscar el programa usando la misma lógica de generación del handle
@@ -148,7 +165,9 @@ async def bugcrowd_program_detail(request: Request, handle: str):
             "request": request,
             "selected_program": None,
             "programs": [],
-            "api_error": f"Program '{handle}' not found"
+            "api_error": f"Program '{handle}' not found",
+            "theme": theme,
+            "page_id": "program_list",
         })
 
     # Normalizar los targets igual que HackerOne
@@ -201,11 +220,13 @@ async def bugcrowd_program_detail(request: Request, handle: str):
     return templates.TemplateResponse("bugcrowd_list.html", {
         "request": request,
         "selected_program": simplified_program,
-        "programs": []
+        "programs": [],
+        "theme": theme,
+        "page_id": "program_list",
     })
 
 @router.post("/scan", response_class=HTMLResponse)
-async def start_scan_from_bugcrowd(request: Request):
+async def start_scan_from_bugcrowd(request: Request, db_session: Session = Depends(get_db)):
     """
     Recibe múltiples inputs 'targets' (checkboxes). Cada target puede ser:
       - 'domain:example.com' or 'url:https://...'
@@ -230,11 +251,14 @@ async def start_scan_from_bugcrowd(request: Request):
     logger.info("Import scan request for BugCrowd program=%s targets=%d", program_handle, len(targets))
 
     if not targets:
+        theme = _theme_for_request(request, db_session)
         return templates.TemplateResponse("bugcrowd_list.html", {
             "request": request,
             "programs": [],
             "selected_program": None,
-            "api_error": "No targets selected"
+            "api_error": "No targets selected",
+            "theme": theme,
+            "page_id": "program_list",
         })
 
     db = SessionLocal()
@@ -329,22 +353,15 @@ async def start_scan_from_bugcrowd(request: Request):
                     db_worker.close()
 
                 if domain_list:
-                    logger.info("BUGCROWD: found %d domains to auto-expand for project %s", len(domain_list), project.id)
-
-                    # replicate_manual_domain_behavior performs the same steps as the manual form
+                    logger.info("BUGCROWD: found %d domain(s) - recon + save discovered URLs for selection (no auto-cards)", len(domain_list), project.id)
                     try:
-                        created_any = replicate_manual_domain_behavior(project.id, domain_list, results_dir_path)
-                        if created_any:
-                            logger.info("BUGCROWD: Auto-expanded created URL targets for project %s", project.id)
-                        else:
-                            logger.info("BUGCROWD: Auto-expanded ran but no new URL targets were created for project %s", project.id)
+                        count = run_domain_recon_save_for_selection(project.id, domain_list, results_dir_path)
+                        logger.info("BUGCROWD: Saved %d discovered URLs for project %s - consultant selects which to scan", count, project.id)
                     except Exception as re:
-                        logger.exception("BUGCROWD: Error during auto-expanded replication for project %s: %s", project.id, re)
+                        logger.exception("BUGCROWD: Error during domain recon for project %s: %s", project.id, re)
                 else:
-                    logger.info("BUGCROWD: no domain targets to auto-expand for project %s", project.id)
-
-                # Finally, run the standard scan worker which will pick up the newly created URL targets
-                run_scan(project_id=project.id)
+                    logger.info("BUGCROWD: no domain targets; running scan for URL targets")
+                    run_scan(project_id=project.id)
             except Exception:
                 logger.exception("BUGCROWD: Error in auto-expanded scan worker for project %s", project.id)
 

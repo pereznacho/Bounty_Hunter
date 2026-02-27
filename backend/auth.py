@@ -2,25 +2,21 @@ from fastapi import APIRouter, HTTPException, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 from pydantic import BaseModel
-from backend.models import User, SessionLocal
+from backend.models import User
+from backend.database import get_db
+from backend.constants import VALID_THEMES
+
+# Cookie used for theme on public pages (login/register) and after logout
+BOUNTY_THEME_COOKIE = "bounty_theme"
+BOUNTY_THEME_COOKIE_MAX_AGE = 365 * 24 * 60 * 60  # 1 year
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 # -------------------------------
-# DEPENDENCIA DB
-# -------------------------------
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# -------------------------------
-# FUNCION PARA OBTENER USUARIO LOGUEADO
+# FUNCION PARA OBTENER USUARIO LOGUEADO (usa la misma get_db que main para una sola sesión/BD)
 # -------------------------------
 def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
     user_id = request.session.get("user_id")
@@ -51,7 +47,7 @@ def register_api(user: UserIn, db: Session = Depends(get_db)):
 
     new_user = User(
         username=user.username,
-        password_hash=hashlib.sha256(user.password.encode()).hexdigest()
+        password_hash=generate_password_hash(user.password)
     )
     db.add(new_user)
     db.commit()
@@ -62,22 +58,39 @@ def register_api(user: UserIn, db: Session = Depends(get_db)):
 # -------------------------------
 @router.post("/auth/login")
 def login_api(user: UserIn, db: Session = Depends(get_db)):
-    pwd_hash = hashlib.sha256(user.password.encode()).hexdigest()
-    existing = db.query(User).filter(
-        User.username == user.username,
-        User.password_hash == pwd_hash
-    ).first()
-    if not existing:
+    existing = db.query(User).filter(User.username == user.username).first()
+    if not existing or not check_password_hash(existing.password_hash, user.password):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
     return {"token": user.username}
+
+def _theme_for_request(request: Request, db: Session) -> str:
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return "default"
+    user = db.query(User).filter(User.id == user_id).first()
+    return (getattr(user, "theme", None) or "default").strip() or "default"
+
+
+def theme_for_public(request: Request, db: Session) -> str:
+    """Theme for public pages (login/register): session user theme if logged in, else cookie."""
+    user_id = request.session.get("user_id")
+    if user_id:
+        user = db.query(User).filter(User.id == user_id).first()
+        if user:
+            t = (getattr(user, "theme", None) or "default").strip() or "default"
+            return t if t in VALID_THEMES else "default"
+    raw = (request.cookies.get(BOUNTY_THEME_COOKIE) or "").strip().lower()
+    return raw if raw in VALID_THEMES else "default"
+
 
 # -------------------------------
 # FORMULARIO HTML - REGISTRO (GET)
 # -------------------------------
 @router.get("/register", response_class=HTMLResponse)
-def register_form(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+def register_form(request: Request, db: Session = Depends(get_db)):
+    theme = theme_for_public(request, db)
+    return templates.TemplateResponse("register.html", {"request": request, "theme": theme, "page_id": "register"})
 
 # -------------------------------
 # FORMULARIO HTML - REGISTRO (POST)
@@ -91,14 +104,17 @@ def register_post(
 ):
     existing = db.query(User).filter(User.username == username).first()
     if existing:
+        theme = theme_for_public(request, db)
         return templates.TemplateResponse("register.html", {
             "request": request,
-            "error": "Usuario ya existe"
+            "error": "Usuario ya existe",
+            "theme": theme,
+            "page_id": "register",
         })
 
     new_user = User(
         username=username,
-        password_hash=hashlib.sha256(password.encode()).hexdigest()
+        password_hash=generate_password_hash(password)
     )
     db.add(new_user)
     db.commit()
@@ -112,8 +128,9 @@ def register_post(
 # FORMULARIO HTML - LOGIN (GET)
 # -------------------------------
 @router.get("/login", response_class=HTMLResponse)
-def login_form(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+def login_form(request: Request, db: Session = Depends(get_db)):
+    theme = theme_for_public(request, db)
+    return templates.TemplateResponse("login.html", {"request": request, "theme": theme, "page_id": "login"})
 
 # -------------------------------
 # FORMULARIO HTML - LOGIN (POST)
@@ -125,27 +142,59 @@ def login_post(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    pwd_hash = hashlib.sha256(password.encode()).hexdigest()
-    user = db.query(User).filter(
-        User.username == username,
-        User.password_hash == pwd_hash
-    ).first()
-
-    if not user:
+    user = db.query(User).filter(User.username == username).first()
+    if not user or not check_password_hash(user.password_hash, password):
+        theme = theme_for_public(request, db)
         return templates.TemplateResponse("login.html", {
             "request": request,
-            "error": "Usuario o contraseña incorrectos"
+            "error": "Usuario o contraseña incorrectos",
+            "theme": theme,
+            "page_id": "login",
         })
 
     request.session["user_id"] = user.id
     request.session["username"] = user.username
 
-    return RedirectResponse(url="/dashboard", status_code=302)
+    cookie_theme = (request.cookies.get(BOUNTY_THEME_COOKIE) or "").strip().lower()
+    if cookie_theme in VALID_THEMES:
+        try:
+            user.theme = cookie_theme
+            db.commit()
+        except Exception:
+            db.rollback()
+    theme = (getattr(user, "theme", None) or "default").strip() or "default"
+    if theme not in VALID_THEMES:
+        theme = "default"
+    response = RedirectResponse(url="/dashboard", status_code=302)
+    response.set_cookie(
+        BOUNTY_THEME_COOKIE,
+        theme,
+        max_age=BOUNTY_THEME_COOKIE_MAX_AGE,
+        path="/",
+    )
+    return response
 
 # -------------------------------
 # LOGOUT
 # -------------------------------
 @router.get("/logout")
-def logout(request: Request):
+def logout(request: Request, db: Session = Depends(get_db)):
+    theme = "default"
+    user_id = request.session.get("user_id")
+    if user_id:
+        user = db.query(User).filter(User.id == user_id).first()
+        if user:
+            t = (getattr(user, "theme", None) or "default").strip() or "default"
+            theme = t if t in VALID_THEMES else "default"
     request.session.clear()
-    return RedirectResponse(url="/login", status_code=302)
+    response = templates.TemplateResponse(
+        "logout.html",
+        {"request": request, "theme": theme, "page_id": "logout"},
+    )
+    response.set_cookie(
+        BOUNTY_THEME_COOKIE,
+        theme,
+        max_age=BOUNTY_THEME_COOKIE_MAX_AGE,
+        path="/",
+    )
+    return response

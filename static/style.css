@@ -22,6 +22,31 @@ body {
     margin-bottom: 30px;
 }
 
+.banner-ascii {
+    white-space: pre;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+}
+.banner-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+.banner-actions .theme-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.banner-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .subtitle {
     margin-top: -10px;
     color: #8b949e;

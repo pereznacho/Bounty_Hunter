@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>New Project</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
     <style>
         .modal-backdrop {
             position: fixed;
@@ -18,17 +19,17 @@
         }
 
         .modal-box {
-            background-color: #131b2e;
+            background-color: var(--th-card);
             padding: 30px;
             border-radius: 10px;
             width: 400px;
-            box-shadow: 0 0 20px rgba(255, 152, 0, 0.4);
-            color: #fff;
+            box-shadow: 0 0 20px var(--th-glow);
+            color: var(--th-text);
         }
 
         .modal-box h2 {
             margin-top: 0;
-            color: #ff9800;
+            color: var(--th-warm);
             text-align: center;
         }
 
@@ -36,7 +37,7 @@
             display: block;
             margin-top: 15px;
             margin-bottom: 5px;
-            color: #ffa726;
+            color: var(--th-accent2);
             font-weight: bold;
         }
 
@@ -45,9 +46,9 @@
             width: 100%;
             padding: 8px;
             border-radius: 5px;
-            border: 1px solid #444;
-            background-color: #0e1624;
-            color: #fff;
+            border: 1px solid var(--th-border);
+            background-color: var(--th-bg2);
+            color: var(--th-text);
             font-family: 'Fira Code', monospace;
         }
 
@@ -60,11 +61,11 @@
             display: block;
             margin-top: 15px;
             text-align: center;
-            color: #ff9800;
+            color: var(--th-warm);
         }
     </style>
 </head>
-<body>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('new_project') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('new_project') }}">
     <div class="modal-backdrop">
         <div class="modal-box">
             <h2>New Project</h2>
@@ -72,7 +73,7 @@
                 <label for="name">Project Name:</label>
                 <input type="text" name="name" id="name" required>
 
-                <label for="mode">Modo:</label>
+                <label for="mode">Mode:</label>
                 <select name="mode" id="mode">
                     <option value="domain">Domain</option>
                     <option value="url">URL</option>

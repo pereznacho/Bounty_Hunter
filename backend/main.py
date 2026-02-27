@@ -1,3 +1,5 @@
+import json
+import logging
 import subprocess
 import os
 import re
@@ -6,11 +8,14 @@ import glob
 import shutil
 import threading
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 from fastapi import FastAPI, Request, Form, status, Depends, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import OperationalError
 from starlette.middleware.sessions import SessionMiddleware
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
@@ -18,10 +23,25 @@ import hashlib
 import threading
 import os
 
-from backend.models import SessionLocal, User, Project, Target, ScanState, Platform, BountyProgram
+from backend.models import SessionLocal, User, Project, Target, ScanState, Platform, BountyProgram, DiscoveredURL
+
+
+def _commit_with_retry(db, max_attempts=4):
+    """Retry commit on SQLite 'database is locked' / 'busy'."""
+    for attempt in range(max_attempts):
+        try:
+            db.commit()
+            return True
+        except OperationalError as e:
+            if "locked" not in str(e).lower() and "busy" not in str(e).lower():
+                raise
+            db.rollback()
+            if attempt < max_attempts - 1:
+                time.sleep(0.3 * (attempt + 1))
+    return False
 from backend.project_routes import router as project_router
-from backend.scan_worker import run_scan, delete_target_and_results
-from modules.recon import replicate_manual_domain_behavior
+from backend.scan_worker import run_scan, delete_target_and_results, launch_scans_for_new_targets, request_skip
+from modules.recon import run_domain_recon_save_for_selection
 from utils.path_utils import get_safe_name_from_target
 
 app = FastAPI(title="Bounty Hunter", description="Bug Bounty Management Platform")
@@ -35,7 +55,8 @@ app.include_router(project_router)
 from fastapi.staticfiles import StaticFiles
 from fastapi import Query
 from starlette.templating import Jinja2Templates
-from backend.models import SessionLocal, Project, ScanState, User, Target
+from backend.models import SessionLocal, Project, ScanState, User, Target, engine
+from sqlalchemy import text
 from backend.project_routes import router
 from backend.routers.hackerone import router as hackerone_router
 from starlette.middleware.sessions import SessionMiddleware
@@ -46,11 +67,13 @@ from backend.routers import hackerone
 from backend.database import get_db
 from sqlalchemy.orm import Session
 from backend.auth import get_current_user
+from backend.constants import VALID_THEMES, APP_VERSION
+from backend.auth import BOUNTY_THEME_COOKIE, BOUNTY_THEME_COOKIE_MAX_AGE
 from sqlalchemy.orm import selectinload
 from backend.routers.intigriti import router as intigriti_router
 from backend.routers.yeswehack import router as yeswehack_router
 from backend.routers.bugcrowd import router as bugcrowd_router
-from backend.scan_worker import run_scan, delete_target_and_results
+from backend.scan_worker import run_scan, delete_target_and_results, launch_scans_for_new_targets, request_skip
 from backend.template_filters import setup_template_filters, clean_html_malformed_spans
 from backend.routers.project import router as project_router
 
@@ -70,6 +93,24 @@ app.include_router(intigriti_router)
 app.include_router(yeswehack_router)
 app.include_router(bugcrowd_router)
 app.include_router(project_router)
+
+
+@app.on_event("startup")
+def _ensure_theme_column():
+    """Create tables if missing, then add theme column to users if missing (Docker + volume .:/app)."""
+    from backend.models import Base
+    Base.metadata.create_all(bind=engine)
+    try:
+        with engine.connect() as conn:
+            if "sqlite" in str(engine.url):
+                r = conn.execute(text("PRAGMA table_info(users)"))
+                cols = [row[1] for row in r]
+                if cols and "theme" not in cols:
+                    conn.execute(text("ALTER TABLE users ADD COLUMN theme VARCHAR DEFAULT 'default'"))
+                    conn.commit()
+    except Exception:
+        pass
+
 
 def is_valid_url(value):
     return re.match(r'^https?://', value) is not None
@@ -112,54 +153,14 @@ def normalize_identifier(identifier: str, typ: str) -> str:
 async def root():
     return RedirectResponse(url="/login")
 
-@app.get("/login", response_class=HTMLResponse)
-async def login_get(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-
-@app.post("/login")
-async def login_post(request: Request):
-    form = await request.form()
-    username = form.get("username")
-    password = form.get("password")
-
-    db = SessionLocal()
-    user = db.query(User).filter_by(username=username).first()
-    db.close()
-
-    if not user or not check_password_hash(user.password_hash, password):
-        return templates.TemplateResponse("login.html", {
-            "request": request,
-            "error": "Invalid credentials"
-        })
-
-    request.session["user_id"] = user.id
-    request.session["username"] = user.username
-
-    return RedirectResponse(url="/dashboard", status_code=302)
-
-@app.get("/logout")
-async def logout(request: Request):
-    request.session.clear()
-    return RedirectResponse(url="/login", status_code=302)
-
-
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    projects = db.query(Project).options(selectinload(Project.targets), selectinload(Project.scan_state)).filter(Project.owner_id == current_user.id).all()
+    project_list = db.query(Project).options(selectinload(Project.targets), selectinload(Project.scan_state)).filter(Project.owner_id == current_user.id).all()
 
-    # Group by platform
-    grouped_projects = {
-        "HackerOne": [],
-        "Intigriti": [],
-        "BugCrowd": [],
-        "YesWeHack": [],
-        "Manual": []
-    }
-
-    for p in projects:
-        # Determine platform
+    projects = []
+    for p in project_list:
         platform = "Manual"
-        if p.platform:
+        if getattr(p, "platform", None):
             platform = p.platform
         elif p.created_from_hackerone:
             platform = "HackerOne"
@@ -170,35 +171,111 @@ def dashboard(request: Request, db: Session = Depends(get_db), current_user: Use
         elif p.name and "bugcrowd" in p.name.lower():
             platform = "BugCrowd"
 
-        # Targets
         if platform == "Manual" and len(p.targets) == 1:
             targets_text = p.targets[0].target
         else:
             targets_text = f"{len(p.targets)} targets"
 
-        grouped_projects.setdefault(platform, []).append({
+        progress = getattr(p.scan_state, "progress", 0) if p.scan_state else 0
+        awaiting_url_selection = (
+            p.scan_state is not None
+            and getattr(p.scan_state, "status", None) == "awaiting_url_selection"
+        )
+        projects.append({
             "id": p.id,
             "name": p.name or "Unnamed Project",
             "platform": platform,
             "targets_text": targets_text,
-            "progress": getattr(p.scan_state, "progress", 0),
-            "created_from_hackerone": p.created_from_hackerone
+            "progress": progress,
+            "has_vulnerabilities": getattr(p, "has_vulnerabilities", False),
+            "vulnerability_level": getattr(p, "vulnerability_level", None),
+            "awaiting_url_selection": awaiting_url_selection,
         })
 
+    theme_passed = (getattr(current_user, "theme", None) or "default").strip() or "default"
     return templates.TemplateResponse(
         "dashboard.html",
         {
             "request": request,
             "user": current_user,
-            "grouped_projects": grouped_projects
+            "projects": projects,
+            "theme": theme_passed,
+            "page_id": "dashboard",
         }
     )
 
+@app.get("/api/user/theme")
+def get_user_theme(current_user: User = Depends(get_current_user)):
+    """Return the current user's saved theme (source of truth for the frontend)."""
+    theme = (getattr(current_user, "theme", None) or "default").strip() or "default"
+    if theme not in VALID_THEMES:
+        theme = "default"
+    return JSONResponse(content={"theme": theme})
+
+
+@app.get("/api/version")
+def get_version():
+    """Return current app version (no auth)."""
+    return JSONResponse(content={"version": APP_VERSION})
+
+
+@app.get("/api/version/check")
+def get_version_check():
+    """Check GitHub for latest release; return latest version and url (no auth). Rate limit: call infrequently (e.g. once per 12h)."""
+    import re
+    repo = os.environ.get("GITHUB_REPO", "pereznacho/Bounty_Hunter").strip()
+    try:
+        import urllib.request
+        url = f"https://api.github.com/repos/{repo}/releases/latest"
+        req = urllib.request.Request(url, headers={"Accept": "application/vnd.github.v3+json"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode())
+        tag = (data.get("tag_name") or "").strip()
+        # Normalize v1.2.0 -> 1.2.0
+        latest = re.sub(r"^v", "", tag) if tag else None
+        html_url = data.get("html_url") or f"https://github.com/{repo}/releases"
+        if not latest:
+            return JSONResponse(content={"latest": APP_VERSION, "url": html_url, "current": APP_VERSION})
+        return JSONResponse(content={"latest": latest, "url": html_url, "current": APP_VERSION})
+    except Exception as e:
+        return JSONResponse(content={"latest": APP_VERSION, "url": None, "current": APP_VERSION, "error": str(e)})
+
+
+@app.post("/api/user/theme")
+async def save_user_theme(request: Request, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    """Save the current user's theme preference. Body: { \"theme\": \"cyberpunk\" }"""
+    try:
+        data = await request.json()
+    except Exception:
+        data = {}
+    theme = (data.get("theme") or "").strip().lower()
+    if theme not in VALID_THEMES:
+        theme = "default"
+    try:
+        current_user.theme = theme
+        db.commit()
+        with engine.connect() as conn:
+            conn.execute(text("UPDATE users SET theme = :t WHERE id = :id"), {"t": theme, "id": current_user.id})
+            conn.commit()
+    except Exception as e:
+        db.rollback()
+        return JSONResponse(content={"ok": False, "error": str(e)}, status_code=500)
+    resp = JSONResponse(content={"ok": True, "theme": theme})
+    resp.set_cookie(
+        BOUNTY_THEME_COOKIE,
+        theme,
+        max_age=BOUNTY_THEME_COOKIE_MAX_AGE,
+        path="/",
+    )
+    return resp
+
 @app.get("/project/new", response_class=HTMLResponse)
-async def new_project_form(request: Request):
+async def new_project_form(request: Request, db: Session = Depends(get_db)):
     if "user_id" not in request.session:
         return RedirectResponse(url="/login", status_code=302)
-    return templates.TemplateResponse("new_project.html", {"request": request})
+    user = db.query(User).filter(User.id == request.session.get("user_id")).first()
+    theme = (getattr(user, "theme", None) or "default").strip() or "default"
+    return templates.TemplateResponse("new_project.html", {"request": request, "theme": theme, "page_id": "new_project"})
 
 @app.post("/project/new")
 async def create_project(
@@ -212,6 +289,8 @@ async def create_project(
         return RedirectResponse(url="/login", status_code=302)
 
     db = SessionLocal()
+    project_id = None
+    target_type = None
     try:
         # Classify the target using the same logic as bug bounty programs
         target_type = classify_identifier(target)
@@ -226,15 +305,20 @@ async def create_project(
         folder_name = f"{safe_target}_{timestamp}"
         
         # Create the project
+        owner_id = request.session.get("user_id")
+        if owner_id is not None:
+            owner_id = int(owner_id)
         project = Project(
-            name=name, 
-            target=normalized_target, 
-            mode=auto_mode, 
+            name=name,
+            target=normalized_target,
+            mode=auto_mode,
             platform="Manual",
-            results_dir=folder_name
+            results_dir=folder_name,
+            owner_id=owner_id
         )
         db.add(project)
-        db.commit()
+        if not _commit_with_retry(db):
+            raise Exception("Failed to commit project after retries")
         db.refresh(project)
         project_id = project.id
 
@@ -255,42 +339,78 @@ async def create_project(
         # Create the scan state
         state = ScanState(project_id=project_id, current_stage="Recon", status="pending", progress=0)
         db.add(state)
-        db.commit()
+        if not _commit_with_retry(db):
+            raise Exception("Failed to commit scan state after retries")
         
         print(f"[📋] Created manual project {project_id} with target {normalized_target} (type: {target_type})")
         
 
-        # Si se debe iniciar inmediatamente, usar el sistema de workers
+        # Si se debe iniciar inmediatamente: mismo flujo que bounty (recon → guardar URLs → consultor elige)
         if start_now and start_now.lower() == "yes":
-            print(f"Starting scan for project {project_id}")
-            
-            # Actualizar estado a "running" ANTES de iniciar el hilo
+            print(f"Starting scan for project {project_id} (type={target_type})")
             state.status = "running"
-            db.commit()
+            _commit_with_retry(db)
 
-            # Thread that executes the scan with error handling
+            results_dir_path = os.path.join("results", folder_name)
+            _pid, _tid, _norm = project_id, target_type, normalized_target
+
             def scan_thread():
                 try:
-                    print(f"Thread started for project {project_id}")
-                    run_scan(project_id)
-                    print(f"Thread completed for project {project_id}")
+                    if _tid == "domain":
+                        # Recon + guardar en DiscoveredURL → awaiting_url_selection (no crear cards)
+                        run_domain_recon_save_for_selection(_pid, [_norm], results_dir_path)
+                        print(f"[✅] Recon done; project {_pid} awaiting URL selection")
+                    else:
+                        run_scan(project_id=_pid)
+                        print(f"Thread completed for project {_pid}")
                 except Exception as e:
-                    print(f"Error in scan thread for project {project_id}: {e}")
+                    print(f"Error in scan thread for project {_pid}: {e}")
 
-            # Lanzar el hilo en modo daemon
             threading.Thread(target=scan_thread, daemon=True).start()
             print(f"Thread launched for project {project_id}")
 
     except Exception as e:
-        print(f"Error creating manual project: {e}")
-        db.rollback()
+        logger.exception("Error creating manual project: %s", e)
+        try:
+            db.rollback()
+        except Exception:
+            pass
     finally:
         db.close()
 
+    # Dominio con start_now: llevar a targets para ver lista de URLs descubiertas y marcar cuáles escanear
+    if project_id and start_now and start_now.lower() == "yes" and target_type == "domain":
+        return RedirectResponse(url=f"/project/{project_id}/targets", status_code=303)
     return RedirectResponse(url="/dashboard", status_code=303)
+
+@app.post("/project/{project_id}/target/{target_id}/stop", response_class=RedirectResponse)
+async def stop_target_scan(request: Request, project_id: int, target_id: int):
+    """Stop all scanning tasks for this target only (kills process via request_skip, marks target cancelled)."""
+    if "user_id" not in request.session:
+        return RedirectResponse(url="/login", status_code=302)
+    db = SessionLocal()
+    try:
+        target = db.query(Target).filter(Target.id == target_id, Target.project_id == project_id).first()
+        if not target:
+            return RedirectResponse(url=f"/project/{project_id}/targets", status_code=303)
+        request_skip(project_id, target.target)
+        target.status = "cancelled"
+        db.commit()
+        # If no other target is running, mark ScanState as cancelled
+        any_running = db.query(Target).filter(Target.project_id == project_id, Target.status == "running").first()
+        if not any_running:
+            state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
+            if state:
+                state.status = "cancelled"
+                db.commit()
+    finally:
+        db.close()
+    return RedirectResponse(url=f"/project/{project_id}/target/{target_id}", status_code=303)
+
 
 @app.post("/project/{project_id}/stop")
 async def stop_project(request: Request, project_id: int):
+    """Legacy: stop single process in running_processes. Prefer stop_target_scan or stop_project_scans for per-target / full-project stop."""
     if "user_id" not in request.session:
         return RedirectResponse(url="/login", status_code=302)
 
@@ -308,6 +428,59 @@ async def stop_project(request: Request, project_id: int):
         db.close()
 
     return RedirectResponse(url=f"/project/{project_id}", status_code=303)
+
+
+@app.post("/project/{project_id}/stop-scan", response_class=RedirectResponse)
+async def stop_project_scans(request: Request, project_id: int):
+    """Stop all scans for all targets in this project (request_skip per target, mark all cancelled)."""
+    if "user_id" not in request.session:
+        return RedirectResponse(url="/login", status_code=302)
+    redirect_url = f"/project/{project_id}/targets"
+    db = SessionLocal()
+    try:
+        user_id = request.session.get("user_id")
+        try:
+            user_id = int(user_id) if user_id is not None else None
+        except (TypeError, ValueError):
+            user_id = None
+        project = db.query(Project).filter(Project.id == project_id, Project.owner_id == user_id).first() if user_id else None
+        if not project:
+            db.close()
+            return RedirectResponse(url="/dashboard", status_code=303)
+        targets = db.query(Target).filter(Target.project_id == project_id).all()
+        for t in targets:
+            if getattr(t, "status", None) == "running" and getattr(t, "target", None):
+                try:
+                    request_skip(project_id, t.target)
+                except Exception:
+                    pass
+                t.status = "cancelled"
+        state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
+        if state:
+            state.status = "cancelled"
+        db.commit()
+    except Exception as e:
+        logger.exception("stop_project_scans error for project_id=%s: %s", project_id, e)
+        try:
+            db.rollback()
+        except Exception:
+            pass
+    finally:
+        db.close()
+    # Kill legacy single process if any
+    try:
+        proc = running_processes.get(project_id)
+        if proc and proc.poll() is None:
+            try:
+                proc.terminate()
+                proc.wait(timeout=5)
+            except Exception:
+                pass
+        if project_id in running_processes:
+            del running_processes[project_id]
+    except Exception:
+        pass
+    return RedirectResponse(url=redirect_url, status_code=303)
 
 
 
@@ -333,17 +506,35 @@ async def project_targets(request: Request, project_id: int):
         return RedirectResponse(url="/login", status_code=302)
 
     db = SessionLocal()
-    project = db.query(Project).filter(Project.id == project_id).first()
+    project = db.query(Project).options(
+        selectinload(Project.targets),
+        selectinload(Project.scan_state),
+        selectinload(Project.discovered_urls),
+    ).filter(Project.id == project_id).first()
 
     if not project:
         db.close()
         raise HTTPException(status_code=404, detail="Project not found")
 
-    targets = project.targets  # session remains open
+    targets = project.targets
+    state = project.scan_state
+    discovered_urls = list(project.discovered_urls) if getattr(project, "discovered_urls", None) else []
+    awaiting_selection = state and getattr(state, "status", None) == "awaiting_url_selection"
+    has_url_targets = any(getattr(t, "type", None) == "url" for t in targets)
+
+    user = db.query(User).filter(User.id == request.session.get("user_id")).first()
+    theme = (getattr(user, "theme", None) or "default").strip() or "default"
+
     response = templates.TemplateResponse("project_targets.html", {
         "request": request,
         "project": project,
-        "targets": targets
+        "targets": targets,
+        "state": state,
+        "discovered_urls": discovered_urls,
+        "awaiting_selection": awaiting_selection,
+        "has_url_targets": has_url_targets,
+        "theme": theme,
+        "page_id": "targets",
     })
     db.close()
     return response
@@ -375,7 +566,9 @@ async def project_detail(request: Request, project_id: int):
         platform == "Manual (Auto-expanded)") and len(project.targets) > 1:
         db.close()
         return RedirectResponse(url=f"/project/{project_id}/targets", status_code=302)
-    
+
+    user = db.query(User).filter(User.id == request.session.get("user_id")).first()
+    theme = (getattr(user, "theme", None) or "default").strip() or "default"
     db.close()
 
     # Cargar archivos generados
@@ -401,7 +594,7 @@ async def project_detail(request: Request, project_id: int):
                             content = f.read()
                         files[file] = content
                     except Exception:
-                        files[file] = "[Error al leer archivo]"
+                        files[file] = "[Error reading file]"
 
     # Si el proyecto fue creado con plataforma (no manual) y tiene target, usar el template especial
     if project.platform != "Manual" and target:
@@ -411,14 +604,18 @@ async def project_detail(request: Request, project_id: int):
             "target": target,
             "scans": scans,
             "files": files,
-            "state": state
+            "state": state,
+            "theme": theme,
+            "page_id": "target_detail",
         })
 
     return templates.TemplateResponse("project_detail.html", {
         "request": request,
         "project": project,
         "state": state,
-        "files": files  # 👈 IMPORTANTE
+        "files": files,
+        "theme": theme,
+        "page_id": "project_detail",
     })
 
 
@@ -462,15 +659,18 @@ async def project_target_detail(request: Request, project_id: int, target_id: in
                         content = f.read()
                     files[file] = content
                 except Exception:
-                    files[file] = "[Error al leer archivo]"
+                    files[file] = "[Error reading file]"
 
+    theme = (getattr(current_user, "theme", None) or "default").strip() or "default"
     return templates.TemplateResponse("project_target_detail.html", {
         "request": request,
         "project": project,
         "target": target,
         "scan_state": scan_state,
         "files": files,
-        "state": scan_state
+        "state": scan_state,
+        "theme": theme,
+        "page_id": "target_detail",
     })
 
 @app.post("/project/{project_id}/start")
@@ -483,7 +683,7 @@ async def start_project(request: Request, project_id: int):
     db.close()
 
     if not project:
-        return JSONResponse(content={"error": "Proyecto no encontrado"}, status_code=404)
+        return JSONResponse(content={"error": "Project not found"}, status_code=404)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     clean_target = project.target.replace('https://', '').replace('http://', '').replace('/', '_')
@@ -585,6 +785,50 @@ async def delete_project(request: Request, project_id: int):
     db.close()
     return RedirectResponse(url="/dashboard", status_code=303)
 
+@app.post("/project/{project_id}/discovered-urls/scan", response_class=RedirectResponse)
+async def scan_selected_discovered_urls(request: Request, project_id: int):
+    """El consultor eligió URLs: se crean targets y se lanza run_scan (flujo dominio manual/bounty)."""
+    if "user_id" not in request.session:
+        return RedirectResponse(url="/login", status_code=302)
+
+    form = await request.form()
+    selected = form.getlist("urls") if hasattr(form, "getlist") else [v for k, v in form.multi_items() if k == "urls"]
+
+    if not selected:
+        return RedirectResponse(url=f"/project/{project_id}/targets", status_code=303)
+
+    db = SessionLocal()
+    try:
+        project = db.query(Project).filter(Project.id == project_id).first()
+        if not project:
+            raise HTTPException(status_code=404, detail="Project not found")
+        selected_set = set()
+        for url in selected:
+            url = (url or "").strip()
+            if not url or not url.startswith(("http://", "https://")):
+                continue
+            selected_set.add(url)
+            if not db.query(Target).filter(Target.project_id == project_id, Target.target == url).first():
+                db.add(Target(project_id=project_id, target=url, type="url", status="pending"))
+        # Remove only the selected URLs from discovered list (keep the rest for later selection)
+        if selected_set:
+            db.query(DiscoveredURL).filter(
+                DiscoveredURL.project_id == project_id,
+                DiscoveredURL.url.in_(selected_set)
+            ).delete(synchronize_session=False)
+        state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
+        if state:
+            state.status = "running"
+            state.current_stage = "Recon"
+        db.commit()
+    finally:
+        db.close()
+
+    # Launch one scan per selected URL in parallel (multithreaded)
+    threading.Thread(target=launch_scans_for_new_targets, args=(project_id,), daemon=True).start()
+    return RedirectResponse(url=f"/project/{project_id}/targets", status_code=303)
+
+
 @app.post("/project/{project_id}/target/{target_id}/delete")
 async def delete_target(request: Request, project_id: int, target_id: int):
     if "user_id" not in request.session:
@@ -615,6 +859,16 @@ async def delete_target(request: Request, project_id: int, target_id: int):
     # Clean up result files for this specific target using shared function
     delete_target_and_results(target.id, target.target)
     
+    # Re-add this URL to the discovered/pending list so it can be selected again (incomplete or deleted scan = not fully audited)
+    target_url = (target.target or "").strip()
+    if target_url and target_url.startswith(("http://", "https://")):
+        existing = db.query(DiscoveredURL).filter(
+            DiscoveredURL.project_id == project_id,
+            DiscoveredURL.url == target_url
+        ).first()
+        if not existing:
+            db.add(DiscoveredURL(project_id=project_id, url=target_url))
+    
     # Delete the target from database
     db.delete(target)
     
@@ -642,14 +896,14 @@ async def delete_target(request: Request, project_id: int, target_id: int):
 @app.get("/api/project/{project_id}/status")
 async def get_project_status(request: Request, project_id: int):
     if "user_id" not in request.session:
-        return JSONResponse(content={"error": "No autenticado"}, status_code=401)
+        return JSONResponse(content={"error": "Not authenticated"}, status_code=401)
 
     db = SessionLocal()
     state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
     db.close()
 
     if not state:
-        return JSONResponse(content={"error": "Estado no encontrado"}, status_code=404)
+        return JSONResponse(content={"error": "State not found"}, status_code=404)
 
     proc = running_processes.get(project_id)
     if proc and proc.poll() is not None:
@@ -669,18 +923,37 @@ async def get_project_status(request: Request, project_id: int):
     })
 
 
+@app.get("/api/project/{project_id}/discovered-urls")
+async def get_discovered_urls(request: Request, project_id: int):
+    """Return count and list of discovered URLs for the project (awaiting selection). No auth for same-session usage."""
+    if "user_id" not in request.session:
+        return JSONResponse(content={"error": "Not authenticated"}, status_code=401)
+    db = SessionLocal()
+    try:
+        state = db.query(ScanState).filter(ScanState.project_id == project_id).first()
+        awaiting = state and getattr(state, "status", None) == "awaiting_url_selection"
+        urls = db.query(DiscoveredURL).filter(DiscoveredURL.project_id == project_id).all()
+        count = len(urls)
+        return JSONResponse(content={
+            "count": count,
+            "awaiting_selection": awaiting,
+            "urls": [u.url for u in urls]
+        })
+    finally:
+        db.close()
+
 
 @app.get("/project/{project_id}/results")
 async def get_results(request: Request, project_id: int):
     if "user_id" not in request.session:
-        return JSONResponse(content={"error": "No autenticado"}, status_code=401)
+        return JSONResponse(content={"error": "Not authenticated"}, status_code=401)
 
     db = SessionLocal()
     project = db.query(Project).filter(Project.id == project_id).first()
     db.close()
 
     if not project:
-        return JSONResponse(content={"error": "Proyecto no encontrado"}, status_code=404)
+        return JSONResponse(content={"error": "Project not found"}, status_code=404)
 
     clean_target = project.target.replace('https://', '').replace('http://', '').replace('/', '_')
     pattern = f"results/{clean_target}_*"
@@ -700,7 +973,7 @@ async def get_results(request: Request, project_id: int):
                     content = f.read()
                 result[file] = content
             except Exception:
-                result[file] = "[Error al leer archivo]"
+                result[file] = "[Error reading file]"
 
     return JSONResponse(content=result)
 

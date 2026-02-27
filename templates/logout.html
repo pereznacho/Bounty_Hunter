@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signed Out - Bounty Hunter</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, var(--th-bg) 0%, var(--th-bg2) 50%, var(--th-bg) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--th-text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, var(--th-glow) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, var(--th-glow) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .logout-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            padding: 0 20px;
+        }
+        .logout-card {
+            background: var(--th-card);
+            border: 1px solid var(--th-border);
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--th-border);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        .logout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--th-accent), transparent);
+        }
+        .logout-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--th-text);
+            margin-bottom: 12px;
+        }
+        .logout-message {
+            color: var(--th-muted);
+            font-size: 1rem;
+            margin-bottom: 28px;
+        }
+        .logout-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--th-accent) 0%, var(--th-accent2) 100%);
+            color: var(--th-bg);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--th-glow);
+        }
+    </style>
+</head>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('logout') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('logout') }}">
+    <div class="logout-theme-wrap" style="position: fixed; top: 16px; right: 16px; z-index: 100; display: flex; align-items: center; gap: 8px;">
+        <label for="theme-select-logout" style="color: var(--th-muted); font-size: 0.875rem;">Theme</label>
+        <select id="theme-select-logout" aria-label="Select theme" style="background: var(--th-card); border: 1px solid var(--th-border); color: var(--th-text); padding: 6px 10px; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">
+            <option value="default" {% if theme == 'default' %}selected{% endif %}>Default</option>
+            <option value="cyberpunk" {% if theme == 'cyberpunk' %}selected{% endif %}>Cyberpunk</option>
+            <option value="neon" {% if theme == 'neon' %}selected{% endif %}>Neon</option>
+            <option value="matrix" {% if theme == 'matrix' %}selected{% endif %}>Matrix</option>
+            <option value="tron" {% if theme == 'tron' %}selected{% endif %}>Tron</option>
+            <option value="purple" {% if theme == 'purple' %}selected{% endif %}>Purple</option>
+            <option value="hackthebox" {% if theme == 'hackthebox' %}selected{% endif %}>HackTheBox</option>
+            <option value="military" {% if theme == 'military' %}selected{% endif %}>Military</option>
+            <option value="parrot" {% if theme == 'parrot' %}selected{% endif %}>Parrot</option>
+        </select>
+    </div>
+    <div class="logout-container">
+        <div class="logout-card logout-card--{{ theme | default('default') }}">
+            {% if theme == 'matrix' %}
+            <h1 class="logout-title">Session terminated</h1>
+            <p class="logout-message">Connection closed. Re-authenticate to continue.</p>
+            <a href="/login" class="logout-btn">&gt; LOGIN</a>
+            {% elif theme == 'military' %}
+            <h1 class="logout-title">Mission ended</h1>
+            <p class="logout-message">Session secured. Re-authenticate for next mission.</p>
+            <a href="/login" class="logout-btn">Back to base</a>
+            {% elif theme == 'hackthebox' %}
+            <h1 class="logout-title">Signed out</h1>
+            <p class="logout-message">Session ended. Sign in again to continue.</p>
+            <a href="/login" class="logout-btn">Back to Login</a>
+            {% else %}
+            <h1 class="logout-title">You have been signed out</h1>
+            <p class="logout-message">Your session has ended. Sign in again to continue.</p>
+            <a href="/login" class="logout-btn">Back to Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        (function() {
+            var sel = document.getElementById('theme-select-logout');
+            if (!sel) return;
+            var THEME_COOKIE = 'bounty_theme';
+            var VALID = ['default','cyberpunk','neon','matrix','tron','purple','hackthebox','military'];
+            sel.addEventListener('change', function() {
+                var t = (this.value || 'default').toLowerCase();
+                if (VALID.indexOf(t) === -1) t = 'default';
+                document.cookie = THEME_COOKIE + '=' + encodeURIComponent(t) + ';path=/;max-age=31536000';
+                document.body.setAttribute('data-theme', t);
+                document.body.className = document.body.className.replace(/\btheme-\w+/g, '').trim() + ' theme-' + t;
+                if (t === 'hackthebox') {
+                    document.body.style.setProperty('background', '#101927', 'important');
+                } else if (t === 'matrix') {
+                    document.body.style.setProperty('background', '#000', 'important');
+                } else {
+                    document.body.style.removeProperty('background');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

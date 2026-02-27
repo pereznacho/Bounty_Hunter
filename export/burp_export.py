@@ -1,4 +1,5 @@
 import os
+import tempfile
 import uuid
 import xml.etree.ElementTree as ET
 from urllib.parse import urlparse
@@ -40,7 +41,7 @@ def export_to_burp(project_name, result_dir):
                         print(f"[!] Error procesando línea en {fname}: {line} - {e}")
 
     xml_tree = ET.ElementTree(root)
-    out_path = f"/tmp/burp_export_{uuid.uuid4().hex}.xml"
+    out_path = os.path.join(tempfile.gettempdir(), f"burp_export_{uuid.uuid4().hex}.xml")
     xml_tree.write(out_path, encoding="utf-8", xml_declaration=True)
     print(f"[✔] Exportación a Burp generada: {out_path}")
     return out_path

@@ -1,12 +1,13 @@
 # backend/project_routes.py
 
-from fastapi import APIRouter, Request, Depends, HTTPException, Form
+from fastapi import APIRouter, Request, Depends, HTTPException, Form, BackgroundTasks
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from datetime import datetime
 import os
 import shutil
+import tempfile
 import threading
 
 from weasyprint import HTML
@@ -43,6 +44,11 @@ def create_project_form(
     request: Request = None,
     db: Session = Depends(get_db)
 ):
+    """
+    Legacy manual project creation. For domain scans with recon + URL selection
+    (same as bounty flow), use POST /project/new instead; the dashboard modal
+    submits there. This endpoint always runs run_scan (no domain recon step).
+    """
     user_id = request.session.get("user_id")
     username = request.session.get("username")
     if not user_id:
@@ -309,34 +315,6 @@ def delete_project(project_id: int, request: Request, db: Session = Depends(get_
     return RedirectResponse(url="/dashboard", status_code=303)
 
 
-@router.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request, db: Session = Depends(get_db)):
-    user_id = request.session.get("user_id")
-    username = request.session.get("username")
-
-    if not user_id:
-        return RedirectResponse(url="/login", status_code=302)
-
-    projects = db.query(Project).filter(Project.owner_id == user_id).all()
-
-    for p in projects:
-        if p.scan_state:
-            if p.scan_state.status == "running":
-                p.scan_state.update_progress()
-                db.commit()
-            p.status = p.scan_state.status
-            p.progress = p.scan_state.progress
-        else:
-            p.status = "pending"
-            p.progress = 0
-
-    return templates.TemplateResponse("dashboard.html", {
-        "request": request,
-        "projects": projects,
-        "user": username
-    })
-
-
 @router.get("/api/project/list")
 def get_user_projects(request: Request, db: Session = Depends(get_db)):
     user_id = request.session.get("user_id")
@@ -389,7 +367,7 @@ def get_project_status(project_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/project/{project_id}/export", response_class=FileResponse)
-def export_pdf(project_id: int, db: Session = Depends(get_db)):
+def export_pdf(project_id: int, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     project = db.query(Project).get(project_id)
     scan = db.query(ScanState).filter_by(project_id=project_id).first()
     if not project or not scan:
@@ -412,8 +390,9 @@ def export_pdf(project_id: int, db: Session = Depends(get_db)):
         "datetime": datetime
     })
 
-    pdf_output = f"/tmp/project_{project.id}_report.pdf"
+    pdf_output = os.path.join(tempfile.gettempdir(), f"project_{project.id}_report.pdf")
     HTML(string=html).write_pdf(pdf_output)
+    background_tasks.add_task(os.remove, pdf_output)
     return FileResponse(path=pdf_output, media_type='application/pdf', filename=f"project_{project.id}_report.pdf")
 
 
@@ -458,21 +437,36 @@ def export_project_to_burp(project_id: int, db: Session = Depends(get_db)):
 def mark_vulnerability_viewed(target_id: int, db: Session = Depends(get_db)):
     """Marca la alerta de vulnerabilidad del target como vista."""
     from backend.models import Target
-    
+
     target = db.query(Target).filter(Target.id == target_id).first()
     if not target:
         raise HTTPException(status_code=404, detail="Target no encontrado.")
-    
-    # Marcar como vista
+
     target.vulnerability_alert_viewed = True
     target.vulnerability_alert_viewed_at = datetime.utcnow()
-    
-    db.commit()
-    
+
+    _commit_with_retry(db)
     return JSONResponse({
         "success": True,
         "message": "Alerta de vulnerabilidad marcada como vista"
     })
+
+def _commit_with_retry(db, max_attempts=4):
+    """Retry commit on SQLite 'database is locked' / 'busy'."""
+    import time
+    from sqlalchemy.exc import OperationalError
+    for attempt in range(max_attempts):
+        try:
+            db.commit()
+            return True
+        except OperationalError as e:
+            if "locked" not in str(e).lower() and "busy" not in str(e).lower():
+                raise
+            db.rollback()
+            if attempt < max_attempts - 1:
+                time.sleep(0.3 * (attempt + 1))
+    return False
+
 
 @router.post("/api/target/{target_id}/mark-viewed")
 def mark_target_vulnerabilities_viewed(target_id: int, db: Session = Depends(get_db)):
@@ -481,29 +475,28 @@ def mark_target_vulnerabilities_viewed(target_id: int, db: Session = Depends(get
         target = db.query(Target).filter(Target.id == target_id).first()
         if not target:
             raise HTTPException(status_code=404, detail="Target no encontrado")
-            
         if target.mark_vulnerabilities_as_viewed():
-            db.commit()
+            if _commit_with_retry(db):
+                return {"success": True, "message": "Vulnerabilidades marcadas como vistas"}
             return {"success": True, "message": "Vulnerabilidades marcadas como vistas"}
-        else:
-            return {"success": False, "message": "No hay vulnerabilidades para marcar"}
+        return {"success": False, "message": "No hay vulnerabilidades para marcar"}
     except Exception as e:
         db.rollback()
         return {"success": False, "error": str(e)}
 
-@router.post("/api/project/{project_id}/mark-all-viewed")  
+
+@router.post("/api/project/{project_id}/mark-all-viewed")
 def mark_project_vulnerabilities_viewed(project_id: int, db: Session = Depends(get_db)):
     """Marca todas las vulnerabilidades de un proyecto como vistas"""
     try:
         project = db.query(Project).filter(Project.id == project_id).first()
         if not project:
             raise HTTPException(status_code=404, detail="Proyecto no encontrado")
-            
         if project.mark_all_vulnerabilities_as_viewed():
-            db.commit()
+            if _commit_with_retry(db):
+                return {"success": True, "message": "Todas las vulnerabilidades marcadas como vistas"}
             return {"success": True, "message": "Todas las vulnerabilidades marcadas como vistas"}
-        else:
-            return {"success": False, "message": "No hay vulnerabilidades para marcar"}
+        return {"success": False, "message": "No hay vulnerabilidades para marcar"}
     except Exception as e:
         db.rollback()
         return {"success": False, "error": str(e)}

@@ -29,6 +29,7 @@ from modules.wfuzz_fuzz import run_wfuzz_scan
 from modules.xss import run_xss_scan
 from modules.nuclei_scan import run_nuclei_scan
 from modules.recon import run_recon
+from modules.dir_discovery import run_dir_discovery
 
 
 # --- Fallback seguro para aliases de módulos ---
@@ -122,6 +123,7 @@ from modules.wfuzz_fuzz import run_wfuzz_scan
 from modules.xss import run_xss_scan
 from modules.nuclei_scan import run_nuclei_scan
 from modules.recon import run_recon
+from modules.dir_discovery import run_dir_discovery
 
 data = json.loads(sys.argv[1])
 module = data["module"]; scan_mode = data["scan_mode"]; target = data["target"]
@@ -139,6 +141,7 @@ def driver():
             print(f"[⚠️] child-clean_param_urls error: {e}")
         return
     if module == "Nuclei Scan": return run_nuclei_scan(scan_mode, target, result_dir, log_file)
+    if module == "Directory & Files": return run_dir_discovery(target, result_dir, log_file)
     if module == "Arjun": return run_arjun(param_urls_file, result_dir, log_file)
     if module == "Dalfox": return run_dalfox(param_urls_file, result_dir, log_file)
     if module == "FFUF": return run_ffuf(param_urls_file, result_dir, log_file)
@@ -337,7 +340,7 @@ def launch_scans_for_new_targets(project_id):
                     daemon=True
                 ).start()
                 
-                time.sleep(3)  # Pause between launches to avoid resource conflicts
+                time.sleep(0.8)  # Short stagger between launches to avoid resource spikes
             
             print(f"[✅] AUTO-EXPANDED: {len(pending_targets)} individual URL scans launched successfully")
         else:
@@ -418,6 +421,7 @@ def execute_single_module(project_id, project_platform, module_index, result_dir
     # Mapping de módulos a funciones ejecutables
     module_runners = {
         "Recon": lambda: execute_recon_module(scan_mode, target, result_dir, live_file, param_urls_file, project_id, project_platform),
+        "Directory & Files": lambda: run_dir_discovery(target, result_dir, log_file),
         "Nuclei Scan": lambda: run_nuclei_scan(scan_mode, target, result_dir, log_file),
         "Arjun": lambda: run_arjun(param_urls_file, result_dir, log_file),
         "Dalfox": lambda: run_dalfox(param_urls_file, result_dir, log_file),
@@ -601,6 +605,17 @@ def run_scan_target(project_id, target, project_mode=None, project_platform=None
     """
     print(f"[*] Iniciando scan completo: 12 módulos para {target}")
 
+    # Mark target as running so launch_scans_for_new_targets won't pick it again
+    try:
+        db = SessionLocal()
+        t = db.query(Target).filter(Target.project_id == project_id, Target.target == target).first()
+        if t:
+            t.status = "running"
+            db.commit()
+        db.close()
+    except Exception as e:
+        print(f"[⚠️] Error updating target status: {e}")
+
     # Directorio de resultados único por ejecución del target
     safe_name = target.replace("http://", "").replace("https://", "").replace("/", "_").rstrip("_")
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
@@ -619,6 +634,17 @@ def run_scan_target(project_id, target, project_mode=None, project_platform=None
             continue
 
     print(f"[✓] Scan completo para target: {target}")
+
+    # Mark target as completed
+    try:
+        db = SessionLocal()
+        t = db.query(Target).filter(Target.project_id == project_id, Target.target == target).first()
+        if t:
+            t.status = "completed"
+            db.commit()
+        db.close()
+    except Exception as e:
+        print(f"[⚠️] Error updating target status: {e}")
 
     # Generar reporte final
     try:

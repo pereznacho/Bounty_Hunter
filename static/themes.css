@@ -1,0 +1,2349 @@
+/* Theme variables and overrides. Body class: theme-default | cyberpunk | neon | matrix | tron | purple | hackthebox | military | parrot */
+
+/* Force theme styles to win over inline page styles */
+body[class*="theme-"] {
+    transition: background 0.3s ease, color 0.2s ease;
+}
+
+/* Button text always visible (all themes): prevent clipping, ensure labels show */
+button,
+a.btn,
+a.btn-outline {
+    white-space: nowrap;
+    overflow: visible;
+    min-height: 2.25rem;
+}
+button,
+a.btn,
+a.btn-outline {
+    padding: 10px 14px;
+}
+/* Card action row: responsive, adapts to card/window width */
+.card-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+.card-actions .card-action-btn {
+    flex: 0 1 auto !important;
+    min-width: 6em !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+.card-actions form {
+    flex: 0 0 auto !important;
+}
+.card-actions form .btn,
+.card-actions button.btn {
+    min-width: 4.5rem !important;
+    box-sizing: border-box !important;
+}
+
+/* View Details / View Vulnerabilities: flexible width, scales with viewport */
+body[class*="theme-"] .card a.btn.card-action-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    color: var(--th-bg) !important;
+}
+body[class*="theme-"] .card a.btn.card-action-btn.btn-danger {
+    color: #fff !important;
+}
+
+/* Top action bar (Scan Selected + Refresh): responsive, wraps on narrow viewports */
+.form-actions-top {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+.form-actions-top .btn,
+.form-actions-top .btn-outline {
+    flex: 0 1 auto !important;
+    min-width: 6rem !important;
+}
+
+/* Project cards: no underlined text (titles, links inside cards; cards that are links) */
+body .card a,
+body .card a:hover,
+body .card h4,
+body a.card,
+body a.card:hover,
+body a.card * {
+    text-decoration: none !important;
+}
+
+/* --------------------------------------------------------------------------- */
+/* DEFAULT (current Bounty Hunter look - teal/amber)                          */
+/* --------------------------------------------------------------------------- */
+body.theme-default,
+body[data-theme="default"],
+body:not([class*="theme-"]) {
+    --th-bg: #0d1117;
+    --th-bg2: #161b22;
+    --th-card: #0f1720;
+    --th-border: #21262d;
+    --th-accent: #0ea5a4;
+    --th-accent2: #9fd8d6;
+    --th-warm: #ffb86b;
+    --th-text: #c9d1d9;
+    --th-muted: #8b949e;
+    --th-glow: rgba(14, 165, 164, 0.3);
+}
+body.theme-default::before,
+body:not([class*="theme-"])::before {
+    background: radial-gradient(circle at 20% 30%, rgba(14, 165, 164, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 184, 107, 0.05) 0%, transparent 50%);
+}
+body.theme-default #banner,
+body[data-theme="default"] #banner,
+body:not([class*="theme-"]) #banner { color: var(--th-text) !important; }
+body.theme-default #banner pre,
+body[data-theme="default"] #banner pre,
+body:not([class*="theme-"]) #banner pre { color: var(--th-accent) !important; text-shadow: 0 0 10px var(--th-glow) !important; }
+body.theme-default #banner h2,
+body[data-theme="default"] #banner h2,
+body:not([class*="theme-"]) #banner h2 { color: var(--th-accent2) !important; background: linear-gradient(135deg, var(--th-accent), var(--th-accent2), var(--th-warm)) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+body.theme-default #banner p,
+body[data-theme="default"] #banner p,
+body:not([class*="theme-"]) #banner p { color: var(--th-muted) !important; }
+body.theme-default #banner a,
+body[data-theme="default"] #banner a,
+body:not([class*="theme-"]) #banner a { color: var(--th-accent) !important; }
+body.theme-default input, body.theme-default select, body.theme-default textarea,
+body[data-theme="default"] input, body[data-theme="default"] select, body[data-theme="default"] textarea,
+body:not([class*="theme-"]) input, body:not([class*="theme-"]) select, body:not([class*="theme-"]) textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-default input:focus, body.theme-default select:focus, body.theme-default textarea:focus,
+body[data-theme="default"] input:focus, body[data-theme="default"] select:focus, body[data-theme="default"] textarea:focus,
+body:not([class*="theme-"]) input:focus, body:not([class*="theme-"]) select:focus, body:not([class*="theme-"]) textarea:focus { outline: none !important; border-color: var(--th-accent) !important; }
+body.theme-default button, body.theme-default .btn,
+body[data-theme="default"] button, body[data-theme="default"] .btn,
+body:not([class*="theme-"]) button, body:not([class*="theme-"]) .btn { background: linear-gradient(135deg, var(--th-accent), var(--th-accent2)) !important; color: var(--th-bg) !important; border: none !important; }
+body.theme-default .btn-outline, body[data-theme="default"] .btn-outline, body:not([class*="theme-"]) .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-default .btn-outline:hover, body[data-theme="default"] .btn-outline:hover, body:not([class*="theme-"]) .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-default .modal-backdrop, body[data-theme="default"] .modal-backdrop, body:not([class*="theme-"]) .modal-backdrop { background: rgba(0,0,0,0.75) !important; }
+body.theme-default .modal-box, body.theme-default .modal-content,
+body[data-theme="default"] .modal-box, body[data-theme="default"] .modal-content,
+body:not([class*="theme-"]) .modal-box, body:not([class*="theme-"]) .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-default .modal-box h2, body.theme-default .modal-content h2,
+body[data-theme="default"] .modal-box h2, body[data-theme="default"] .modal-content h2,
+body:not([class*="theme-"]) .modal-box h2, body:not([class*="theme-"]) .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-default .modal-box label, body.theme-default .modal-content label,
+body[data-theme="default"] .modal-box label, body[data-theme="default"] .modal-content label,
+body:not([class*="theme-"]) .modal-box label, body:not([class*="theme-"]) .modal-content label { color: var(--th-accent2) !important; }
+body.theme-default .modal-box input, body.theme-default .modal-box select,
+body.theme-default .modal-content input, body.theme-default .modal-content select,
+body[data-theme="default"] .modal-box input, body[data-theme="default"] .modal-box select,
+body:not([class*="theme-"]) .modal-box input, body:not([class*="theme-"]) .modal-box select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-default .modal-box a, body.theme-default .modal-content a,
+body[data-theme="default"] .modal-box a, body[data-theme="default"] .modal-content a,
+body:not([class*="theme-"]) .modal-box a, body:not([class*="theme-"]) .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* CYBERPUNK - pink/magenta, yellow, dark                                      */
+/* --------------------------------------------------------------------------- */
+body.theme-cyberpunk {
+    --th-bg: #0a0a0f;
+    --th-bg2: #12121a;
+    --th-card: #16102a;
+    --th-border: #3d2a5c;
+    --th-accent: #ff00ff;
+    --th-accent2: #ff6ec7;
+    --th-warm: #ffff00;
+    --th-text: #e0c0ff;
+    --th-muted: #a080c0;
+    --th-glow: rgba(255, 0, 255, 0.4);
+}
+body.theme-cyberpunk {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%) !important;
+    color: var(--th-text) !important;
+}
+body.theme-cyberpunk::before {
+    background: radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 0, 0.05) 0%, transparent 50%) !important;
+}
+body.theme-cyberpunk .card,
+body.theme-cyberpunk .modal-content { border-color: var(--th-border) !important; background: var(--th-card) !important; }
+body.theme-cyberpunk .card:hover { border-color: var(--th-accent) !important; box-shadow: 0 0 20px var(--th-glow) !important; }
+body.theme-cyberpunk .card::before { background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important; }
+body.theme-cyberpunk a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-cyberpunk pre, body.theme-cyberpunk .progress-bar { color: var(--th-accent) !important; }
+body.theme-cyberpunk h2, body.theme-cyberpunk .form-header { color: var(--th-accent2) !important; }
+body.theme-cyberpunk #banner { color: var(--th-text) !important; }
+body.theme-cyberpunk #banner pre { color: var(--th-accent) !important; text-shadow: 0 0 12px var(--th-glow) !important; }
+body.theme-cyberpunk #banner h2 { color: var(--th-accent2) !important; text-shadow: 0 0 15px var(--th-glow) !important; }
+body.theme-cyberpunk #banner p { color: var(--th-muted) !important; }
+body.theme-cyberpunk #banner a { color: var(--th-accent) !important; }
+body.theme-cyberpunk input, body.theme-cyberpunk select, body.theme-cyberpunk textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-cyberpunk input:focus, body.theme-cyberpunk select:focus, body.theme-cyberpunk textarea:focus { outline: none !important; border-color: var(--th-accent) !important; box-shadow: 0 0 8px var(--th-glow) !important; }
+body.theme-cyberpunk button, body.theme-cyberpunk .btn { background: var(--th-accent) !important; color: var(--th-bg) !important; border: none !important; }
+body.theme-cyberpunk .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-cyberpunk .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-cyberpunk .modal-backdrop { background: rgba(10,10,15,0.85) !important; }
+body.theme-cyberpunk .modal-box, body.theme-cyberpunk .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-cyberpunk .modal-box h2, body.theme-cyberpunk .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-cyberpunk .modal-box label, body.theme-cyberpunk .modal-content label { color: var(--th-accent2) !important; }
+body.theme-cyberpunk .modal-box input, body.theme-cyberpunk .modal-box select, body.theme-cyberpunk .modal-content input, body.theme-cyberpunk .modal-content select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-cyberpunk .modal-box a, body.theme-cyberpunk .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* NEON - bright cyan, magenta, dark                                           */
+/* --------------------------------------------------------------------------- */
+body.theme-neon {
+    --th-bg: #050508;
+    --th-bg2: #0c0c14;
+    --th-card: #0f0f1a;
+    --th-border: #00ffff;
+    --th-accent: #00ffff;
+    --th-accent2: #ff00ff;
+    --th-warm: #ff00ff;
+    --th-text: #b0f0f0;
+    --th-muted: #6080a0;
+    --th-glow: rgba(0, 255, 255, 0.5);
+}
+body.theme-neon {
+    background: linear-gradient(135deg, #050508 0%, #0a0a1a 50%, #050508 100%) !important;
+    color: var(--th-text) !important;
+}
+body.theme-neon::before {
+    background: radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 70% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 45%) !important;
+}
+body.theme-neon .card,
+body.theme-neon .modal-content { border-color: rgba(0, 255, 255, 0.3) !important; background: var(--th-card) !important; }
+body.theme-neon .card:hover { border-color: var(--th-accent) !important; box-shadow: 0 0 25px var(--th-glow) !important; }
+body.theme-neon .card::before { background: linear-gradient(90deg, transparent, #00ffff, transparent) !important; }
+body.theme-neon a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-neon pre { color: var(--th-accent) !important; text-shadow: 0 0 10px var(--th-glow) !important; }
+body.theme-neon #banner { color: var(--th-text) !important; }
+body.theme-neon #banner pre { color: var(--th-accent) !important; text-shadow: 0 0 14px var(--th-glow) !important; }
+body.theme-neon #banner h2 { color: var(--th-accent2) !important; text-shadow: 0 0 12px var(--th-glow) !important; }
+body.theme-neon #banner p { color: var(--th-muted) !important; }
+body.theme-neon #banner a { color: var(--th-accent) !important; }
+body.theme-neon input, body.theme-neon select, body.theme-neon textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-neon input:focus, body.theme-neon select:focus, body.theme-neon textarea:focus { outline: none !important; border-color: var(--th-accent) !important; box-shadow: 0 0 10px var(--th-glow) !important; }
+body.theme-neon button, body.theme-neon .btn { background: var(--th-accent) !important; color: var(--th-bg) !important; border: none !important; }
+body.theme-neon .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-neon .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-neon .modal-backdrop { background: rgba(5,5,8,0.9) !important; }
+body.theme-neon .modal-box, body.theme-neon .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-neon .modal-box h2, body.theme-neon .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-neon .modal-box label, body.theme-neon .modal-content label { color: var(--th-accent2) !important; }
+body.theme-neon .modal-box input, body.theme-neon .modal-box select, body.theme-neon .modal-content input, body.theme-neon .modal-content select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-neon .modal-box a, body.theme-neon .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* MATRIX - green on black                                                     */
+/* --------------------------------------------------------------------------- */
+body.theme-matrix {
+    --th-bg: #000000;
+    --th-bg2: #0a0f0a;
+    --th-card: #0d150d;
+    --th-border: #003300;
+    --th-accent: #00ff41;
+    --th-accent2: #39ff14;
+    --th-warm: #00ff41;
+    --th-text: #00ff41;
+    --th-muted: #008f20;
+    --th-glow: rgba(0, 255, 65, 0.3);
+}
+body.theme-matrix {
+    background: #000000 !important;
+    color: var(--th-text) !important;
+}
+body.theme-matrix::before {
+    background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.06) 0%, transparent 60%) !important;
+}
+body.theme-matrix .card,
+body.theme-matrix .modal-content { border-color: var(--th-border) !important; background: var(--th-card) !important; }
+body.theme-matrix .card:hover { border-color: var(--th-accent) !important; box-shadow: 0 0 15px var(--th-glow) !important; }
+body.theme-matrix .card::before { background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important; }
+body.theme-matrix a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-matrix pre { color: var(--th-accent) !important; text-shadow: 0 0 8px var(--th-glow) !important; }
+body.theme-matrix .container { color: var(--th-text) !important; }
+body.theme-matrix #banner { color: var(--th-text) !important; }
+body.theme-matrix #banner pre { color: var(--th-accent) !important; text-shadow: 0 0 10px var(--th-glow) !important; }
+body.theme-matrix #banner h2 { color: var(--th-accent2) !important; text-shadow: 0 0 8px var(--th-glow) !important; }
+body.theme-matrix #banner p { color: var(--th-muted) !important; }
+body.theme-matrix #banner a { color: var(--th-accent) !important; }
+body.theme-matrix input, body.theme-matrix select, body.theme-matrix textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-matrix input:focus, body.theme-matrix select:focus, body.theme-matrix textarea:focus { outline: none !important; border-color: var(--th-accent) !important; box-shadow: 0 0 6px var(--th-glow) !important; }
+body.theme-matrix button, body.theme-matrix .btn { background: var(--th-accent) !important; color: #000 !important; border: none !important; }
+body.theme-matrix .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-matrix .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-matrix .modal-backdrop { background: rgba(0,0,0,0.9) !important; }
+body.theme-matrix .modal-box, body.theme-matrix .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-matrix .modal-box h2, body.theme-matrix .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-matrix .modal-box label, body.theme-matrix .modal-content label { color: var(--th-accent2) !important; }
+body.theme-matrix .modal-box input, body.theme-matrix .modal-box select, body.theme-matrix .modal-content input, body.theme-matrix .modal-content select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-matrix .modal-box a, body.theme-matrix .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* TRON - blue/cyan grid, electric blue                                        */
+/* --------------------------------------------------------------------------- */
+body.theme-tron {
+    --th-bg: #0a1628;
+    --th-bg2: #0d1f3c;
+    --th-card: #0f2847;
+    --th-border: #00d4ff;
+    --th-accent: #00d4ff;
+    --th-accent2: #7df9ff;
+    --th-warm: #00d4ff;
+    --th-text: #b8e6f5;
+    --th-muted: #4a9fb8;
+    --th-glow: rgba(0, 212, 255, 0.4);
+}
+body.theme-tron {
+    background: linear-gradient(180deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%) !important;
+    color: var(--th-text) !important;
+}
+body.theme-tron::before {
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.03) 50%, transparent 100%),
+        linear-gradient(0deg, transparent 0%, rgba(0, 212, 255, 0.03) 50%, transparent 100%) !important;
+    background-size: 60px 60px !important;
+}
+body.theme-tron .card,
+body.theme-tron .modal-content { border-color: rgba(0, 212, 255, 0.4) !important; background: var(--th-card) !important; }
+body.theme-tron .card:hover { border-color: var(--th-accent) !important; box-shadow: 0 0 20px var(--th-glow) !important; }
+body.theme-tron .card::before { background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important; }
+body.theme-tron a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-tron pre { color: var(--th-accent) !important; }
+body.theme-tron #banner { color: var(--th-text) !important; }
+body.theme-tron #banner pre { color: var(--th-accent) !important; text-shadow: 0 0 12px var(--th-glow) !important; }
+body.theme-tron #banner h2 { color: var(--th-accent2) !important; text-shadow: 0 0 10px var(--th-glow) !important; }
+body.theme-tron #banner p { color: var(--th-muted) !important; }
+body.theme-tron #banner a { color: var(--th-accent) !important; }
+body.theme-tron input, body.theme-tron select, body.theme-tron textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-tron input:focus, body.theme-tron select:focus, body.theme-tron textarea:focus { outline: none !important; border-color: var(--th-accent) !important; box-shadow: 0 0 8px var(--th-glow) !important; }
+body.theme-tron button, body.theme-tron .btn { background: var(--th-accent) !important; color: var(--th-bg) !important; border: none !important; }
+body.theme-tron .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-tron .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-tron .modal-backdrop { background: rgba(10,22,40,0.88) !important; }
+body.theme-tron .modal-box, body.theme-tron .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-tron .modal-box h2, body.theme-tron .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-tron .modal-box label, body.theme-tron .modal-content label { color: var(--th-accent2) !important; }
+body.theme-tron .modal-box input, body.theme-tron .modal-box select, body.theme-tron .modal-content input, body.theme-tron .modal-content select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-tron .modal-box a, body.theme-tron .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* PURPLE - violet/purple tones                                                 */
+/* --------------------------------------------------------------------------- */
+body.theme-purple {
+    --th-bg: #1a0a2e;
+    --th-bg2: #251038;
+    --th-card: #2d1545;
+    --th-border: #6b4c7a;
+    --th-accent: #b794f6;
+    --th-accent2: #e9d5ff;
+    --th-warm: #c084fc;
+    --th-text: #e9d5ff;
+    --th-muted: #9f7aea;
+    --th-glow: rgba(183, 148, 246, 0.15);
+}
+body.theme-purple {
+    background: linear-gradient(135deg, #1a0a2e 0%, #251038 50%, #1a0a2e 100%) !important;
+    color: var(--th-text) !important;
+}
+body.theme-purple::before {
+    background: radial-gradient(circle at 20% 30%, rgba(183, 148, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(192, 132, 252, 0.06) 0%, transparent 50%) !important;
+}
+body.theme-purple .card,
+body.theme-purple .modal-content { border-color: var(--th-border) !important; background: var(--th-card) !important; }
+body.theme-purple .card:hover { border-color: var(--th-accent) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important; }
+body.theme-purple .card::before { background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important; }
+body.theme-purple a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-purple pre { color: var(--th-accent2) !important; }
+body.theme-purple #banner { color: var(--th-text) !important; }
+body.theme-purple #banner pre { color: var(--th-accent) !important; text-shadow: none !important; }
+body.theme-purple #banner h2 { color: var(--th-accent2) !important; text-shadow: none !important; }
+body.theme-purple #banner p { color: var(--th-muted) !important; }
+body.theme-purple #banner a { color: var(--th-accent) !important; }
+body.theme-purple input, body.theme-purple select, body.theme-purple textarea { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-purple input:focus, body.theme-purple select:focus, body.theme-purple textarea:focus { outline: none !important; border-color: var(--th-accent) !important; box-shadow: 0 0 0 2px rgba(183, 148, 246, 0.2) !important; }
+body.theme-purple button, body.theme-purple .btn { background: var(--th-accent) !important; color: var(--th-bg) !important; border: none !important; }
+body.theme-purple .btn-outline { background: transparent !important; border: 1px solid var(--th-border) !important; color: var(--th-accent2) !important; }
+body.theme-purple .btn-outline:hover { border-color: var(--th-accent) !important; background: var(--th-glow) !important; }
+body.theme-purple .modal-backdrop { background: rgba(26,10,46,0.88) !important; }
+body.theme-purple .modal-box, body.theme-purple .modal-content { background: var(--th-card) !important; border: 1px solid var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-purple .modal-box h2, body.theme-purple .modal-content h2 { color: var(--th-accent2) !important; }
+body.theme-purple .modal-box label, body.theme-purple .modal-content label { color: var(--th-accent2) !important; }
+body.theme-purple .modal-box input, body.theme-purple .modal-box select, body.theme-purple .modal-content input, body.theme-purple .modal-content select { background: var(--th-bg2) !important; border-color: var(--th-border) !important; color: var(--th-text) !important; }
+body.theme-purple .modal-box a, body.theme-purple .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* HACKTHEBOX – Fondo azul oscuro #101927, botones verde #9fef00, texto botones #101927 */
+/* --------------------------------------------------------------------------- */
+body.theme-hackthebox,
+body[data-theme="hackthebox"] {
+    --th-bg: #101927;
+    --th-bg2: #162238;
+    --th-card: #162238;
+    --th-border: rgba(159, 239, 0, 0.35);
+    --th-accent: #9fef00;
+    --th-accent2: #9fef00;
+    --th-warm: #9fef00;
+    --th-text: #ffffff;
+    --th-muted: rgba(255, 255, 255, 0.75);
+    --th-glow: rgba(159, 239, 0, 0.25);
+}
+body.theme-hackthebox,
+body[data-theme="hackthebox"] {
+    background: #101927 !important;
+    color: var(--th-text) !important;
+}
+body.theme-hackthebox .card,
+body.theme-hackthebox .modal-content,
+body[data-theme="hackthebox"] .card,
+body[data-theme="hackthebox"] .modal-content {
+    border-color: var(--th-border) !important;
+    background: var(--th-card) !important;
+}
+body.theme-hackthebox .card:hover,
+body[data-theme="hackthebox"] .card:hover {
+    border-color: var(--th-accent) !important;
+}
+body.theme-hackthebox .card::before,
+body[data-theme="hackthebox"] .card::before {
+    background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important;
+}
+/* Nombre del programa/proyecto en cards del dashboard: verde visible (evitar gradiente que se confunde con fondo) */
+body.theme-hackthebox .card h4,
+body[data-theme="hackthebox"] .card h4 {
+    color: #9fef00 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+}
+body.theme-hackthebox a:not(.platform-btn),
+body[data-theme="hackthebox"] a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-hackthebox pre,
+body[data-theme="hackthebox"] pre { color: var(--th-accent) !important; }
+body.theme-hackthebox h2,
+body.theme-hackthebox .form-header,
+body[data-theme="hackthebox"] h2,
+body[data-theme="hackthebox"] .form-header { color: var(--th-accent) !important; }
+body.theme-hackthebox #banner,
+body[data-theme="hackthebox"] #banner { color: var(--th-text) !important; }
+body.theme-hackthebox #banner pre,
+body[data-theme="hackthebox"] #banner pre { color: var(--th-accent) !important; }
+body.theme-hackthebox #banner h2,
+body[data-theme="hackthebox"] #banner h2 { color: var(--th-accent) !important; }
+body.theme-hackthebox #banner p,
+body[data-theme="hackthebox"] #banner p { color: var(--th-muted) !important; }
+body.theme-hackthebox #banner a,
+body[data-theme="hackthebox"] #banner a { color: var(--th-accent) !important; }
+body.theme-hackthebox input,
+body.theme-hackthebox select,
+body.theme-hackthebox textarea,
+body[data-theme="hackthebox"] input,
+body[data-theme="hackthebox"] select,
+body[data-theme="hackthebox"] textarea {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-hackthebox input:focus,
+body.theme-hackthebox select:focus,
+body.theme-hackthebox textarea:focus,
+body[data-theme="hackthebox"] input:focus,
+body[data-theme="hackthebox"] select:focus,
+body[data-theme="hackthebox"] textarea:focus {
+    outline: none !important;
+    border-color: var(--th-accent) !important;
+}
+/* Botones verdes con texto azul oscuro #101927 */
+body.theme-hackthebox button,
+body.theme-hackthebox .btn,
+body[data-theme="hackthebox"] button,
+body[data-theme="hackthebox"] .btn {
+    background: #9fef00 !important;
+    color: #101927 !important;
+    border: none !important;
+}
+body.theme-hackthebox .btn-outline,
+body[data-theme="hackthebox"] .btn-outline {
+    background: transparent !important;
+    border: 1px solid var(--th-accent) !important;
+    color: var(--th-accent) !important;
+}
+body.theme-hackthebox .btn-outline:hover,
+body[data-theme="hackthebox"] .btn-outline:hover {
+    border-color: var(--th-accent) !important;
+    background: rgba(159, 239, 0, 0.15) !important;
+    color: var(--th-accent) !important;
+}
+body.theme-hackthebox .platform-btn,
+body.theme-hackthebox .btn-new-project,
+body[data-theme="hackthebox"] .platform-btn,
+body[data-theme="hackthebox"] .btn-new-project {
+    background: #9fef00 !important;
+    color: #101927 !important;
+    border-color: #9fef00 !important;
+}
+body.theme-hackthebox .platform-btn:hover,
+body.theme-hackthebox .btn-new-project:hover,
+body[data-theme="hackthebox"] .platform-btn:hover,
+body[data-theme="hackthebox"] .btn-new-project:hover {
+    background: #b0f010 !important;
+    color: #101927 !important;
+    border-color: #b0f010 !important;
+}
+body.theme-hackthebox .modal-backdrop,
+body[data-theme="hackthebox"] .modal-backdrop { background: rgba(16, 25, 39, 0.9) !important; }
+body.theme-hackthebox .modal-box,
+body.theme-hackthebox .modal-content,
+body[data-theme="hackthebox"] .modal-box,
+body[data-theme="hackthebox"] .modal-content {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-hackthebox .modal-box h2,
+body.theme-hackthebox .modal-content h2,
+body[data-theme="hackthebox"] .modal-box h2,
+body[data-theme="hackthebox"] .modal-content h2 { color: var(--th-accent) !important; }
+body.theme-hackthebox .modal-box label,
+body.theme-hackthebox .modal-content label,
+body[data-theme="hackthebox"] .modal-box label,
+body[data-theme="hackthebox"] .modal-content label { color: var(--th-accent) !important; }
+body.theme-hackthebox .modal-box input,
+body.theme-hackthebox .modal-box select,
+body.theme-hackthebox .modal-content input,
+body.theme-hackthebox .modal-content select,
+body[data-theme="hackthebox"] .modal-box input,
+body[data-theme="hackthebox"] .modal-box select,
+body[data-theme="hackthebox"] .modal-content input,
+body[data-theme="hackthebox"] .modal-content select {
+    background: var(--th-bg2) !important;
+    border-color: var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-hackthebox .modal-box a,
+body.theme-hackthebox .modal-content a,
+body[data-theme="hackthebox"] .modal-box a,
+body[data-theme="hackthebox"] .modal-content a { color: var(--th-accent) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* MILITARY - escala de grises, texto blanco, detalles cyan                     */
+/* --------------------------------------------------------------------------- */
+body.theme-military,
+body[data-theme="military"] {
+    --th-bg: #0a0a0c;
+    --th-bg2: #141418;
+    --th-card: #1a1a20;
+    --th-border: #2a2a32;
+    --th-accent: #00bcd4;
+    --th-accent2: #00e5ff;
+    --th-warm: #6a6a70;
+    --th-text: #ffffff;
+    --th-muted: #9e9e9e;
+    --th-glow: rgba(0, 188, 212, 0.2);
+}
+body.theme-military,
+body[data-theme="military"] {
+    background: #0a0a0c !important;
+    color: var(--th-text) !important;
+}
+body.theme-military::before,
+body[data-theme="military"]::before {
+    background:
+        linear-gradient(90deg, rgba(40, 40, 44, 0.65) 0%, transparent 1px),
+        linear-gradient(rgba(40, 40, 44, 0.65) 0%, transparent 1px),
+        linear-gradient(45deg, rgba(50, 50, 56, 0.45) 0%, transparent 1px);
+    background-size: 8px 8px, 8px 8px, 6px 6px !important;
+    background-color: transparent !important;
+}
+body.theme-military .card,
+body.theme-military .modal-content,
+body[data-theme="military"] .card,
+body[data-theme="military"] .modal-content {
+    border-color: var(--th-border) !important;
+    background: var(--th-card) !important;
+    border-radius: 0 !important;
+    border-left: 4px solid var(--th-accent) !important;
+}
+body.theme-military .card:hover,
+body[data-theme="military"] .card:hover {
+    border-left-color: var(--th-accent2) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+}
+body.theme-military .card::before,
+body[data-theme="military"] .card::before {
+    background: linear-gradient(90deg, var(--th-accent), transparent) !important;
+    opacity: 0.2 !important;
+}
+body.theme-military a:not(.platform-btn),
+body[data-theme="military"] a:not(.platform-btn) { color: var(--th-accent2) !important; }
+body.theme-military pre,
+body[data-theme="military"] pre { color: var(--th-accent) !important; }
+body.theme-military h2,
+body.theme-military .form-header,
+body[data-theme="military"] h2,
+body[data-theme="military"] .form-header { color: var(--th-text) !important; }
+body.theme-military #banner,
+body[data-theme="military"] #banner { color: var(--th-text) !important; }
+body.theme-military #banner pre,
+body[data-theme="military"] #banner pre { color: var(--th-accent) !important; }
+body.theme-military #banner h2,
+body[data-theme="military"] #banner h2 { color: var(--th-text) !important; }
+body.theme-military #banner p,
+body[data-theme="military"] #banner p { color: var(--th-muted) !important; }
+body.theme-military #banner a,
+body[data-theme="military"] #banner a { color: var(--th-accent2) !important; }
+body.theme-military input,
+body.theme-military select,
+body.theme-military textarea,
+body[data-theme="military"] input,
+body[data-theme="military"] select,
+body[data-theme="military"] textarea {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+    border-radius: 0 !important;
+}
+body.theme-military input:focus,
+body.theme-military select:focus,
+body.theme-military textarea:focus,
+body[data-theme="military"] input:focus,
+body[data-theme="military"] select:focus,
+body[data-theme="military"] textarea:focus {
+    outline: none !important;
+    border-color: var(--th-accent) !important;
+}
+body.theme-military button,
+body.theme-military .btn,
+body[data-theme="military"] button,
+body[data-theme="military"] .btn {
+    background: var(--th-accent) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+body.theme-military .btn-outline,
+body[data-theme="military"] .btn-outline {
+    background: transparent !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-accent2) !important;
+    border-radius: 0 !important;
+}
+body.theme-military .btn-outline:hover,
+body[data-theme="military"] .btn-outline:hover {
+    border-color: var(--th-accent) !important;
+    background: var(--th-glow) !important;
+}
+body.theme-military .modal-backdrop,
+body[data-theme="military"] .modal-backdrop { background: rgba(10, 10, 12, 0.88) !important; }
+body.theme-military .modal-box,
+body.theme-military .modal-content,
+body[data-theme="military"] .modal-box,
+body[data-theme="military"] .modal-content {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+    border-radius: 0 !important;
+    border-left: 4px solid var(--th-accent) !important;
+}
+body.theme-military .modal-box h2,
+body.theme-military .modal-content h2,
+body[data-theme="military"] .modal-box h2,
+body[data-theme="military"] .modal-content h2 { color: var(--th-text) !important; }
+body.theme-military .modal-box label,
+body.theme-military .modal-content label,
+body[data-theme="military"] .modal-box label,
+body[data-theme="military"] .modal-content label { color: var(--th-text) !important; }
+body.theme-military .modal-box input,
+body.theme-military .modal-box select,
+body.theme-military .modal-content input,
+body.theme-military .modal-content select,
+body[data-theme="military"] .modal-box input,
+body[data-theme="military"] .modal-box select,
+body[data-theme="military"] .modal-content input,
+body[data-theme="military"] .modal-content select {
+    background: var(--th-bg2) !important;
+    border-color: var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-military .modal-box a,
+body.theme-military .modal-content a,
+body[data-theme="military"] .modal-box a,
+body[data-theme="military"] .modal-content a { color: var(--th-accent2) !important; }
+
+/* --------------------------------------------------------------------------- */
+/* PARROT – Inspirado en parrotsec.org/download: oscuro, acento cyan #00fff0    */
+/* --------------------------------------------------------------------------- */
+body.theme-parrot,
+body[data-theme="parrot"] {
+    --th-bg: #0a0e12;
+    --th-bg2: #161b22;
+    --th-card: #161b22;
+    --th-border: rgba(0, 255, 240, 0.25);
+    --th-accent: #00fff0;
+    --th-accent2: #00fff0;
+    --th-warm: #00fff0;
+    --th-text: #e6edf3;
+    --th-muted: #8b949e;
+    --th-glow: rgba(0, 255, 240, 0.2);
+}
+body.theme-parrot,
+body[data-theme="parrot"] {
+    background: #0a0e12 !important;
+    color: var(--th-text) !important;
+}
+body.theme-parrot::after,
+body[data-theme="parrot"]::after {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--th-accent), var(--th-accent2), var(--th-accent)) !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+}
+body.theme-parrot::before,
+body[data-theme="parrot"]::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    background:
+        linear-gradient(180deg, rgba(0, 255, 240, 0.06) 0%, transparent 15%),
+        radial-gradient(circle at 50% 0%, rgba(0, 255, 240, 0.08) 0%, transparent 40%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 240, 0.02) 2px, rgba(0, 255, 240, 0.02) 4px) !important;
+}
+body.theme-parrot .card,
+body.theme-parrot .modal-content,
+body[data-theme="parrot"] .card,
+body[data-theme="parrot"] .modal-content {
+    border-color: var(--th-border) !important;
+    background: var(--th-card) !important;
+    border-left: 4px solid var(--th-accent) !important;
+    border-radius: 0 12px 12px 0 !important;
+}
+body.theme-parrot .card:hover,
+body[data-theme="parrot"] .card:hover {
+    border-left-color: var(--th-accent2) !important;
+    box-shadow: 4px 0 0 var(--th-accent), 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-parrot .card::before,
+body[data-theme="parrot"] .card::before {
+    display: none !important;
+}
+body.theme-parrot .card h4,
+body[data-theme="parrot"] .card h4 {
+    color: var(--th-accent) !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+}
+body.theme-parrot a:not(.platform-btn),
+body[data-theme="parrot"] a:not(.platform-btn) { color: var(--th-accent) !important; }
+body.theme-parrot pre,
+body[data-theme="parrot"] pre { color: var(--th-accent) !important; }
+body.theme-parrot h2,
+body.theme-parrot .form-header,
+body[data-theme="parrot"] h2,
+body[data-theme="parrot"] .form-header { color: var(--th-accent) !important; }
+body.theme-parrot #banner,
+body[data-theme="parrot"] #banner { color: var(--th-text) !important; }
+body.theme-parrot #banner pre,
+body[data-theme="parrot"] #banner pre { color: var(--th-accent) !important; }
+body.theme-parrot #banner h2,
+body[data-theme="parrot"] #banner h2 { color: var(--th-accent) !important; }
+body.theme-parrot #banner p,
+body[data-theme="parrot"] #banner p { color: var(--th-muted) !important; }
+body.theme-parrot #banner a,
+body[data-theme="parrot"] #banner a { color: var(--th-accent) !important; }
+body.theme-parrot input,
+body.theme-parrot select,
+body.theme-parrot textarea,
+body[data-theme="parrot"] input,
+body[data-theme="parrot"] select,
+body[data-theme="parrot"] textarea {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-parrot input:focus,
+body.theme-parrot select:focus,
+body.theme-parrot textarea:focus,
+body[data-theme="parrot"] input:focus,
+body[data-theme="parrot"] select:focus,
+body[data-theme="parrot"] textarea:focus {
+    outline: none !important;
+    border-color: var(--th-accent) !important;
+}
+body.theme-parrot button,
+body.theme-parrot .btn,
+body[data-theme="parrot"] button,
+body[data-theme="parrot"] .btn {
+    background: var(--th-accent) !important;
+    color: #0f1419 !important;
+    border: none !important;
+}
+body.theme-parrot .btn-outline,
+body[data-theme="parrot"] .btn-outline {
+    background: transparent !important;
+    border: 1px solid var(--th-accent) !important;
+    color: var(--th-accent) !important;
+}
+body.theme-parrot .btn-outline:hover,
+body[data-theme="parrot"] .btn-outline:hover {
+    border-color: var(--th-accent) !important;
+    background: rgba(0, 255, 240, 0.1) !important;
+    color: var(--th-accent) !important;
+}
+body.theme-parrot .platform-btn,
+body.theme-parrot .btn-new-project,
+body[data-theme="parrot"] .platform-btn,
+body[data-theme="parrot"] .btn-new-project {
+    background: var(--th-accent) !important;
+    color: #0f1419 !important;
+    border-color: var(--th-accent) !important;
+}
+body.theme-parrot .platform-btn:hover,
+body.theme-parrot .btn-new-project:hover,
+body[data-theme="parrot"] .platform-btn:hover,
+body[data-theme="parrot"] .btn-new-project:hover {
+    background: #33fff5 !important;
+    color: #0f1419 !important;
+    border-color: #33fff5 !important;
+}
+body.theme-parrot .modal-backdrop,
+body[data-theme="parrot"] .modal-backdrop { background: rgba(15, 20, 25, 0.9) !important; }
+body.theme-parrot .modal-box,
+body.theme-parrot .modal-content,
+body[data-theme="parrot"] .modal-box,
+body[data-theme="parrot"] .modal-content {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-parrot .modal-box h2,
+body.theme-parrot .modal-content h2,
+body[data-theme="parrot"] .modal-box h2,
+body[data-theme="parrot"] .modal-content h2 { color: var(--th-accent) !important; }
+body.theme-parrot .modal-box label,
+body.theme-parrot .modal-content label,
+body[data-theme="parrot"] .modal-box label,
+body[data-theme="parrot"] .modal-content label { color: var(--th-accent) !important; }
+body.theme-parrot .modal-box input,
+body.theme-parrot .modal-box select,
+body.theme-parrot .modal-content input,
+body.theme-parrot .modal-content select,
+body[data-theme="parrot"] .modal-box input,
+body[data-theme="parrot"] .modal-box select,
+body[data-theme="parrot"] .modal-content input,
+body[data-theme="parrot"] .modal-content select {
+    background: var(--th-bg2) !important;
+    border-color: var(--th-border) !important;
+    color: var(--th-text) !important;
+}
+body.theme-parrot .modal-box a,
+body.theme-parrot .modal-content a,
+body[data-theme="parrot"] .modal-box a,
+body[data-theme="parrot"] .modal-content a { color: var(--th-accent) !important; }
+
+/* Parrot: botones pill con glow, barra horizontal en cards */
+body.theme-parrot .btn,
+body.theme-parrot button:not(.platform-btn):not(.btn-outline),
+body[data-theme="parrot"] .btn:not(.btn-outline),
+body[data-theme="parrot"] button:not(.platform-btn):not(.btn-outline) {
+    border-radius: 999px !important;
+    padding: 12px 26px !important;
+    box-shadow: 0 0 16px var(--th-glow), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+}
+body.theme-parrot .btn:hover,
+body[data-theme="parrot"] .btn:not(.btn-outline):hover {
+    box-shadow: 0 0 24px var(--th-glow), 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+body.theme-parrot .btn-outline,
+body[data-theme="parrot"] .btn-outline {
+    border-radius: 999px !important;
+    padding: 11px 24px !important;
+    font-weight: 500 !important;
+}
+body.theme-parrot .form-actions-top .btn,
+body.theme-parrot .form-actions-top .btn-outline,
+body[data-theme="parrot"] .form-actions-top .btn,
+body[data-theme="parrot"] .form-actions-top .btn-outline {
+    padding: 14px 30px !important;
+}
+body.theme-parrot .card-actions,
+body[data-theme="parrot"] .card-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+body.theme-parrot .card-actions .btn,
+body.theme-parrot .card-actions .btn-outline,
+body.theme-parrot .card-actions button,
+body[data-theme="parrot"] .card-actions .btn,
+body[data-theme="parrot"] .card-actions .btn-outline,
+body[data-theme="parrot"] .card-actions button {
+    border-radius: 999px !important;
+    min-width: 5rem !important;
+}
+body.theme-parrot .card h2,
+body.theme-parrot .discovered-urls-legend h2,
+body[data-theme="parrot"] .card h2,
+body[data-theme="parrot"] .discovered-urls-legend h2 {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid var(--th-border) !important;
+    margin-bottom: 12px !important;
+}
+
+/* --------------------------------------------------------------------------- */
+/* UX CONFIGURATION PER THEME (container, banner, grid, card, forms, typography) */
+/* --------------------------------------------------------------------------- */
+
+/* Banner/header alignment: same width and box model in all pages */
+.container > #banner,
+.container > .page-header {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* DEFAULT: reference layout, centered banner, standard grid */
+body.theme-default .container,
+body[data-theme="default"] .container,
+body:not([class*="theme-"]) .container {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 40px 20px !important;
+}
+body.theme-default #banner,
+body.theme-default .header,
+body[data-theme="default"] #banner,
+body[data-theme="default"] .header,
+body:not([class*="theme-"]) #banner,
+body:not([class*="theme-"]) .header { text-align: center !important; margin-bottom: 40px !important; }
+body.theme-default #banner pre,
+body[data-theme="default"] #banner pre,
+body:not([class*="theme-"]) #banner pre { font-size: 10px !important; line-height: 1 !important; margin-bottom: 20px !important; }
+body.theme-default #banner h2,
+body[data-theme="default"] #banner h2,
+body:not([class*="theme-"]) #banner h2 { font-size: 1.5rem !important; }
+body.theme-default .grid,
+body[data-theme="default"] .grid,
+body:not([class*="theme-"]) .grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important; gap: 20px !important; }
+body.theme-default .container,
+body[data-theme="default"] .container,
+body:not([class*="theme-"]) .container { font-size: 1rem !important; line-height: 1.5 !important; }
+body.theme-default .muted,
+body[data-theme="default"] .muted,
+body:not([class*="theme-"]) .muted { font-size: 0.9rem !important; }
+body.theme-default form { display: flex !important; flex-direction: column !important; gap: 12px !important; }
+body.theme-default form label { display: block !important; margin-bottom: 4px !important; }
+
+/* PARROT: layout tipo "edición" – barra superior, grid 3 cols fijas, sección con strip cyan */
+body.theme-parrot .container,
+body[data-theme="parrot"] .container {
+    max-width: 1280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 28px 24px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+body.theme-parrot #banner,
+body.theme-parrot .header,
+body[data-theme="parrot"] #banner,
+body[data-theme="parrot"] .header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    text-align: left !important;
+    margin-bottom: 32px !important;
+    padding: 20px 24px !important;
+    background: rgba(22, 27, 34, 0.85) !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 0 0 16px 16px !important;
+    border-top: none !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+body.theme-parrot #banner pre,
+body[data-theme="parrot"] #banner pre {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0 !important;
+    margin-right: 20px !important;
+    order: 0 !important;
+}
+body.theme-parrot #banner h2,
+body.theme-parrot .banner-title,
+body[data-theme="parrot"] #banner h2,
+body[data-theme="parrot"] .banner-title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    margin-bottom: 0 !important;
+    order: 1 !important;
+}
+body.theme-parrot #banner p,
+body.theme-parrot .banner-subtitle,
+body[data-theme="parrot"] #banner p,
+body[data-theme="parrot"] .banner-subtitle { margin-bottom: 0 !important; order: 2 !important; }
+body.theme-parrot .banner-actions,
+body[data-theme="parrot"] .banner-actions { margin-left: auto !important; order: 10 !important; }
+body.theme-parrot .grid,
+body[data-theme="parrot"] .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+    padding-top: 24px !important;
+    margin-top: 0 !important;
+    border-top: 2px solid var(--th-accent) !important;
+    position: relative !important;
+}
+body.theme-parrot .grid::before,
+body[data-theme="parrot"] .grid::before {
+    content: "PROJECTS" !important;
+    position: absolute !important;
+    top: -12px !important;
+    left: 0 !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.15em !important;
+    color: var(--th-accent) !important;
+    background: var(--th-bg) !important;
+    padding: 0 10px !important;
+}
+body.theme-parrot.page-targets .grid::before,
+body[data-theme="parrot"].page-targets .grid::before {
+    content: "TARGETS" !important;
+}
+body.theme-parrot .card,
+body[data-theme="parrot"] .card {
+    padding: 28px !important;
+    border-radius: 0 12px 12px 0 !important;
+    min-height: 140px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+@media (max-width: 960px) {
+    body.theme-parrot .grid,
+    body[data-theme="parrot"] .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+@media (max-width: 600px) {
+    body.theme-parrot .grid,
+    body[data-theme="parrot"] .grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+body.theme-parrot form label,
+body[data-theme="parrot"] form label { display: block !important; margin-bottom: 8px !important; font-weight: 600 !important; letter-spacing: 0.02em !important; }
+body.theme-parrot .muted,
+body[data-theme="parrot"] .muted { font-size: 0.875rem !important; opacity: 0.9 !important; }
+body.theme-parrot input,
+body.theme-parrot select,
+body.theme-parrot textarea,
+body[data-theme="parrot"] input,
+body[data-theme="parrot"] select,
+body[data-theme="parrot"] textarea { border-radius: 8px !important; padding: 10px 14px !important; }
+body.theme-parrot .list,
+body[data-theme="parrot"] .list { border-radius: 8px !important; border-color: var(--th-border) !important; }
+body.theme-parrot .page-header,
+body[data-theme="parrot"] .page-header {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 24px !important;
+    background: rgba(22, 27, 34, 0.85) !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 0 0 12px 12px !important;
+    border-top: none !important;
+    margin-bottom: 28px !important;
+}
+body.theme-parrot .container > div:has(.btn-new-project),
+body[data-theme="parrot"] .container > div:has(.btn-new-project) {
+    padding: 20px 24px !important;
+    margin: 0 0 28px 0 !important;
+    background: rgba(22, 27, 34, 0.6) !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 12px !important;
+    border-left: 4px solid var(--th-accent) !important;
+}
+body.theme-parrot .theme-select-wrap label,
+body[data-theme="parrot"] .theme-select-wrap label {
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    color: var(--th-muted) !important;
+}
+body.theme-parrot select,
+body[data-theme="parrot"] select {
+    font-weight: 500 !important;
+}
+
+/* CYBERPUNK: wide HUD, compact bar banner, 3-col dense grid, panel cards */
+body.theme-cyberpunk .container { max-width: 1400px !important; margin-left: auto !important; margin-right: auto !important; padding: 24px 28px !important; }
+body.theme-cyberpunk #banner,
+body.theme-cyberpunk .header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    margin-bottom: 28px !important;
+    padding: 16px 20px !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 12px !important;
+}
+body.theme-cyberpunk #banner pre { font-size: 8px !important; line-height: 1 !important; margin-bottom: 0 !important; margin-right: 16px !important; }
+body.theme-cyberpunk #banner h2 { font-size: 1.25rem !important; margin-bottom: 0 !important; }
+body.theme-cyberpunk #banner p { margin-bottom: 0 !important; }
+body.theme-cyberpunk #banner > div { margin-top: 0 !important; }
+body.theme-cyberpunk .btn,
+body.theme-cyberpunk .btn-outline,
+body.theme-cyberpunk button:not(.platform-btn) {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-width: 120px !important; padding: 14px 20px !important; border-radius: 12px !important;
+    box-shadow: 0 0 16px var(--th-glow) !important;
+}
+body.theme-cyberpunk .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; gap: 24px !important; }
+body.theme-cyberpunk .card { padding: 28px !important; border-radius: 16px !important; box-shadow: 0 0 20px var(--th-glow) !important; border-width: 1px !important; }
+body.theme-cyberpunk form label { display: block !important; margin-bottom: 6px !important; }
+body.theme-cyberpunk input, body.theme-cyberpunk select, body.theme-cyberpunk textarea { border-width: 1px !important; border-radius: 8px !important; padding: 10px 12px !important; }
+body.theme-cyberpunk .modal-content { padding: 28px !important; border-radius: 16px !important; max-width: 480px !important; }
+body.theme-cyberpunk .list { border-radius: 12px !important; padding: 12px !important; }
+body.theme-cyberpunk .container { font-size: 0.95rem !important; line-height: 1.45 !important; }
+body.theme-cyberpunk .muted { font-size: 0.85rem !important; }
+
+/* NEON: generous padding, large banner, 2-3 cols large gap, very rounded cards */
+body.theme-neon .container { max-width: 1200px !important; margin-left: auto !important; margin-right: auto !important; padding: 48px 32px !important; }
+body.theme-neon #banner,
+body.theme-neon .header { text-align: center !important; margin-bottom: 48px !important; padding-bottom: 24px !important; }
+body.theme-neon #banner pre { font-size: 11px !important; line-height: 1.1 !important; margin-bottom: 24px !important; }
+body.theme-neon #banner h2 { font-size: 1.75rem !important; margin-bottom: 12px !important; }
+body.theme-neon .btn,
+body.theme-neon .btn-outline,
+body.theme-neon button:not(.platform-btn) { border-radius: 999px !important; padding: 12px 24px !important; }
+body.theme-neon .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important; gap: 28px !important; }
+body.theme-neon .card { border-radius: 20px !important; padding: 28px !important; box-shadow: 0 0 28px var(--th-glow) !important; }
+body.theme-neon form > div[style*="flex"] { display: flex !important; flex-wrap: wrap !important; gap: 12px !important; align-items: center !important; }
+body.theme-neon form label { display: block !important; margin-bottom: 8px !important; }
+body.theme-neon input, body.theme-neon select, body.theme-neon textarea { padding: 12px 14px !important; border-radius: 14px !important; font-size: 1rem !important; }
+body.theme-neon .modal-content { border-radius: 20px !important; padding: 32px !important; max-width: 460px !important; }
+body.theme-neon .list { border-radius: 16px !important; padding: 14px !important; }
+body.theme-neon .container { font-size: 1.05rem !important; line-height: 1.55 !important; }
+body.theme-neon .muted { font-size: 0.95rem !important; }
+
+/* MATRIX: narrow, minimal banner, 2-col dense, terminal typography */
+body.theme-matrix .container { max-width: 1000px !important; margin-left: auto !important; margin-right: auto !important; padding: 20px 16px !important; font-family: ui-monospace, "JetBrains Mono", monospace !important; }
+body.theme-matrix #banner,
+body.theme-matrix .header { margin-bottom: 20px !important; padding: 12px 0 !important; text-align: left !important; }
+body.theme-matrix #banner pre { font-size: 7px !important; line-height: 1 !important; margin-bottom: 8px !important; }
+body.theme-matrix #banner h2 { font-size: 1.1rem !important; margin-bottom: 4px !important; }
+body.theme-matrix #banner p { font-size: 0.85rem !important; margin-bottom: 0 !important; }
+body.theme-matrix .btn,
+body.theme-matrix .btn-outline,
+body.theme-matrix button:not(.platform-btn) {
+    padding: 8px 14px !important; border-radius: 4px !important;
+    font-family: ui-monospace, monospace !important; font-size: 0.85rem !important;
+}
+body.theme-matrix .grid { grid-template-columns: repeat(2, minmax(280px, 1fr)) !important; gap: 12px !important; }
+body.theme-matrix .card { padding: 16px 20px !important; border-radius: 6px !important; border-width: 1px !important; }
+body.theme-matrix form label { display: block !important; margin-bottom: 4px !important; font-size: 0.85rem !important; }
+body.theme-matrix input, body.theme-matrix select, body.theme-matrix textarea { padding: 6px 10px !important; border-radius: 4px !important; font-size: 0.9rem !important; }
+body.theme-matrix .modal-content { padding: 20px !important; border-radius: 6px !important; max-width: 420px !important; }
+body.theme-matrix .list { padding: 8px !important; border-radius: 4px !important; }
+body.theme-matrix .container { font-size: 0.9rem !important; line-height: 1.4 !important; }
+body.theme-matrix .muted { font-size: 0.8rem !important; }
+
+/* TRON: geometric grid, straight borders, aligned controls */
+body.theme-tron .container { max-width: 1280px !important; margin-left: auto !important; margin-right: auto !important; padding: 28px 24px !important; }
+body.theme-tron #banner,
+body.theme-tron .header {
+    display: flex !important; flex-wrap: wrap !important; align-items: center !important; justify-content: space-between !important;
+    margin-bottom: 24px !important; padding: 16px 20px !important;
+    border: 1px solid var(--th-border) !important; border-radius: 4px !important;
+}
+body.theme-tron #banner pre { font-size: 9px !important; line-height: 1 !important; margin-bottom: 0 !important; margin-right: 20px !important; }
+body.theme-tron #banner h2 { font-size: 1.2rem !important; margin-bottom: 0 !important; }
+body.theme-tron .btn,
+body.theme-tron .btn-outline,
+body.theme-tron button:not(.platform-btn) {
+    border-radius: 4px !important; padding: 12px 18px !important; border: 1px solid var(--th-border) !important;
+}
+body.theme-tron .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important; gap: 18px !important; }
+body.theme-tron .card { border-radius: 8px !important; padding: 22px !important; border-width: 1px !important; }
+body.theme-tron form label { display: block !important; margin-bottom: 6px !important; }
+body.theme-tron input, body.theme-tron select, body.theme-tron textarea { border-radius: 4px !important; padding: 10px 12px !important; }
+body.theme-tron .modal-content { padding: 24px !important; border-radius: 8px !important; max-width: 440px !important; }
+body.theme-tron .list { border-radius: 8px !important; padding: 12px !important; }
+body.theme-tron .container { font-size: 0.95rem !important; line-height: 1.5 !important; }
+body.theme-tron .muted { font-size: 0.88rem !important; }
+
+/* PURPLE: soft, ample padding, 2-col or wide cards, high line-height */
+body.theme-purple .container { max-width: 1100px !important; margin-left: auto !important; margin-right: auto !important; padding: 44px 32px !important; }
+body.theme-purple #banner,
+body.theme-purple .header { text-align: center !important; margin-bottom: 44px !important; padding: 24px 0 !important; }
+body.theme-purple #banner pre { font-size: 10px !important; line-height: 1.1 !important; margin-bottom: 24px !important; }
+body.theme-purple #banner h2 { font-size: 1.6rem !important; margin-bottom: 10px !important; }
+body.theme-purple .btn,
+body.theme-purple .btn-outline,
+body.theme-purple button:not(.platform-btn) {
+    border-radius: 999px !important; padding: 14px 26px !important; box-shadow: 0 4px 14px var(--th-glow) !important;
+}
+body.theme-purple .grid { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important; gap: 26px !important; }
+body.theme-purple .card { border-radius: 24px !important; padding: 30px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important; }
+body.theme-purple form label { display: block !important; margin-bottom: 8px !important; }
+body.theme-purple input, body.theme-purple select, body.theme-purple textarea { border-radius: 14px !important; padding: 12px 16px !important; }
+body.theme-purple .modal-content { border-radius: 24px !important; padding: 34px !important; max-width: 460px !important; }
+body.theme-purple .list { border-radius: 16px !important; padding: 16px !important; }
+body.theme-purple .container { font-size: 1.02rem !important; line-height: 1.65 !important; }
+body.theme-purple .muted { font-size: 0.92rem !important; line-height: 1.5 !important; }
+
+/* HACKTHEBOX: layout y UX propios – barra compacta, cards con borde izquierdo verde, grid denso */
+body.theme-hackthebox .container,
+body[data-theme="hackthebox"] .container {
+    max-width: 1280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 28px 24px !important;
+}
+body.theme-hackthebox #banner,
+body.theme-hackthebox .header,
+body[data-theme="hackthebox"] #banner,
+body[data-theme="hackthebox"] .header {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 24px !important;
+    padding: 14px 20px !important;
+    border-bottom: 3px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+    background: rgba(22, 34, 56, 0.6) !important;
+}
+body.theme-hackthebox #banner pre,
+body[data-theme="hackthebox"] #banner pre { font-size: 9px !important; line-height: 1 !important; margin-bottom: 0 !important; margin-right: 16px !important; }
+body.theme-hackthebox #banner h2,
+body[data-theme="hackthebox"] #banner h2 { font-size: 1.2rem !important; margin-bottom: 0 !important; }
+body.theme-hackthebox #banner p,
+body[data-theme="hackthebox"] #banner p { margin-bottom: 0 !important; }
+body.theme-hackthebox .page-header,
+body[data-theme="hackthebox"] .page-header {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 24px !important;
+    padding: 14px 20px !important;
+    border-bottom: 3px solid var(--th-accent) !important;
+    background: rgba(22, 34, 56, 0.6) !important;
+}
+body.theme-hackthebox .btn,
+body.theme-hackthebox .btn-outline,
+body.theme-hackthebox button:not(.platform-btn),
+body[data-theme="hackthebox"] .btn,
+body[data-theme="hackthebox"] .btn-outline,
+body[data-theme="hackthebox"] button:not(.platform-btn) {
+    border-radius: 6px !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+}
+body.theme-hackthebox .grid,
+body[data-theme="hackthebox"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+}
+body.theme-hackthebox .card,
+body[data-theme="hackthebox"] .card {
+    border-radius: 8px !important;
+    padding: 24px !important;
+    border-left: 4px solid var(--th-accent) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+body.theme-hackthebox .card:hover,
+body[data-theme="hackthebox"] .card:hover {
+    border-left-color: #b0f010 !important;
+    box-shadow: 0 6px 20px rgba(159, 239, 0, 0.15) !important;
+}
+body.theme-hackthebox form label,
+body[data-theme="hackthebox"] form label { display: block !important; margin-bottom: 6px !important; }
+body.theme-hackthebox input,
+body.theme-hackthebox select,
+body.theme-hackthebox textarea,
+body[data-theme="hackthebox"] input,
+body[data-theme="hackthebox"] select,
+body[data-theme="hackthebox"] textarea {
+    border-radius: 6px !important;
+    padding: 10px 14px !important;
+}
+body.theme-hackthebox .modal-content,
+body[data-theme="hackthebox"] .modal-content {
+    border-radius: 8px !important;
+    padding: 28px !important;
+    border-left: 4px solid var(--th-accent) !important;
+    max-width: 480px !important;
+}
+body.theme-hackthebox .list,
+body[data-theme="hackthebox"] .list {
+    border-radius: 8px !important;
+    padding: 16px !important;
+    border: 1px solid var(--th-border) !important;
+}
+body.theme-hackthebox .container,
+body[data-theme="hackthebox"] .container { font-size: 0.98rem !important; line-height: 1.55 !important; }
+body.theme-hackthebox .muted,
+body[data-theme="hackthebox"] .muted { font-size: 0.9rem !important; }
+body.theme-hackthebox table,
+body[data-theme="hackthebox"] table { border-collapse: collapse !important; width: 100% !important; }
+body.theme-hackthebox th,
+body.theme-hackthebox td,
+body[data-theme="hackthebox"] th,
+body[data-theme="hackthebox"] td {
+    padding: 10px 14px !important;
+    border: 1px solid var(--th-border) !important;
+    text-align: left !important;
+}
+body.theme-hackthebox th,
+body[data-theme="hackthebox"] th { color: var(--th-accent) !important; background: rgba(159, 239, 0, 0.08) !important; }
+body.theme-hackthebox h1,
+body[data-theme="hackthebox"] h1 { color: var(--th-accent) !important; margin-bottom: 12px !important; }
+body.theme-hackthebox h2,
+body[data-theme="hackthebox"] h2 { color: var(--th-accent) !important; margin-bottom: 10px !important; }
+body.theme-hackthebox h3,
+body[data-theme="hackthebox"] h3 { color: var(--th-text) !important; margin-bottom: 8px !important; }
+
+/* HACKTHEBOX: Login */
+body.theme-hackthebox.page-login .login-container,
+body.theme-hackthebox[data-page="login"] .login-container,
+body[data-theme="hackthebox"].page-login .login-container,
+body[data-theme="hackthebox"][data-page="login"] .login-container {
+    max-width: 420px !important;
+}
+body.theme-hackthebox.page-login .form-container,
+body.theme-hackthebox[data-page="login"] .form-container,
+body[data-theme="hackthebox"].page-login .form-container,
+body[data-theme="hackthebox"][data-page="login"] .form-container {
+    border-radius: 8px !important;
+    border-left: 4px solid var(--th-accent) !important;
+    padding: 36px 32px !important;
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-hackthebox.page-login .form-container .form-title,
+body[data-theme="hackthebox"][data-page="login"] .form-container .form-title { color: var(--th-accent) !important; }
+
+/* HACKTHEBOX: Register */
+body.theme-hackthebox.page-register .register-container,
+body.theme-hackthebox[data-page="register"] .register-container,
+body[data-theme="hackthebox"].page-register .register-container,
+body[data-theme="hackthebox"][data-page="register"] .register-container {
+    max-width: 520px !important;
+}
+body.theme-hackthebox.page-register .form-container,
+body.theme-hackthebox[data-page="register"] .form-container,
+body[data-theme="hackthebox"].page-register .form-container,
+body[data-theme="hackthebox"][data-page="register"] .form-container {
+    border-radius: 8px !important;
+    border-left: 4px solid var(--th-accent) !important;
+    padding: 36px 32px !important;
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+}
+
+/* HACKTHEBOX: Logout */
+body.theme-hackthebox.page-logout,
+body.theme-hackthebox[data-page="logout"],
+body[data-theme="hackthebox"].page-logout,
+body[data-theme="hackthebox"][data-page="logout"] {
+    background: #101927 !important;
+}
+body.theme-hackthebox.page-logout .logout-card,
+body.theme-hackthebox[data-page="logout"] .logout-card,
+body[data-theme="hackthebox"].page-logout .logout-card,
+body[data-theme="hackthebox"][data-page="logout"] .logout-card {
+    border-radius: 8px !important;
+    border-left: 4px solid var(--th-accent) !important;
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    padding: 40px 36px !important;
+}
+body.theme-hackthebox.page-logout .logout-title,
+body[data-theme="hackthebox"][data-page="logout"] .logout-title { color: var(--th-accent) !important; }
+body.theme-hackthebox.page-logout .logout-btn,
+body[data-theme="hackthebox"][data-page="logout"] .logout-btn {
+    background: #9fef00 !important;
+    color: #101927 !important;
+    border: none !important;
+    border-radius: 6px !important;
+}
+
+/* TECH: narrow centered, compact banner, 1-col or 2-col with gap, minimal cards */
+
+/* MILITARY: command bar + left strip + single-column briefing list */
+body.theme-military .container,
+body[data-theme="military"] .container {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 200px 1fr !important;
+    gap: 0 !important;
+    position: relative !important;
+}
+body.theme-military .container::before,
+body[data-theme="military"] .container::before {
+    content: '' !important;
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    background: var(--th-card) !important;
+    border-right: 1px solid var(--th-border) !important;
+}
+body.theme-military .container > *,
+body[data-theme="military"] .container > * {
+    grid-column: 2 !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+body.theme-military .container > *:not(#banner),
+body[data-theme="military"] .container > *:not(#banner) {
+    padding-top: 20px !important;
+}
+body.theme-military .container > *:not(#banner):first-child,
+body[data-theme="military"] .container > *:not(#banner):first-child {
+    padding-top: 16px !important;
+}
+body.theme-military .container > #banner,
+body[data-theme="military"] .container > #banner {
+    grid-column: 1 / -1 !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+body.theme-military #banner,
+body.theme-military .header,
+body[data-theme="military"] #banner,
+body[data-theme="military"] .header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    margin-bottom: 0 !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-bottom: 1px solid var(--th-border) !important;
+    border-radius: 0 !important;
+    background: var(--th-card) !important;
+}
+body.theme-military #banner pre,
+body[data-theme="military"] #banner pre {
+    font-size: 8px !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+    margin-right: 16px !important;
+}
+body.theme-military #banner h2,
+body[data-theme="military"] #banner h2 { font-size: 1.15rem !important; margin-bottom: 0 !important; }
+body.theme-military #banner p,
+body[data-theme="military"] #banner p { margin-bottom: 0 !important; }
+body.theme-military #banner > div,
+body[data-theme="military"] #banner > div { margin-top: 0 !important; }
+body.theme-military .grid,
+body[data-theme="military"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+body.theme-military .card,
+body[data-theme="military"] .card {
+    padding: 18px 20px !important;
+}
+body.theme-military form label,
+body[data-theme="military"] form label { display: block !important; margin-bottom: 6px !important; }
+body.theme-military input,
+body.theme-military select,
+body.theme-military textarea,
+body[data-theme="military"] input,
+body[data-theme="military"] select,
+body[data-theme="military"] textarea {
+    padding: 8px 12px !important;
+}
+body.theme-military .modal-content,
+body[data-theme="military"] .modal-content {
+    padding: 24px !important;
+    max-width: 440px !important;
+}
+body.theme-military .list,
+body[data-theme="military"] .list {
+    border-radius: 0 !important;
+    padding: 12px !important;
+    border: 1px solid var(--th-border) !important;
+}
+body.theme-military .container,
+body[data-theme="military"] .container { font-size: 0.95rem !important; line-height: 1.5 !important; }
+body.theme-military .muted,
+body[data-theme="military"] .muted { font-size: 0.88rem !important; }
+
+/* --------------------------------------------------------------------------- */
+/* LAYOUT VARIANTS PER THEME AND PAGE (data-page / .page-* set by backend)     */
+/* --------------------------------------------------------------------------- */
+
+/* Dashboard: Tron = wider grid 3-col feel; Matrix = compact list-like; Tech = narrow 2-col */
+body.theme-tron.page-dashboard .grid,
+body.theme-tron[data-page="dashboard"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+    gap: 20px !important;
+}
+body.theme-matrix.page-dashboard .grid,
+body.theme-matrix[data-page="dashboard"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+}
+body.theme-matrix.page-dashboard .card,
+body.theme-matrix[data-page="dashboard"] .card {
+    padding: 12px 16px !important;
+}
+body.theme-cyberpunk.page-dashboard .grid,
+body.theme-cyberpunk[data-page="dashboard"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    gap: 20px !important;
+}
+body.theme-neon.page-dashboard .grid,
+body.theme-neon[data-page="dashboard"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
+    gap: 32px !important;
+}
+body.theme-purple.page-dashboard .grid,
+body.theme-purple[data-page="dashboard"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+    gap: 28px !important;
+}
+body.theme-military.page-dashboard .grid,
+body.theme-military[data-page="dashboard"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+/* Targets page: Matrix = dense list; Neon/Purple = spacious */
+body.theme-matrix.page-targets .grid,
+body.theme-matrix[data-page="targets"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+}
+body.theme-tron.page-targets .grid,
+body.theme-tron[data-page="targets"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 16px !important;
+}
+body.theme-neon.page-targets .grid,
+body.theme-neon[data-page="targets"] .grid {
+    gap: 26px !important;
+}
+body.theme-military.page-targets .grid,
+body.theme-military[data-page="targets"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+/* Project detail / Target detail: Tron = clearer sections */
+body.theme-tron.page-project_detail .card,
+body.theme-tron[data-page="project_detail"] .card,
+body.theme-tron.page-target_detail .card,
+body.theme-tron[data-page="target_detail"] .card {
+    border-left: 3px solid var(--th-accent) !important;
+}
+body.theme-matrix.page-project_detail .container,
+body.theme-matrix[data-page="project_detail"] .container,
+body.theme-matrix.page-target_detail .container,
+body.theme-matrix[data-page="target_detail"] .container {
+    max-width: 900px !important;
+}
+
+/* Program list / Import: Cyberpunk = dense; Purple = wide cards */
+body.theme-cyberpunk.page-program_list .grid,
+body.theme-cyberpunk[data-page="program_list"] .grid,
+body.theme-cyberpunk.page-import .grid,
+body.theme-cyberpunk[data-page="import"] .grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+}
+body.theme-military.page-program_list .grid,
+body.theme-military[data-page="program_list"] .grid,
+body.theme-military.page-import .grid,
+body.theme-military[data-page="import"] .grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+body.theme-purple.page-program_list .card,
+body.theme-purple[data-page="program_list"] .card,
+body.theme-purple.page-import .card,
+body.theme-purple[data-page="import"] .card {
+    padding: 28px 32px !important;
+}
+
+/* --------------------------------------------------------------------------- */
+/* AUTH PAGES: LAYOUT AND PERSONALITY PER THEME (login, register)             */
+/* --------------------------------------------------------------------------- */
+
+/* Ensure auth containers sit above theme overlays (Tron/Matrix ::after) */
+body.page-login .login-container,
+body.page-register .register-container,
+body.page-logout .logout-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ----- LOGIN: Matrix – full terminal look: black page, narrow green-bordered box, mono only */
+body.theme-matrix.page-login,
+body.theme-matrix.page-register,
+body.theme-matrix[data-page="login"],
+body.theme-matrix[data-page="register"] {
+    background: #000 !important;
+}
+body.theme-matrix.page-login .login-container,
+body.theme-matrix[data-page="login"] .login-container {
+    grid-template-columns: 1fr !important;
+    justify-items: center;
+    align-items: center;
+    max-width: 420px !important;
+}
+body.theme-matrix.page-login .brand-section .brand-title,
+body.theme-matrix.page-login .brand-section .feature-list,
+body.theme-matrix.page-login .brand-section .process-flow,
+body.theme-matrix[data-page="login"] .brand-section .brand-title,
+body.theme-matrix[data-page="login"] .brand-section .feature-list,
+body.theme-matrix[data-page="login"] .brand-section .process-flow {
+    display: none !important;
+}
+body.theme-matrix.page-login .brand-section,
+body.theme-matrix[data-page="login"] .brand-section {
+    text-align: center;
+    margin-bottom: 8px;
+}
+body.theme-matrix.page-login .form-container,
+body.theme-matrix[data-page="login"] .form-container {
+    max-width: 340px !important;
+    width: 100%;
+    border-radius: 0 !important;
+    border: 2px solid var(--th-accent) !important;
+    box-shadow: none !important;
+    background: #0a0f0a !important;
+    padding: 24px 28px !important;
+}
+body.theme-matrix.page-login .form-container::before,
+body.theme-matrix[data-page="login"] .form-container::before {
+    display: none !important;
+}
+
+/* ----- LOGIN: Tron – panel look: cyan left bar, top line, no round corners, strong shadow */
+body.theme-tron.page-login .form-container,
+body.theme-tron[data-page="login"] .form-container {
+    border-radius: 0 !important;
+    border-left: 6px solid var(--th-accent) !important;
+    box-shadow: 8px 12px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 212, 255, 0.2) !important;
+    padding: 32px 36px !important;
+}
+body.theme-tron.page-login .form-container::before,
+body.theme-tron[data-page="login"] .form-container::before {
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--th-accent), transparent 70%) !important;
+}
+
+/* ----- LOGIN: Cyberpunk – HUD frame: magenta glow, angular corners, thick top bar */
+body.theme-cyberpunk.page-login .form-container,
+body.theme-cyberpunk[data-page="login"] .form-container {
+    border-radius: 0 !important;
+    border: 1px solid var(--th-accent) !important;
+    box-shadow: 0 0 0 1px var(--th-border), 0 0 40px var(--th-glow), inset 0 0 60px rgba(255, 0, 255, 0.05) !important;
+    padding: 36px 40px !important;
+}
+body.theme-cyberpunk.page-login .form-container::before,
+body.theme-cyberpunk[data-page="login"] .form-container::before {
+    height: 4px !important;
+    background: linear-gradient(90deg, transparent, var(--th-accent), var(--th-accent2), transparent) !important;
+}
+body.theme-cyberpunk.page-login .form-title,
+body.theme-cyberpunk[data-page="login"] .form-title {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 1rem !important;
+}
+body.theme-cyberpunk.page-login .form-container .input-label,
+body.theme-cyberpunk[data-page="login"] .form-container .input-label {
+    color: var(--th-warm) !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+}
+body.theme-cyberpunk.page-login .form-container::after,
+body.theme-cyberpunk[data-page="login"] .form-container::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, transparent, var(--th-warm), transparent) !important;
+}
+body.theme-cyberpunk.page-login .form-container,
+body.theme-cyberpunk[data-page="login"] .form-container {
+    position: relative !important;
+}
+
+/* ----- LOGIN: Neon – blob card: very rounded, strong cyan glow, pill button */
+body.theme-neon.page-login .login-container,
+body.theme-neon[data-page="login"] .login-container {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto;
+    gap: 48px !important;
+    justify-items: center;
+}
+body.theme-neon.page-login .brand-section,
+body.theme-neon[data-page="login"] .brand-section {
+    order: 1;
+    text-align: center;
+}
+body.theme-neon.page-login .form-container,
+body.theme-neon[data-page="login"] .form-container {
+    order: 2;
+    max-width: 440px !important;
+    width: 100%;
+    border-radius: 28px !important;
+    border: 1px solid rgba(0, 255, 255, 0.4) !important;
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.2), 0 0 60px rgba(0, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    padding: 44px 48px !important;
+}
+body.theme-neon.page-login .form-container .login-btn,
+body.theme-neon[data-page="login"] .form-container .login-btn {
+    border-radius: 999px !important;
+    padding: 16px 32px !important;
+    font-size: 1rem !important;
+}
+
+/* ----- LOGIN: Purple – soft card: large radius, generous padding, soft shadow only (no neon) */
+body.theme-purple.page-login .form-container,
+body.theme-purple[data-page="login"] .form-container {
+    border-radius: 24px !important;
+    padding: 52px 48px !important;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid var(--th-border) !important;
+}
+body.theme-purple.page-login .form-container::before,
+body.theme-purple[data-page="login"] .form-container::before {
+    border-radius: 24px 24px 0 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+/* ----- LOGIN: Left panel (brand/features) per theme */
+body.theme-default.page-login .brand-panel,
+body.theme-default[data-page="login"] .brand-panel {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+body.theme-matrix.page-login .brand-panel,
+body.theme-matrix[data-page="login"] .brand-panel {
+    background: #0a0f0a !important;
+    border: 2px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+}
+body.theme-tron.page-login .brand-panel,
+body.theme-tron[data-page="login"] .brand-panel {
+    background: var(--th-bg2) !important;
+    border: none !important;
+    border-left: 6px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3) !important;
+}
+body.theme-tron.page-login .brand-panel::before,
+body.theme-tron[data-page="login"] .brand-panel::before {
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--th-accent), transparent 70%) !important;
+}
+body.theme-tron.page-login .brand-section,
+body.theme-tron[data-page="login"] .brand-section {
+    position: relative !important;
+}
+body.theme-tron.page-login .brand-panel,
+body.theme-tron[data-page="login"] .brand-panel {
+    position: relative !important;
+    padding-top: 28px !important;
+}
+body.theme-cyberpunk.page-login .brand-panel,
+body.theme-cyberpunk[data-page="login"] .brand-panel {
+    background: #0a0a0f !important;
+    border: 1px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 0 1px var(--th-border), 0 0 30px var(--th-glow) !important;
+    position: relative !important;
+}
+body.theme-cyberpunk.page-login .brand-panel::before,
+body.theme-cyberpunk[data-page="login"] .brand-panel::before {
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, transparent, var(--th-accent), var(--th-accent2), transparent) !important;
+}
+body.theme-cyberpunk.page-login .brand-panel {
+    padding-top: 28px !important;
+}
+body.theme-neon.page-login .brand-panel,
+body.theme-neon[data-page="login"] .brand-panel {
+    background: var(--th-card) !important;
+    border: 1px solid rgba(0, 255, 255, 0.4) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.15), 0 16px 40px rgba(0, 0, 0, 0.3) !important;
+}
+body.theme-purple.page-login .brand-panel,
+body.theme-purple[data-page="login"] .brand-panel {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
+}
+/* ----- REGISTER: Matrix – same terminal look as login */
+body.theme-matrix.page-register .register-container,
+body.theme-matrix[data-page="register"] .register-container {
+    max-width: 380px !important;
+}
+body.theme-matrix.page-register .form-container,
+body.theme-matrix[data-page="register"] .form-container {
+    border-radius: 0 !important;
+    border: 2px solid var(--th-accent) !important;
+    box-shadow: none !important;
+    background: #0a0f0a !important;
+    padding: 24px 28px !important;
+}
+body.theme-matrix.page-register .form-container::before,
+body.theme-matrix[data-page="register"] .form-container::before {
+    display: none !important;
+}
+
+/* ----- REGISTER: Tron – panel style */
+body.theme-tron.page-register .register-container,
+body.theme-tron[data-page="register"] .register-container {
+    max-width: 540px !important;
+}
+body.theme-tron.page-register .form-container,
+body.theme-tron[data-page="register"] .form-container {
+    border-radius: 0 !important;
+    border-left: 6px solid var(--th-accent) !important;
+    box-shadow: 8px 12px 32px rgba(0, 0, 0, 0.5) !important;
+    padding: 32px 36px !important;
+}
+body.theme-tron.page-register .form-container::before,
+body.theme-tron[data-page="register"] .form-container::before {
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--th-accent), transparent 70%) !important;
+}
+
+/* ----- REGISTER: Cyberpunk – HUD frame */
+body.theme-cyberpunk.page-register .form-container,
+body.theme-cyberpunk[data-page="register"] .form-container {
+    border-radius: 0 !important;
+    border: 1px solid var(--th-accent) !important;
+    box-shadow: 0 0 0 1px var(--th-border), 0 0 40px var(--th-glow) !important;
+    padding: 36px 40px !important;
+}
+body.theme-cyberpunk.page-register .form-container::before,
+body.theme-cyberpunk[data-page="register"] .form-container::before {
+    height: 4px !important;
+    background: linear-gradient(90deg, transparent, var(--th-accent), var(--th-accent2), transparent) !important;
+}
+
+/* ----- REGISTER: Neon – blob card */
+body.theme-neon.page-register .register-container,
+body.theme-neon[data-page="register"] .register-container {
+    max-width: 520px !important;
+}
+body.theme-neon.page-register .form-container,
+body.theme-neon[data-page="register"] .form-container {
+    border-radius: 28px !important;
+    border: 1px solid rgba(0, 255, 255, 0.4) !important;
+    box-shadow: 0 0 60px rgba(0, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    padding: 44px 48px !important;
+}
+body.theme-neon.page-register .form-container .submit-btn,
+body.theme-neon[data-page="register"] .form-container .submit-btn {
+    border-radius: 999px !important;
+}
+
+/* ----- REGISTER: Purple – soft card */
+body.theme-purple.page-register .register-container,
+body.theme-purple[data-page="register"] .register-container {
+    max-width: 520px !important;
+}
+body.theme-purple.page-register .form-container,
+body.theme-purple[data-page="register"] .form-container {
+    border-radius: 24px !important;
+    padding: 52px 48px !important;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ----- LOGOUT PAGE: strongly different per theme */
+body.theme-matrix.page-logout,
+body.theme-matrix[data-page="logout"] {
+    background: #000 !important;
+}
+body.theme-matrix.page-logout .logout-container,
+body.theme-matrix[data-page="logout"] .logout-container {
+    max-width: 340px !important;
+}
+body.theme-matrix.page-logout .logout-card,
+body.theme-matrix[data-page="logout"] .logout-card {
+    border-radius: 0 !important;
+    border: 2px solid var(--th-accent) !important;
+    box-shadow: none !important;
+    background: #0a0f0a !important;
+}
+body.theme-tron.page-logout .logout-card,
+body.theme-tron[data-page="logout"] .logout-card {
+    border-radius: 0 !important;
+    border-left: 6px solid var(--th-accent) !important;
+    box-shadow: 8px 12px 32px rgba(0, 0, 0, 0.5) !important;
+}
+body.theme-cyberpunk.page-logout .logout-card,
+body.theme-cyberpunk[data-page="logout"] .logout-card {
+    border-radius: 0 !important;
+    border: 1px solid var(--th-accent) !important;
+    box-shadow: 0 0 40px var(--th-glow) !important;
+}
+body.theme-cyberpunk.page-logout .logout-card::before,
+body.theme-cyberpunk[data-page="logout"] .logout-card::before {
+    height: 4px !important;
+    background: linear-gradient(90deg, transparent, var(--th-accent), var(--th-accent2), transparent) !important;
+}
+body.theme-neon.page-logout .logout-container,
+body.theme-neon[data-page="logout"] .logout-container {
+    max-width: 420px !important;
+}
+body.theme-neon.page-logout .logout-card,
+body.theme-neon[data-page="logout"] .logout-card {
+    border-radius: 28px !important;
+    box-shadow: 0 0 60px rgba(0, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-neon.page-logout .logout-card .logout-btn,
+body.theme-neon[data-page="logout"] .logout-card .logout-btn {
+    border-radius: 999px !important;
+}
+body.theme-purple.page-logout .logout-card,
+body.theme-purple[data-page="logout"] .logout-card {
+    border-radius: 24px !important;
+    padding: 56px 48px !important;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ----- LOGIN / REGISTER / LOGOUT: Military – camo background, angular panels, single-column stacked */
+body.theme-military.page-login,
+body.theme-military.page-register,
+body.theme-military.page-logout,
+body.theme-military[data-page="login"],
+body.theme-military[data-page="register"],
+body.theme-military[data-page="logout"] {
+    background: #0a0a0c !important;
+    color: var(--th-text) !important;
+}
+body.theme-military.page-login::before,
+body.theme-military.page-register::before,
+body.theme-military.page-logout::before,
+body.theme-military[data-page="login"]::before,
+body.theme-military[data-page="register"]::before,
+body.theme-military[data-page="logout"]::before {
+    background:
+        linear-gradient(90deg, rgba(36, 36, 40, 0.7) 0%, transparent 1px),
+        linear-gradient(rgba(36, 36, 40, 0.7) 0%, transparent 1px),
+        linear-gradient(45deg, rgba(44, 44, 50, 0.5) 0%, transparent 1px) !important;
+    background-size: 10px 10px, 10px 10px, 8px 8px !important;
+    background-color: transparent !important;
+    animation: none !important;
+}
+body.theme-military.page-login .login-container,
+body.theme-military[data-page="login"] .login-container {
+    grid-template-columns: 1fr !important;
+    max-width: 480px !important;
+    gap: 24px !important;
+    justify-items: center !important;
+}
+body.theme-military.page-login .brand-section,
+body.theme-military[data-page="login"] .brand-section {
+    width: 100% !important;
+    text-align: center !important;
+}
+body.theme-military.page-login .brand-panel,
+body.theme-military[data-page="login"] .brand-panel {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    border-left: 5px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    padding: 24px 28px !important;
+    position: relative !important;
+}
+body.theme-military.page-login .brand-panel::before,
+body.theme-military[data-page="login"] .brand-panel::before {
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--th-accent), var(--th-accent2), transparent) !important;
+}
+body.theme-military.page-login .brand-title,
+body.theme-military[data-page="login"] .brand-title {
+    color: var(--th-text) !important;
+    font-size: 1.75rem !important;
+}
+body.theme-military.page-login .brand-subtitle,
+body.theme-military[data-page="login"] .brand-subtitle {
+    color: var(--th-muted) !important;
+}
+body.theme-military.page-login .form-container,
+body.theme-military.page-login .auth-military-panel,
+body.theme-military[data-page="login"] .form-container,
+body.theme-military[data-page="login"] .auth-military-panel {
+    max-width: 400px !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--th-border) !important;
+    border-left: 5px solid var(--th-accent) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+    padding: 28px 24px !important;
+}
+body.theme-military.page-login .form-container .form-title,
+body.theme-military[data-page="login"] .form-container .form-title {
+    color: var(--th-text) !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+}
+body.theme-military.page-register .register-container,
+body.theme-military[data-page="register"] .register-container {
+    max-width: 480px !important;
+}
+body.theme-military.page-register .form-container,
+body.theme-military.page-register .auth-military-panel,
+body.theme-military[data-page="register"] .form-container,
+body.theme-military[data-page="register"] .auth-military-panel {
+    border-radius: 0 !important;
+    border: 1px solid var(--th-border) !important;
+    border-left: 5px solid var(--th-accent) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+    padding: 28px 24px !important;
+}
+body.theme-military.page-logout .logout-container,
+body.theme-military[data-page="logout"] .logout-container {
+    max-width: 400px !important;
+}
+body.theme-military.page-logout .logout-card,
+body.theme-military[data-page="logout"] .logout-card,
+body.theme-military .logout-card--military {
+    border-radius: 0 !important;
+    border: 1px solid var(--th-border) !important;
+    border-left: 5px solid var(--th-accent) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+    background: var(--th-card) !important;
+    padding: 40px 32px !important;
+}
+body.theme-military.page-logout .logout-card .logout-btn,
+body.theme-military[data-page="logout"] .logout-card .logout-btn {
+    border-radius: 0 !important;
+    background: var(--th-accent) !important;
+    color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------- */
+/* AUTH WRAPPER CLASSES (theme-specific elements and layouts)                  */
+/* --------------------------------------------------------------------------- */
+
+/* ----- Matrix: terminal (titlebar + mono inputs + bracket button) */
+body.theme-matrix .auth-terminal-titlebar {
+    border-bottom: 1px solid var(--th-accent);
+    padding: 10px 14px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--th-accent);
+    margin: -40px -40px 24px -40px;
+    padding: 12px 40px;
+    background: rgba(0, 0, 0, 0.2);
+}
+body.theme-matrix .auth-terminal .input-label,
+body.theme-matrix .auth-terminal-form .input-label {
+    font-family: monospace !important;
+    font-size: 0.8rem !important;
+}
+body.theme-matrix .auth-terminal .input-field,
+body.theme-matrix .auth-terminal-form .input-field {
+    font-family: monospace !important;
+    border-radius: 2px !important;
+    border-color: var(--th-accent) !important;
+}
+body.theme-matrix .auth-terminal .login-btn,
+body.theme-matrix .auth-terminal-form .login-btn,
+body.theme-matrix .auth-terminal .submit-btn,
+body.theme-matrix .auth-terminal-form .submit-btn {
+    font-family: monospace !important;
+    border-radius: 2px !important;
+    border: 1px solid var(--th-accent) !important;
+}
+
+/* ----- Tron: panel (left border + top line + directional shadow) */
+body.theme-tron .auth-tron-panel {
+    border-left: 4px solid var(--th-accent) !important;
+    border-radius: 2px !important;
+    box-shadow: 4px 6px 24px rgba(0, 0, 0, 0.4) !important;
+    position: relative;
+    overflow: hidden;
+}
+body.theme-tron .auth-tron-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--th-accent), transparent 60%);
+}
+body.theme-tron .auth-tron-panel .input-field,
+body.theme-tron .auth-tron-panel .login-btn,
+body.theme-tron .auth-tron-panel .submit-btn {
+    border-radius: 2px !important;
+}
+
+/* ----- Cyberpunk: HUD frame (corner brackets + glow) */
+body.theme-cyberpunk .auth-cyberpunk-frame {
+    position: relative !important;
+    box-shadow: inset 0 0 0 1px var(--th-border), 0 0 24px var(--th-glow) !important;
+}
+body.theme-cyberpunk .auth-cyberpunk-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important;
+}
+body.theme-cyberpunk .auth-cyberpunk-frame .form-title {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 1rem;
+}
+body.theme-cyberpunk .auth-cyberpunk-frame .input-field:focus {
+    box-shadow: 0 0 0 2px var(--th-accent), 0 0 12px var(--th-glow) !important;
+}
+
+/* ----- Neon: blob card (large radius + pill button + glow) */
+body.theme-neon .auth-neon-card {
+    border-radius: 24px !important;
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.2), 0 8px 32px rgba(0, 255, 255, 0.15) !important;
+}
+body.theme-neon .auth-neon-card .login-btn,
+body.theme-neon .auth-neon-card .submit-btn {
+    border-radius: 999px !important;
+    box-shadow: 0 0 20px var(--th-glow) !important;
+}
+body.theme-neon .auth-register-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+}
+
+/* ----- Purple: soft card (large padding + soft shadow) */
+body.theme-purple .auth-purple-card {
+    padding: 48px 44px !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 16px !important;
+}
+body.theme-purple .auth-register-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+}
+
+/* ----- Military: briefing panel (angular, left accent strip) */
+body.theme-military .auth-military-panel,
+body[data-theme="military"] .auth-military-panel {
+    background: var(--th-card) !important;
+    border: 1px solid var(--th-border) !important;
+    border-left: 4px solid var(--th-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+    padding: 28px 24px !important;
+}
+body.theme-military .auth-military-panel .input-field,
+body.theme-military .auth-military-panel .login-btn,
+body.theme-military .auth-military-panel .submit-btn,
+body[data-theme="military"] .auth-military-panel .input-field,
+body[data-theme="military"] .auth-military-panel .login-btn,
+body[data-theme="military"] .auth-military-panel .submit-btn {
+    border-radius: 0 !important;
+}
+
+/* ----- Logout card variants (by modifier class) */
+body.theme-matrix .logout-card--matrix {
+    border-radius: 4px !important;
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 65, 0.25) !important;
+}
+body.theme-matrix .logout-card--matrix .logout-title {
+    font-family: monospace !important;
+    font-size: 0.9rem !important;
+}
+body.theme-matrix .logout-card--matrix .logout-btn {
+    font-family: monospace !important;
+    border-radius: 2px !important;
+    border: 1px solid var(--th-accent) !important;
+}
+body.theme-tron .logout-card--tron {
+    border-left: 4px solid var(--th-accent) !important;
+    border-radius: 2px !important;
+    box-shadow: 4px 6px 24px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-cyberpunk .logout-card--cyberpunk {
+    box-shadow: inset 0 0 0 1px var(--th-border), 0 0 24px var(--th-glow) !important;
+}
+body.theme-cyberpunk .logout-card--cyberpunk::before {
+    height: 3px !important;
+    background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important;
+}
+body.theme-neon .logout-card--neon {
+    border-radius: 24px !important;
+    box-shadow: 0 0 0 1px rgba(0, 255, 255, 0.2), 0 8px 32px rgba(0, 255, 255, 0.15) !important;
+}
+body.theme-neon .logout-card--neon .logout-btn {
+    border-radius: 999px !important;
+}
+body.theme-purple .logout-card--purple {
+    padding: 56px 48px !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2) !important;
+}
+/* --------------------------------------------------------------------------- */
+/* THEME PERSONALITY (decorations and structure per theme)                     */
+/* --------------------------------------------------------------------------- */
+
+/* Tron: grid/panel feel – subtle grid overlay, cards with directional shadow */
+body.theme-tron .container { position: relative; z-index: 1; }
+body.theme-tron::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+body.theme-tron .card {
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+body.theme-tron .card:hover {
+    box-shadow: 4px 6px 20px var(--th-glow), 2px 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Matrix: terminal – subtle scanline overlay, cards as terminal windows */
+body.theme-matrix .container { position: relative; z-index: 1; }
+body.theme-matrix::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+    );
+}
+body.theme-matrix .card {
+    border-left: 3px solid var(--th-accent) !important;
+    box-shadow: inset 0 0 0 1px rgba(0, 255, 65, 0.1) !important;
+}
+
+/* Cyberpunk: HUD – frame-like borders on banner and cards */
+body.theme-cyberpunk #banner {
+    position: relative;
+    box-shadow: inset 0 0 0 1px var(--th-border), 0 0 20px var(--th-glow) !important;
+}
+body.theme-cyberpunk #banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--th-accent), transparent) !important;
+}
+body.theme-cyberpunk .card {
+    box-shadow: inset 0 0 0 1px var(--th-border), 0 0 12px rgba(255, 0, 255, 0.1) !important;
+}
+
+/* Neon: blobs/glow already in UX; reinforce rounded corners and colored shadow */
+body.theme-neon .card {
+    box-shadow: 0 4px 24px rgba(0, 255, 255, 0.08), 0 0 0 1px rgba(0, 255, 255, 0.2) !important;
+}
+body.theme-neon .card:hover {
+    box-shadow: 0 0 25px var(--th-glow), 0 4px 24px rgba(0, 255, 255, 0.12) !important;
+}
+
+/* Purple: soft shadows (UX already has rounded); keep personality subtle */
+body.theme-purple .card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Default: reference look – no extra overlay */
+/* (default theme uses existing ::before gradient only) */
+
+/* Theme selector dropdown */
+.theme-select-wrap { display: inline-flex; align-items: center; gap: 8px; margin-left: 12px; }
+.theme-select-wrap label { color: var(--th-muted, #8b949e); font-size: 0.85rem; }
+.theme-select-wrap select {
+    background: var(--th-card, #0f1720);
+    border: 1px solid var(--th-border, #21262d);
+    color: var(--th-text, #c9d1d9);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.theme-select-wrap select:focus { outline: none; border-color: var(--th-accent, #0ea5a4); }

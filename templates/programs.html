@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Integración con HackerOne</title>
+    <title>HackerOne integration</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/themes.css">
     <link rel="stylesheet" href="/static/hackerone.css">
     <style>
         .container {
@@ -26,7 +27,7 @@
         }
     </style>
 </head>
-<body>
+<body class="theme-{{ theme | default('default') }} page-{{ page_id | default('program_list') }}" data-theme="{{ theme | default('default') }}" data-page="{{ page_id | default('program_list') }}">
     <div class="container">
         <h1>🔗 HackerOneTESTER</h1>
 
@@ -38,7 +39,7 @@
                 <div class="card program-detail">
                     <h2>📁 {{ selected_program.name }}</h2>
                     <p><strong>Program ID:</strong> {{ selected_program.handle }}</p>
-                    <p><a href="{{ selected_program.url }}" target="_blank" rel="noopener noreferrer">🔗 Ver en HackerOne</a></p>
+                    <p><a href="{{ selected_program.url }}" target="_blank" rel="noopener noreferrer">🔗 View on HackerOne</a></p>
                     
                     {% if selected_program.filtered_targets %}
                         <form action="/hackerone/scan" method="post" class="targets-form" enctype="application/x-www-form-urlencoded">
@@ -51,7 +52,7 @@
                                         <span class="summary-item">Total: {{ selected_program.summary.total }}</span>
                                         <span class="summary-item">🌐 Dominios: {{ selected_program.summary.domains }}</span>
                                         <span class="summary-item">🔗 URLs: {{ selected_program.summary.urls }}</span>
-                                        <span class="summary-item">💰 Elegibles: {{ selected_program.summary.eligible }}</span>
+                                        <span class="summary-item">💰 Eligible: {{ selected_program.summary.eligible }}</span>
                                     </div>
                                 </div>
                                 <button type="submit" name="scan_all" value="true" class="btn-scan-all">
@@ -74,7 +75,7 @@
                                             <label for="target-{{ loop.index }}">
                                                 {{ target.identifier }}
                                                 {% if target.eligibility %}
-                                                    <span class="bounty-eligible" title="Elegible para bounty">💰</span>
+                                                    <span class="bounty-eligible" title="Bounty eligible">💰</span>
                                                 {% endif %}
                                             </label>
                                         </div>
@@ -98,7 +99,7 @@
                                             <label for="target-{{ loop.index }}">
                                                 {{ target.identifier }}
                                                 {% if target.eligibility %}
-                                                    <span class="bounty-eligible" title="Elegible para bounty">💰</span>
+                                                    <span class="bounty-eligible" title="Bounty eligible">💰</span>
                                                 {% endif %}
                                             </label>
                                         </div>
@@ -117,7 +118,7 @@
                         <p class="no-targets">No valid targets to scan in this program.</p>
                     {% endif %}
                     
-                    <a href="/hackerone" class="btn-back">← Volver a la lista</a>
+                    <a href="/hackerone" class="btn-back">← Back to list</a>
                 </div>
             {% else %}
                 {% for p in programs %}
@@ -126,7 +127,7 @@
                     <p><strong>Program ID:</strong> {{ p.handle }}</p>
                     <p><strong>Targets in Scope:</strong> {{ p.in_scope|length }}</p>
                     {% if p.offers_bounties %}
-                        <p class="bounty-info">💰 Ofrece recompensas</p>
+                        <p class="bounty-info">💰 Offers bounties</p>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -135,7 +136,7 @@
         {% elif not error %}
             <div class="card" style="text-align: center;">
                 <h3>👋 Bienvenido</h3>
-                <p>Para comenzar, ingresa tu API key de HackerOne arriba.</p>
+                <p>To get started, enter your HackerOne API key above.</p>
                 <p style="color: #888; font-size: 0.9em;">Once configured, you'll see the available programs to scan here.</p>
             </div>
         {% endif %}

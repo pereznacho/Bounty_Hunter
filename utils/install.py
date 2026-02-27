@@ -4,10 +4,11 @@ Instalador/Verificador de dependencias para Bounty_Hunter
 Autor: Nacho Pérez
 """
 
+import os
 import subprocess
 import shutil
 import json
-import os
+import tempfile
 from pathlib import Path
 
 # ── Rutas base ────────────────────────────────────────────────────────────────
@@ -39,7 +40,7 @@ def ensure_go_installed() -> Path | None:
 
     print("[+] Go no encontrado. Instalando Go 1.21.0 (linux-amd64)…")
     url = "https://go.dev/dl/go1.21.0.linux-amd64.tar.gz"
-    tar = "/tmp/go.tar.gz"
+    tar = os.path.join(tempfile.gettempdir(), "go.tar.gz")
     try:
         subprocess.run(f"wget -qO {tar} {url}", shell=True, check=True)
         subprocess.run("sudo rm -rf /usr/local/go", shell=True, check=True)

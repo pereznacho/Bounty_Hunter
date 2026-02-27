@@ -8,9 +8,11 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      # Montar código y datos: BD y results/ quedan en el proyecto (persistentes al cerrar el contenedor)
       - .:/app
     environment:
-      - SQLALCHEMY_DATABASE_URL=sqlite:////db.sqlite3
+      # BD dentro de /app para que persista con el volumen .:/app
+      - SQLALCHEMY_DATABASE_URL=sqlite:////app/db.sqlite3
     command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
     restart: always
     deploy:
