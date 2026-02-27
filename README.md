@@ -459,7 +459,7 @@ flowchart LR
 
 ### Recent changelog
 
-- **v2.1.0**: Auto-expanded mode (bounty programs = manual flow), dashboard with logos and real-time alerts, unified backend, severity colors aligned with standards.
+- **v2.0.1**: Auto-expanded mode (bounty programs = manual flow), dashboard with logos and real-time alerts, unified backend, severity colors aligned with standards.
 - **v2.0.0**: Multi-platform support (HackerOne, Intigriti, YesWeHack, BugCrowd), real-time monitoring, modern UI and dark theme.
 
 ### License
