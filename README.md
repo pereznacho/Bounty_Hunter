@@ -112,7 +112,7 @@ flowchart TB
 
 ```mermaid
 graph LR;
-    A[Domain(s)] --> B[Subfinder];
+    A["Domain(s)"] --> B["Subfinder"]
     B --> C[Httpx];
     C --> D[Active URLs];
     D --> E[DiscoveredURL];
