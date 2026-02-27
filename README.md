@@ -112,29 +112,10 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    subgraph Input
-        A[Domain(s)]
-    end
-    subgraph Recon
-        B[Subfinder]
-        C[Httpx]
-        D[Active URLs]
-    end
-    subgraph DB
-        E[DiscoveredURL]
-        F[ScanState: awaiting_url_selection]
-    end
-    subgraph UI
-        G[Targets view: URL checkboxes]
-        H[POST discovered-urls/scan]
-    end
-    subgraph Scan
-        I[Target per URL]
-        J[launch_scans_for_new_targets]
-        K[run_scan_target per target]
-    end
-    A --> B --> C --> D --> E --> F
-    F --> G --> H --> I --> J --> K
+    A[Domain(s)] --> B[Subfinder] --> C[Httpx] --> D[Active URLs]
+    D --> E[DiscoveredURL] --> F[ScanState: awaiting_url_selection]
+    F --> G[Targets view: URL checkboxes] --> H[POST discovered-urls/scan]
+    H --> I[Target per URL] --> J[launch_scans_for_new_targets] --> K[run_scan_target per target]
 ```
 
 ### Scan worker flow (per target)
