@@ -72,16 +72,16 @@ def etapa_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls
     run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_file, param_urls_file)
 
 def etapa_waf(live_file, result_dir, log_file, mode, domain):
-    from modules.waf import run_waf_detection
+    from modules.waf import run_waf_pipeline_step
     if mode == "url":
         base_url = f"http://{domain}"
         live_temp = os.path.join(result_dir, "live_url_temp.txt")
         with open(live_temp, "w") as f:
             f.write(base_url + "\n")
-        run_waf_detection(live_temp, result_dir, log_file)
+        run_waf_pipeline_step(live_temp, result_dir, log_file)
         os.remove(live_temp)
     else:
-        run_waf_detection(live_file, result_dir, log_file)
+        run_waf_pipeline_step(live_file, result_dir, log_file)
 
 
 def etapa_xss(param_urls_file, result_dir, log_file):
@@ -161,8 +161,8 @@ def main():
     stats = {}
     etapas = [
         ("Recon", lambda: etapa_recon(mode, safe_name, args.url, result_dir, subs_file, live_file, urls_file, param_urls_file)),
-        ("Nuclei Scan", lambda: run_nuclei_scan(mode, safe_name, result_dir, log_file)),
         ("WAF Detection", lambda: etapa_waf(live_file, result_dir, log_file, mode, safe_name)),
+        ("Nuclei Scan", lambda: run_nuclei_scan(mode, safe_name, result_dir, log_file)),
         ("XSStrike (XSS)", lambda: stats.update({"XSS vulnerabilidades": count_lines(etapa_xss(param_urls_file, result_dir, log_file))})),
         ("SQLMap (SQLi)", lambda: stats.update({"SQLi vulnerabilidades": count_lines(etapa_sqli(param_urls_file, result_dir, log_file))})),
         ("FFUF", lambda: etapa_ffuf(param_urls_file, result_dir, os.path.join(result_dir, "log.txt"))),

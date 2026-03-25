@@ -12,7 +12,7 @@ import threading
 
 from weasyprint import HTML
 from backend.scan_worker import run_scan, continue_scan_from_module
-from backend.models import SessionLocal, Project, User, ScanState, Target
+from backend.models import SessionLocal, Project, User, ScanState, Target, DiscoveredURL
 from utils.path_utils import get_safe_name_from_target
 from utils.reporter import generate_markdown_report
 from modules.ffuf import run_ffuf
@@ -287,16 +287,16 @@ def delete_project(project_id: int, request: Request, db: Session = Depends(get_
     if not project:
         raise HTTPException(status_code=404, detail="Proyecto no encontrado")
 
+    raw_t = (project.target or "").strip()
     clean_target = (
-        project.target
-        .replace("https://", "")
+        raw_t.replace("https://", "")
         .replace("http://", "")
         .rstrip("/")
         .replace("/", "_")
     )
 
     base_path = os.path.abspath("results")
-    if os.path.isdir(base_path):
+    if os.path.isdir(base_path) and clean_target:
         for folder in os.listdir(base_path):
             if folder.startswith(clean_target):
                 folder_path = os.path.join(base_path, folder)
@@ -307,8 +307,23 @@ def delete_project(project_id: int, request: Request, db: Session = Depends(get_
                     except Exception as e:
                         print(f"[✘] Error al eliminar {folder_path}: {e}")
 
+    rd = (getattr(project, "results_dir", None) or "").strip()
+    if rd and os.path.isdir(base_path):
+        rd_folder = rd.replace("\\", "/").split("/")[-1]
+        rd_path = os.path.join(base_path, rd_folder)
+        if os.path.isdir(rd_path):
+            try:
+                shutil.rmtree(rd_path)
+                print(f"[✔] Eliminado results_dir: {rd_path}")
+            except Exception as e:
+                print(f"[✘] Error al eliminar {rd_path}: {e}")
+
     if project.scan_state:
         db.delete(project.scan_state)
+    db.query(DiscoveredURL).filter(DiscoveredURL.project_id == project_id).delete(
+        synchronize_session=False
+    )
+    db.query(Target).filter(Target.project_id == project_id).delete(synchronize_session=False)
     db.delete(project)
     db.commit()
 

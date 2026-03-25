@@ -27,6 +27,20 @@ body {
     font-family: 'JetBrains Mono', monospace;
     line-height: 1;
 }
+
+/* ASCII banners: mismo box model en todas las páginas y temas (evita desplazamiento de la 1ª línea) */
+pre.banner-ascii,
+pre.ascii-logo {
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    text-indent: 0;
+    box-sizing: border-box;
+    tab-size: 8;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    white-space: pre;
+    line-height: 1;
+}
 .banner-actions {
     display: flex;
     align-items: center;

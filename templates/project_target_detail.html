@@ -381,7 +381,7 @@
     <!-- Banner -->
     <div class="page-header">
         <pre class="ascii-logo">
-██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
+ ██████╗  ██████╗ ██╗   ██╗███╗   ██╗████████╗██╗   ██╗    ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
  ██╔══██╗██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝╚██╗ ██╔╝    ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
  ██████╔╝██║   ██║██║   ██║██╔██╗ ██║   ██║    ╚████╔╝     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
  ██╔══██╗██║   ██║██║   ██║██║╚██╗██║   ██║     ╚██╔╝      ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
@@ -508,6 +508,9 @@ by Ignacio Pérez</pre>
                             <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_nuclei }}</pre>
                         {% elif 'xss' in fname or 'XSS' in fname or fname == 'xss_vulnerables.txt' %}
                             <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | clean_xss }}</pre>
+                        {% elif fname == 'waf_detected.txt' %}
+                            <p class="muted" style="margin-bottom:10px;">WAF report (wafw00f): summary first, then raw output per host. Legacy waf.txt is no longer used.</p>
+                            <pre style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(30,41,59,0.8); padding: 16px; border-radius: 8px; color: #e2e8f0; border: 1px solid rgba(148,163,184,0.2);">{{ content | e }}</pre>
                         {% else %}
                             {{ content
                                 | e

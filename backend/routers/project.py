@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 import os
 
-from backend.models import SessionLocal, Project, Target, ScanState
+from backend.models import SessionLocal, Project, Target, ScanState, DiscoveredURL
 from backend.scan_worker import delete_target_and_results
 
 router = APIRouter(prefix="/project", tags=["project"])
@@ -59,8 +59,12 @@ def delete_project(project_id: int):
         #    que ya se eliminan por target.
         #    Si deseas limpiar archivos sueltos, agrégalo aquí.
 
-        # 3) Eliminar el proyecto (gracias al cascade='all, delete-orphan' en models,
-        #    los targets hijos se eliminarán automáticamente)
+        # 3) URLs descubiertas (recon dominio) — evita FK / huérfanos si no hay targets
+        db.query(DiscoveredURL).filter(DiscoveredURL.project_id == project_id).delete(
+            synchronize_session=False
+        )
+
+        # 4) Eliminar el proyecto (cascade targets si quedara alguno)
         db.delete(project)
         db.commit()
 

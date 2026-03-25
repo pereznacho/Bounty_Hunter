@@ -30,7 +30,7 @@ Base = declarative_base()
 # -------------------------------
 MODULE_FILES = [
     "subdomains.txt", "httpx.txt", "gau.txt", "waybackurls.txt", "katana.txt",
-    "arjun.txt", "dalfox.txt", "ffuf.txt", "tplmap.txt", "sqlmap.txt", "waf.txt", "xsstrike.txt"
+    "arjun.txt", "dalfox.txt", "ffuf.txt", "tplmap.txt", "sqlmap.txt", "waf_detected.txt", "xsstrike.txt"
 ]
 
 # -------------------------------
@@ -247,8 +247,7 @@ class Target(Base):
         matching_dirs = glob.glob(pattern)
         
         if matching_dirs:
-            # Retornar el más reciente (último en orden alfabético = timestamp más reciente)
-            return max(matching_dirs)
+            return max(matching_dirs, key=os.path.getmtime)
         
         # Fallback: calcular basado en timestamp del proyecto
         if self.project and self.project.created_at:

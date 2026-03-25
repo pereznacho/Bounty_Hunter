@@ -40,10 +40,10 @@ SEVERITY_KEYWORDS = {
 # Scan pipeline: ordered list of module display names (project_routes, scan_worker)
 MODULES = [
     "Recon",
+    "WAF Detection",
     "Directory & Files",
     "Arjun",
     "Nuclei Scan",
-    "WAF Detection",
     "LFI",
     "XSStrike (XSS)",
     "SQLMap (SQLi)",

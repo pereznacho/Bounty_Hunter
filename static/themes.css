@@ -924,6 +924,25 @@ body[data-theme="parrot"] .discovered-urls-legend h2 {
     box-sizing: border-box !important;
 }
 
+/* Contenido del logo ASCII: sin padding/indent heredados que desalineen la 1ª línea (todos los themes) */
+pre.banner-ascii,
+pre.ascii-logo {
+    padding: 0 !important;
+    text-indent: 0 !important;
+    border: 0 !important;
+    box-sizing: border-box !important;
+    tab-size: 8 !important;
+    font-variant-numeric: tabular-nums !important;
+    /* Alineación interna consistente entre themes (evita "centering" por línea) */
+    display: inline-block !important;
+    text-align: left !important;
+    /* Misma métrica de glifos para evitar desalineaciones por fuente heredada */
+    font-family: "JetBrains Mono", ui-monospace, monospace !important;
+    letter-spacing: 0 !important;
+    font-kerning: none !important;
+    white-space: pre !important;
+}
+
 /* DEFAULT: reference layout, centered banner, standard grid */
 body.theme-default .container,
 body[data-theme="default"] .container,
@@ -1162,7 +1181,8 @@ body.theme-neon .muted { font-size: 0.95rem !important; }
 body.theme-matrix .container { max-width: 1000px !important; margin-left: auto !important; margin-right: auto !important; padding: 20px 16px !important; font-family: ui-monospace, "JetBrains Mono", monospace !important; }
 body.theme-matrix #banner,
 body.theme-matrix .header { margin-bottom: 20px !important; padding: 12px 0 !important; text-align: left !important; }
-body.theme-matrix #banner pre { font-size: 7px !important; line-height: 1 !important; margin-bottom: 8px !important; }
+body.theme-matrix #banner pre,
+body[data-theme="matrix"] #banner pre { font-size: 7px !important; line-height: 1 !important; margin-bottom: 8px !important; }
 body.theme-matrix #banner h2 { font-size: 1.1rem !important; margin-bottom: 4px !important; }
 body.theme-matrix #banner p { font-size: 0.85rem !important; margin-bottom: 0 !important; }
 body.theme-matrix .btn,

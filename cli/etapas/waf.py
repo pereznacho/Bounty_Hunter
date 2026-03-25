@@ -15,7 +15,7 @@ def update_progress(project_id, percent, status="running"):
 
 def main():
     if len(sys.argv) != 2:
-        print("Uso: python3 waf.py <project_id>")
+        print("Usage: python3 waf.py <project_id>")
         sys.exit(1)
 
     project_id = int(sys.argv[1])

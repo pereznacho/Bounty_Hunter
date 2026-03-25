@@ -24,7 +24,7 @@ from modules.gf_qsreplace import run_gf_qsreplace
 from modules.lfi import run_lfi
 from modules.sqli import run_sqli_scan
 from modules.tplmap import run_tplmap_scan
-from modules.waf import run_waf
+from modules.waf import run_waf, run_waf_pipeline_step
 from modules.wfuzz_fuzz import run_wfuzz_scan
 from modules.xss import run_xss_scan
 from modules.nuclei_scan import run_nuclei_scan
@@ -118,7 +118,7 @@ from modules.gf_qsreplace import run_gf_qsreplace
 from modules.lfi import run_lfi
 from modules.sqli import run_sqli_scan
 from modules.tplmap import run_tplmap_scan
-from modules.waf import run_waf
+from modules.waf import run_waf_pipeline_step
 from modules.wfuzz_fuzz import run_wfuzz_scan
 from modules.xss import run_xss_scan
 from modules.nuclei_scan import run_nuclei_scan
@@ -149,7 +149,7 @@ def driver():
     if module == "LFI": return run_lfi(param_urls_file, result_dir)
     if module == "SQLMap (SQLi)": return run_sqli_scan(param_urls_file, result_dir, log_file)
     if module == "Tplmap": return run_tplmap_scan(param_urls_file, result_dir, log_file)
-    if module == "WAF Detection": return run_waf(live_file, result_dir, log_file)
+    if module == "WAF Detection": return run_waf_pipeline_step(live_file, result_dir, log_file)
     if module == "WFUZZ": return run_wfuzz_scan(param_urls_file, result_dir, log_file)
     if module == "XSStrike (XSS)": return run_xss_scan(param_urls_file, result_dir, log_file)
     print(f"[child] módulo desconocido: {module}")
@@ -430,7 +430,7 @@ def execute_single_module(project_id, project_platform, module_index, result_dir
         "LFI": lambda: run_lfi(param_urls_file, result_dir),
         "SQLMap (SQLi)": lambda: run_sqli_scan(param_urls_file, result_dir, log_file),
         "Tplmap": lambda: run_tplmap_scan(param_urls_file, result_dir, log_file),
-        "WAF Detection": lambda: run_waf(live_file, result_dir, log_file),
+        "WAF Detection": lambda: run_waf_pipeline_step(live_file, result_dir, log_file),
         "WFUZZ": lambda: run_wfuzz_scan(param_urls_file, result_dir, log_file),
         "XSStrike (XSS)": lambda: run_xss_scan(param_urls_file, result_dir, log_file),
     }

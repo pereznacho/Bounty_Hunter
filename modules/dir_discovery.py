@@ -36,12 +36,94 @@ def _normalize_base_url(target):
     return u.rstrip("/") + "/"
 
 
-def _is_4xx_warning_line(line):
-    """True si la línea es un aviso de dirb sobre códigos 4xx (403, etc.)."""
-    t = (line or "").strip()
-    if "WARNING" not in t and "(!)" not in t:
+def _is_dirb_junk_line(line):
+    """Dirb spam: repeated WARNING lines and '(Use mode -w...)' when all paths return 4xx (e.g. WAF)."""
+    t = (line or "").rstrip()
+    if not t.strip():
         return False
-    return "CODE =" in t and "40" in t  # CODE = 403, CODE = 400, etc.
+    if re.search(r"CODE\s*=\s*4\d\d", t) and (
+        "WARNING" in t or "(!)" in t or "warning" in t.lower()
+    ):
+        return True
+    if "(!)" in t and "WARNING" in t and "CODE" in t and re.search(r"\b4\d\d\b", t):
+        return True
+    if "use mode" in t.lower() and "-w" in t and "scan" in t.lower():
+        return True
+    return False
+
+
+def _sanitize_dirb_output_file(out_path):
+    """Strip junk WARNING lines from dirb -o file (recursive scans can repeat thousands)."""
+    if not os.path.isfile(out_path):
+        return
+    try:
+        with open(out_path, "r", encoding="utf-8", errors="ignore") as f:
+            lines = f.readlines()
+        kept = [ln for ln in lines if not _is_dirb_junk_line(ln)]
+        if len(kept) < len(lines):
+            with open(out_path, "w", encoding="utf-8") as f:
+                f.writelines(kept)
+    except OSError:
+        pass
+
+
+def _sanitize_gobuster_output_file(out_path, drop_4xx=True):
+    if not drop_4xx or not os.path.isfile(out_path):
+        return
+    try:
+        with open(out_path, "r", encoding="utf-8", errors="ignore") as f:
+            lines = f.readlines()
+        kept = []
+        for ln in lines:
+            m = re.search(r"Status:\s*(\d+)", ln, re.I)
+            if m and 400 <= int(m.group(1)) <= 499:
+                continue
+            kept.append(ln)
+        if len(kept) < len(lines):
+            with open(out_path, "w", encoding="utf-8") as f:
+                f.writelines(kept)
+    except OSError:
+        pass
+
+
+def _sanitize_dirsearch_output_file(out_path, drop_4xx=True):
+    if not drop_4xx or not os.path.isfile(out_path):
+        return
+    try:
+        with open(out_path, "r", encoding="utf-8", errors="ignore") as f:
+            lines = f.readlines()
+        kept = []
+        for ln in lines:
+            m = re.search(r"Status:\s*(\d+)", ln, re.I)
+            if m and 400 <= int(m.group(1)) <= 499:
+                continue
+            sm = re.match(r"^\s*(\d{3})\s+", ln.strip())
+            if sm and 400 <= int(sm.group(1)) <= 499:
+                continue
+            kept.append(ln)
+        if len(kept) < len(lines):
+            with open(out_path, "w", encoding="utf-8") as f:
+                f.writelines(kept)
+    except OSError:
+        pass
+
+
+def _dirsearch_line_has_4xx_status(line):
+    m = re.search(r"Status:\s*(\d+)", line, re.I)
+    if m and 400 <= int(m.group(1)) <= 499:
+        return True
+    sm = re.match(r"^\s*(\d{3})\s+", line.strip())
+    if sm and 400 <= int(sm.group(1)) <= 499:
+        return True
+    return False
+
+
+def _tool_tag_implies_4xx(info_str):
+    m = re.search(r"(?:Status|CODE):(\d{3})", info_str, re.I)
+    if m:
+        c = int(m.group(1))
+        return 400 <= c <= 499
+    return False
 
 
 def _extract_urls_from_line(line, base_url):
@@ -80,8 +162,7 @@ def _run_dirb(base_url, wordlist, result_dir, timeout=DIRB_TIMEOUT, exclude_stat
             text=True,
         )
         if r.returncode != 0 and r.stderr:
-            # No mostrar mensajes de códigos 4xx (403, etc.) al usuario
-            stderr_lines = [ln for ln in r.stderr.splitlines() if not _is_4xx_warning_line(ln)]
+            stderr_lines = [ln for ln in r.stderr.splitlines() if not _is_dirb_junk_line(ln)]
             if stderr_lines:
                 msg = " ".join(stderr_lines)[:200]
                 print(f"[dir_discovery] dirb stderr: {msg}")
@@ -99,7 +180,10 @@ def _run_dirb(base_url, wordlist, result_dir, timeout=DIRB_TIMEOUT, exclude_stat
                 continue
             with open(out_path, "r", encoding="utf-8", errors="ignore") as f:
                 for line in f:
+                    raw_ln = line
                     line = line.strip()
+                    if _is_dirb_junk_line(raw_ln):
+                        continue
                     # ==>> DIRECTORY: http://... or DIRECTORY: http://...
                     if "DIRECTORY:" in line:
                         for u in _extract_urls_from_line(line, base_url):
@@ -123,17 +207,9 @@ def _run_dirb(base_url, wordlist, result_dir, timeout=DIRB_TIMEOUT, exclude_stat
                     for u in _extract_urls_from_line(line, base_url):
                         if base_url.rstrip("/") in u:
                             found.append((u, "dirb"))
-        # Reescribir el archivo principal sin líneas de aviso 4xx para que no se vean al abrirlo
-        if exclude_status_4xx and os.path.isfile(out_file):
-            try:
-                with open(out_file, "r", encoding="utf-8", errors="ignore") as f:
-                    all_lines = f.readlines()
-                kept = [ln for ln in all_lines if not _is_4xx_warning_line(ln)]
-                if len(kept) < len(all_lines):
-                    with open(out_file, "w", encoding="utf-8") as f:
-                        f.writelines(kept)
-            except OSError:
-                pass
+        for out_path in dirb_files:
+            if os.path.isfile(out_path):
+                _sanitize_dirb_output_file(out_path)
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         print(f"[dir_discovery] dirb skip: {e}")
     return found
@@ -161,10 +237,13 @@ def _run_gobuster(base_url, wordlist, result_dir, timeout=GOBUSTER_TIMEOUT, excl
                     line = line.strip()
                     if not line:
                         continue
+                    st = re.search(r"Status:\s*(\d+)", line, re.I)
+                    if exclude_status_4xx and st and 400 <= int(st.group(1)) <= 499:
+                        continue
                     url = None
                     info = "gobuster"
                     if line.startswith("http"):
-                        url = line.rstrip("/")
+                        url = (line.split()[0] if line.split() else line).rstrip("/")
                     elif line.startswith("/"):
                         path = line.split()[0] if line.split() else line
                         url = (base_url.rstrip("/") + path).rstrip("/")
@@ -178,11 +257,12 @@ def _run_gobuster(base_url, wordlist, result_dir, timeout=GOBUSTER_TIMEOUT, excl
                             else:
                                 base = base_url.rstrip("/")
                                 url = (base + "/" + path.lstrip("/")).rstrip("/") if not path.startswith("http") else path.rstrip("/")
-                            status = re.search(r"Status:\s*(\d+)", line)
+                            status = re.search(r"Status:\s*(\d+)", line, re.I)
                             if status:
                                 info = f"gobuster Status:{status.group(1)}"
                     if url:
                         found.append((url, info))
+        _sanitize_gobuster_output_file(out_file, drop_4xx=exclude_status_4xx)
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         print(f"[dir_discovery] gobuster skip: {e}")
     return found
@@ -226,6 +306,8 @@ def _run_dirsearch(base_url, result_dir, timeout=DIRSEARCH_TIMEOUT, exclude_stat
                     line = line.strip()
                     if not line or line.startswith("#"):
                         continue
+                    if exclude_status_4xx and _dirsearch_line_has_4xx_status(line):
+                        continue
                     url = None
                     if line.startswith("http"):
                         url = (line.split()[0] if line.split() else line).rstrip("/")
@@ -247,6 +329,9 @@ def _run_dirsearch(base_url, result_dir, timeout=DIRSEARCH_TIMEOUT, exclude_stat
                             if base_url.rstrip("/") in u:
                                 found.append((u, "dirsearch"))
                                 break
+        for fp in to_read:
+            if os.path.isfile(fp):
+                _sanitize_dirsearch_output_file(fp, drop_4xx=exclude_status_4xx)
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         print(f"[dir_discovery] dirsearch skip: {e}")
     return found
@@ -255,9 +340,10 @@ def _run_dirsearch(base_url, result_dir, timeout=DIRSEARCH_TIMEOUT, exclude_stat
 def run_dir_discovery(target, result_dir, log_file=None, exclude_status_4xx=True):
     """
     Run dirb (recursive), gobuster and dirsearch against target URL.
-    Consolidate ALL results into directory_and_files.txt with full attribution:
-    - Which tool(s) found each URL
-    - All discovered URLs from all three tools (dirb iterates directories; gobuster/dirsearch do not).
+    Consolidate results into directory_and_files.txt.
+
+    When exclude_status_4xx is True (default): HTTP 400–499 hits are not stored in the
+    consolidated file, and raw tool outputs are scrubbed of 4xx lines and dirb WARNING spam.
     """
     base_url = _normalize_base_url(target)
     wordlist = _get_wordlist()
@@ -288,10 +374,21 @@ def run_dir_discovery(target, result_dir, log_file=None, exclude_status_4xx=True
     for url, info in dsearch_list:
         url_sources.setdefault(url, set()).add(("dirsearch", info))
 
-    # Write consolidated file with ALL information
+    if exclude_status_4xx and url_sources:
+        pruned = {}
+        for url, pairs in url_sources.items():
+            tags = [p[1] for p in pairs]
+            if tags and all(_tool_tag_implies_4xx(t) for t in tags):
+                continue
+            pruned[url] = pairs
+        url_sources = pruned
+
+    # Write consolidated file (no client-error rows when exclude_status_4xx)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("# Directory & Files — Consolidated (dirb recursive + gobuster + dirsearch)\n")
         f.write(f"# Target: {base_url}\n")
+        if exclude_status_4xx:
+            f.write("# Note: HTTP 400–499 responses excluded from this file and from raw tool logs.\n")
         f.write(f"# Dirb: {len(dirb_list)} | Gobuster: {len(gob_list)} | Dirsearch: {len(dsearch_list)} | Unique URLs: {len(url_sources)}\n\n")
         f.write("# --- Per-URL list (URL | tools that found it) ---\n\n")
         for url in sorted(url_sources.keys()):

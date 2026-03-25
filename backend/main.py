@@ -44,6 +44,67 @@ from backend.scan_worker import run_scan, delete_target_and_results, launch_scan
 from modules.recon import run_domain_recon_save_for_selection
 from utils.path_utils import get_safe_name_from_target
 
+
+def _load_txt_files_from_result_dir(latest_dir):
+    """Lee todos los .txt de un directorio de resultados (para Generated Files en el dashboard)."""
+    files = {}
+    if not latest_dir or not os.path.isdir(latest_dir):
+        return files
+    for fname in os.listdir(latest_dir):
+        if not fname.endswith(".txt"):
+            continue
+        path = os.path.join(latest_dir, fname)
+        try:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                files[fname] = f.read()
+        except Exception:
+            files[fname] = "[Error reading file]"
+    return files
+
+
+def resolve_latest_results_dir(project, preferred_target=None):
+    """
+    Directory under results/... where scans write outputs (waf_detected.txt, live_subdomains.txt, etc.).
+    Prioriza project.results_dir, luego Target.results_dir (mismo patrón que scan_worker),
+    y por último un glob desde project.target.
+    """
+    rd = getattr(project, "results_dir", None)
+    if rd:
+        r0 = str(rd).replace("\\", "/")
+        p = rd if r0.startswith("results/") else os.path.join("results", rd)
+        if os.path.isdir(p):
+            return p
+
+    t = preferred_target
+    if t is None:
+        targets = getattr(project, "targets", None) or []
+        if targets:
+            t = targets[0]
+
+    if t is not None:
+        try:
+            td = t.results_dir
+        except Exception:
+            td = None
+        if td and os.path.isdir(td):
+            return td
+
+    proj_t = getattr(project, "target", None)
+    if proj_t:
+        clean = (
+            proj_t.replace("https://", "")
+            .replace("http://", "")
+            .rstrip("/")
+            .replace("/", "_")
+        )
+        pattern = os.path.join("results", f"{clean}_*")
+        dirs = [d for d in glob.glob(pattern) if os.path.isdir(d)]
+        if dirs:
+            return max(dirs, key=os.path.getmtime)
+
+    return None
+
+
 app = FastAPI(title="Bounty Hunter", description="Bug Bounty Management Platform")
 app.add_middleware(SessionMiddleware, secret_key="17f8b4eeb499e55f11f3fcebb933e7196050fa343482f7c3064ad595c5518c1f")
 
@@ -571,30 +632,8 @@ async def project_detail(request: Request, project_id: int):
     theme = (getattr(user, "theme", None) or "default").strip() or "default"
     db.close()
 
-    # Cargar archivos generados
-    files = {}
-    if hasattr(project, "target"):
-        clean_target = (
-            project.target
-            .replace("https://", "")
-            .replace("http://", "")
-            .rstrip("/")
-            .replace("/", "_")
-        )
-        pattern = f"results/{clean_target}_*"
-        dirs = sorted(glob.glob(pattern), key=os.path.getmtime, reverse=True)
-
-        if dirs:
-            latest_dir = dirs[0]
-            for file in os.listdir(latest_dir):
-                if file.endswith(".txt"):
-                    path = os.path.join(latest_dir, file)
-                    try:
-                        with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                            content = f.read()
-                        files[file] = content
-                    except Exception:
-                        files[file] = "[Error reading file]"
+    latest = resolve_latest_results_dir(project, preferred_target=target)
+    files = _load_txt_files_from_result_dir(latest) if latest else {}
 
     # Si el proyecto fue creado con plataforma (no manual) y tiene target, usar el template especial
     if project.platform != "Manual" and target:
@@ -637,29 +676,31 @@ async def project_target_detail(request: Request, project_id: int, target_id: in
 
     scan_state = db.query(ScanState).filter(ScanState.project_id == project.id).first()
 
-    # Buscar último directorio con resultados de este target (como en project_detail)
-    clean_target = (
-        target.target
-        .replace("https://", "")
-        .replace("http://", "")
-        .rstrip("/")
-        .replace("/", "_")
-    )
-    pattern = f"results/{clean_target}_*"
-    dirs = sorted(glob.glob(pattern), key=os.path.getmtime, reverse=True)
+    latest_dir = None
+    try:
+        td = target.results_dir
+    except Exception:
+        td = None
+    if td and os.path.isdir(td):
+        latest_dir = td
+    else:
+        clean_target = (
+            target.target
+            .replace("https://", "")
+            .replace("http://", "")
+            .rstrip("/")
+            .replace("/", "_")
+        )
+        pattern = os.path.join("results", f"{clean_target}_*")
+        dirs = sorted(
+            (d for d in glob.glob(pattern) if os.path.isdir(d)),
+            key=os.path.getmtime,
+            reverse=True,
+        )
+        if dirs:
+            latest_dir = dirs[0]
 
-    files = {}
-    if dirs:
-        latest_dir = dirs[0]
-        for file in os.listdir(latest_dir):
-            if file.endswith(".txt"):
-                path = os.path.join(latest_dir, file)
-                try:
-                    with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                        content = f.read()
-                    files[file] = content
-                except Exception:
-                    files[file] = "[Error reading file]"
+    files = _load_txt_files_from_result_dir(latest_dir) if latest_dir else {}
 
     theme = (getattr(current_user, "theme", None) or "default").strip() or "default"
     return templates.TemplateResponse("project_target_detail.html", {
@@ -735,31 +776,44 @@ async def delete_project(request: Request, project_id: int):
         if os.path.exists(results_root):
             # Clean directories for all targets (domains and URLs)
             for target in targets:
+                raw_t = (target.target or "").strip()
                 clean_target = (
-                    target.target
-                    .replace("https://", "")
+                    raw_t.replace("https://", "")
                     .replace("http://", "")
                     .rstrip("/")
                     .replace("/", "_")
                 )
+                # startswith("") matches every folder — skip empty / null targets
+                if clean_target:
+                    for folder in os.listdir(results_root):
+                        if folder.startswith(clean_target):
+                            folder_path = os.path.join(results_root, folder)
+                            if os.path.isdir(folder_path):
+                                try:
+                                    shutil.rmtree(folder_path)
+                                    print(f"[✔] Eliminado directorio de target o dominio: {folder_path}")
+                                except Exception as e:
+                                    print(f"[✘] Error al eliminar {folder_path}: {e}")
 
-                for folder in os.listdir(results_root):
-                    if folder.startswith(clean_target):
-                        folder_path = os.path.join(results_root, folder)
-                        if os.path.isdir(folder_path):
-                            try:
-                                shutil.rmtree(folder_path)
-                                print(f"[✔] Eliminado directorio de target o dominio: {folder_path}")
-                            except Exception as e:
-                                print(f"[✘] Error al eliminar {folder_path}: {e}")
+            # project.results_dir (e.g. bounty folder name) even when target was empty
+            rd = (getattr(project, "results_dir", None) or "").strip()
+            if rd:
+                rd_path = os.path.join(results_root, rd.replace("\\", "/").split("/")[-1])
+                if os.path.isdir(rd_path):
+                    try:
+                        shutil.rmtree(rd_path)
+                        print(f"[✔] Eliminado results_dir del proyecto: {rd_path}")
+                    except Exception as e:
+                        print(f"[✘] Error al eliminar {rd_path}: {e}")
 
             # Clean additional directories related to the project name (for bounty expansions)
-            if project.name:
-                safe_project_name = (
-                    project.name
-                    .replace(" ", "_")
-                    .replace("/", "_")
-                )
+            safe_project_name = (
+                (project.name or "")
+                .replace(" ", "_")
+                .replace("/", "_")
+                .strip()
+            )
+            if safe_project_name:
                 for folder in os.listdir(results_root):
                     if safe_project_name.lower() in folder.lower():
                         folder_path = os.path.join(results_root, folder)
@@ -770,7 +824,11 @@ async def delete_project(request: Request, project_id: int):
                             except Exception as e:
                                 print(f"[✘] Error al eliminar {folder_path}: {e}")
 
-        # Delete all targets first (cascade should handle this, but being explicit)
+        # Bulk .delete() bypasses ORM cascade — remove children explicitly
+        db.query(DiscoveredURL).filter(DiscoveredURL.project_id == project_id).delete(
+            synchronize_session=False
+        )
+        # Delete all targets first
         db.query(Target).filter(Target.project_id == project_id).delete()
 
         # Delete scan state
@@ -780,7 +838,7 @@ async def delete_project(request: Request, project_id: int):
         db.query(Project).filter(Project.id == project_id).delete()
         db.commit()
 
-        print(f"[✔] Eliminado proyecto completo: {project.name} (ID: {project_id})")
+        print(f"[✔] Eliminado proyecto completo: {project.name or project_id} (ID: {project_id})")
 
     db.close()
     return RedirectResponse(url="/dashboard", status_code=303)

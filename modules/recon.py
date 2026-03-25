@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 from urllib.parse import urlparse, parse_qs
 from termcolor import cprint
@@ -8,6 +9,42 @@ from modules.dir_discovery import run_dir_discovery
 # Timeouts for recon (subfinder/httpx) - large domains (e.g. nasa.gov) need more time
 SUBFINDER_RECON_TIMEOUT = 600  # 10 minutes
 HTTPX_RECON_TIMEOUT = 600      # 10 minutes
+
+def _netloc_for_gau(url: str) -> str:
+    """Host for gau (e.g. playdigital.com.ar), from a full URL or bare hostname."""
+    u = (url or "").strip()
+    if not u:
+        return ""
+    if not u.startswith(("http://", "https://")):
+        u = "https://" + u
+    p = urlparse(u)
+    netloc = (p.netloc or "").split("@")[-1]
+    return netloc.strip() or u.strip()
+
+
+def run_gau_pipeline_to_raw(raw_urls_file: str, seed_url: str) -> None:
+    """
+    gau SEED --subs --retries 3 --threads 100 | grep -Ev '<static ext>$' | sort -u |
+    httpx -silent -fc 404 -fr -sc -cl  >> raw_urls (URLs only, httpx metadata stripped).
+
+    Matches the hunter one-liner; seed is the host (or URL → netloc).
+    """
+    host = _netloc_for_gau(seed_url)
+    if not host:
+        return
+    httpx_bin = shlex.quote(get_httpx_binary())
+    host_q = shlex.quote(host)
+    out_q = shlex.quote(raw_urls_file)
+    # Same pipeline as capture: gau … | grep -Ev '…' | sort -u | httpx -silent -fc 404 -fr -sc -cl
+    # sed removes httpx suffix " [status] [length]" so raw_urls stays plain URLs for the rest of recon
+    cmd = (
+        f"gau {host_q} --subs --retries 3 --threads 100 | "
+        r"grep -Ev '\.(png|jpg|jpeg|gif|mp3|mp4|svg|woff|woff2|etf|eof|otf|css|exe|ttf|eot|pdf)$' | "
+        f"sort -u | {httpx_bin} -silent -fc 404 -fr -sc -cl | "
+        r"sed -E 's/[[:space:]]+\[.*$//' >> "
+        f"{out_q}"
+    )
+    run_command(cmd, silent=True)
 
 
 def get_unique_param_urls(input_file, param_output_file, urls_output_file):
@@ -124,18 +161,26 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
         # Ahora recon de URLs sobre cada subdominio vivo
         cprint("[*] Ejecutando recon de URLs sobre dominios vivos...", "blue")
         if os.path.exists(live_file) and os.path.getsize(live_file) > 0:
+            cprint("[*] WAF: early scan on live hosts (before katana / dir bruteforce)...", "blue")
+            try:
+                from modules.waf import run_waf
+
+                run_waf(live_file, result_dir, os.path.join(result_dir, "scan.log"))
+            except Exception as e:
+                cprint(f"[!] Early WAF (domain mode) skipped: {e}", "yellow")
+
             # Crear archivo raw_urls.txt vacío al inicio
             with open(raw_urls_file, "w") as f:
                 f.write("")
-                
+
             with open(live_file) as f:
                 for url in f:
                     url = url.strip()
                     if url:  # Verificar que la URL no esté vacía
                         run_command(f"katana -u {url} -silent >> {raw_urls_file}", silent=True)
-                        run_command(f"gau {url} >> {raw_urls_file}", silent=True)
+                        run_gau_pipeline_to_raw(raw_urls_file, url)
                         run_command(f"waybackurls {url} >> {raw_urls_file}", silent=True)
-            # Directory & file discovery: once per unique host (dirb, gobuster, dirsearch) to avoid re-scanning same host
+            # Directory & file discovery: once per unique host (after early WAF)
             cprint("[*] Buscando directorios y archivos por dominio vivo (dirb, gobuster, dirsearch, -x 400-499)...", "blue")
             try:
                 seen_bases = set()
@@ -176,6 +221,14 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
         with open(live_file, "w") as lf:
             lf.write(target_url + "\n")
 
+        cprint("[*] WAF: early scan on target URL (before katana / dir bruteforce)...", "blue")
+        try:
+            from modules.waf import run_waf
+
+            run_waf(live_file, result_dir, os.path.join(result_dir, "scan.log"))
+        except Exception as e:
+            cprint(f"[!] Early WAF (URL mode) skipped: {e}", "yellow")
+
         # Crear archivo raw_urls.txt vacío al inicio
         with open(raw_urls_file, "w") as f:
             f.write("")
@@ -183,13 +236,13 @@ def run_recon(mode, domain, target_url, result_dir, subs_file, live_file, urls_f
         cprint("[*] Ejecutando Katana sobre la URL...", "blue")
         run_command(f"katana -u {target_url} -silent >> {raw_urls_file}", silent=True)
 
-        cprint("[*] Ejecutando gau sobre la URL...", "blue")
-        run_command(f"gau {target_url} >> {raw_urls_file}", silent=True)
+        cprint("[*] Running gau pipeline (gau --subs | grep | sort | httpx) on target...", "blue")
+        run_gau_pipeline_to_raw(raw_urls_file, target_url)
 
         cprint("[*] Ejecutando waybackurls sobre la URL...", "blue")
         run_command(f"waybackurls {target_url} >> {raw_urls_file}", silent=True)
 
-        # Directory & file discovery (dirb, gobuster, dirsearch) with -x 400-499
+        # Directory & file discovery (dirb, gobuster, dirsearch) con -x 400-499
         cprint("[*] Buscando directorios y archivos (dirb, gobuster, dirsearch, -x 400-499)...", "blue")
         try:
             dir_out = run_dir_discovery(target_url, result_dir, exclude_status_4xx=True)
